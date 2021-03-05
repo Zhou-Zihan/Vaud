@@ -1,0 +1,39 @@
+/*div.linechart_div{*/
+    /*position:absolute;*/
+    /*-webkit-user-select:none;*/
+    /*cursor:default;*/
+/*}*/
+
+
+.axis path,
+.axis line{
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.MyRect {
+    fill: steelblue;
+}
+
+.MyText {
+    fill: white;
+    text-anchor: middle;
+    font-size:8px;
+}
+
+
+rect {
+    fill: none;
+    pointer-events: all;
+}
+
+circle {
+    fill: none;
+    stroke-width: 2.5px;
+}

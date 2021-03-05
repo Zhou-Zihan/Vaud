@@ -1,0 +1,38 @@
+package  vaud.data.datastructure;
+
+public class TexiInfo implements Comparable{
+	public int time;//time
+	public String date;
+	
+	public String name="";
+	public float latitude;
+	public float longitude;
+	
+	public int isPassengerIn ;
+	public int speed;
+	public int direction;
+	
+	public TexiInfo(String name,int speed,int direction,int isPin,int time,float la,float lo)
+	{
+		this.name=name;
+		this.speed=speed;
+		this.direction=direction;
+		this.isPassengerIn=isPin;
+		this.time=time;
+		this.latitude=la;
+		this.longitude=lo;
+	}
+	public TexiInfo() {
+		// TODO Auto-generated constructor stub
+	}
+	public String toString(){
+		return date+" " +time+" "+name+" " +speed+" "+direction+" "+isPassengerIn+" "+longitude+" "+latitude;
+		
+	}
+	
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		TexiInfo a=(TexiInfo)o;
+		return (int)(-a.time+this.time);
+	}
+}

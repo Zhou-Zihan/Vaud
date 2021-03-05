@@ -1,0 +1,58 @@
+package vaud.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.jfinal.core.Controller;
+
+/**
+ * @author suhang 撤销/重做功能
+ *
+ */
+public class Undoredo extends Controller {
+
+	public void index() {
+
+	}
+
+	public static ArrayList<String> historylist = new ArrayList<String>();
+	public static HashMap<Integer, Integer> hmap=new HashMap<Integer, Integer>(); 
+	public static int position = -1;
+	
+	public static void saveOrder(int order,String ret){
+		hmap.put(order,historylist.size());
+		historylist.add(ret);
+	}
+	
+	public void getByOrder(){
+		int order= Integer.parseInt(getPara("order"));
+		String ret=historylist.get(hmap.get(order));
+		renderJson(ret);
+	}
+	
+//	public void undo() {
+//		System.out.println("undo");
+//		if (position == 0) {
+//			position -= 1;
+//			renderJson(JSON.toJSONString(""));
+//		} else
+//
+//		if (position - 1 < 0) {
+//			renderJson(JSON.toJSONString("error"));
+//		} else {
+//			position -= 1;
+//			renderJson(historylist.get(position));
+//		}
+//	}
+//
+//	public void redo() {
+//		System.out.println("redo");
+//		if (position + 1 > historylist.size() - 1) {
+//			renderJson(JSON.toJSONString("error"));
+//		} else {
+//			position += 1;
+//			renderJson(historylist.get(position));
+//		}
+//	}
+
+}

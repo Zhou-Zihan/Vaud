@@ -1,0 +1,17 @@
+package vaud.data.datastructure;
+
+import java.util.ArrayList;
+
+
+public class CellTexi {
+	public String ID;
+	//public HashMap<Integer,Integer> hm=new HashMap<Integer,Integer>();
+	public ArrayList<TexiInfo> texiInfo=new ArrayList<TexiInfo>();;
+
+//	public CellTexi()
+//	{
+//		texiInfo=new ArrayList<TexiInfo>();
+//		time=new ArrayList<Integer>();
+//		pos=new ArrayList<Integer>();
+//	}
+}

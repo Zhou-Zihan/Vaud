@@ -1,0 +1,23 @@
+package vaud.data;
+
+import java.io.IOException;
+
+import com.jfinal.plugin.IPlugin;
+
+public class OtherDataPlugin implements IPlugin {
+	
+	@Override
+	public boolean start() {
+		
+			OtherDataManager.init();
+		
+		return true;
+	}
+
+	@Override
+	public boolean stop() {
+		CarDataManager.close();
+		return true;
+	}
+
+}

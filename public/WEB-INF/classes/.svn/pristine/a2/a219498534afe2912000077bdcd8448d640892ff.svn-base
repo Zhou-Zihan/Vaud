@@ -1,0 +1,22 @@
+package vaud.data.datastructure;
+
+//uid表示人，time表示时间
+
+public class UserAndTime implements Comparable{
+	public UserAndTime(long uid,int time)
+	{
+		this.time=time;
+		this.uid=uid;
+	}
+	
+	//public long uid;
+	public int time;
+	public long uid;
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		UserAndTime a=(UserAndTime)o;
+		return (int)(-a.time+this.time);
+	}
+	
+}

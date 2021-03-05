@@ -1,0 +1,185 @@
+package vaud.data;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+import org.apache.log4j.Logger;
+
+
+
+
+
+
+
+
+import vaud.data.datastructure.CellTexi;
+import vaud.data.datastructure.TexiInfo;
+import vaud.data.util.TexiCellV2;
+import vaud.data.util.TexiTraj;
+
+import com.jfinal.kit.PropKit;
+
+public class CarDataManager {
+	protected static final Logger logger = Logger
+			.getLogger(CarDataManager.class);
+	public static ArrayList<TexiCellV2> b=new ArrayList<TexiCellV2>();
+	public static void init() throws IOException {
+		//Data read
+		String datapath = PropKit.use("resource.properties").get("car.resource.path");//read the path from resource.properties
+		
+//		for(int i=0;i<10;i++){
+//		
+//			System.out.println(i);
+//			
+//			TexiCellV2 btmp=new TexiCellV2("data//texidata//TexiCellIndex"+"0"+i);
+//			
+//				
+//			b.add(btmp);
+//		}
+		for (int i=10;i<20;i++){
+			System.out.println(i);
+			TexiCellV2 btmp=new TexiCellV2("data//texidata//TexiCellIndex"+i);
+			b.add(btmp);
+		}
+		
+		logger.info("car Data read finished");
+	}
+	
+	public static void close() {
+		
+	}
+
+	public static ArrayList<CellTexi> getData(String[][] pos, String[][] time, String operate) throws IOException {
+		
+		int num=pos.length;
+		float x1,x2,y1,y2;
+		int startTime,endTime;
+		//System.out.println(time[0][0]);
+		ArrayList<TexiInfo> result=new ArrayList<TexiInfo>(); 
+		for(int i=0;i<num;i++){
+			ArrayList<TexiInfo> tmp=new ArrayList<TexiInfo>(); 
+			x1=Float.parseFloat(pos[i][0]);
+			y1=Float.parseFloat(pos[i][1]);
+			x2=Float.parseFloat(pos[i][2]);
+			y2=Float.parseFloat(pos[i][3]);
+			startTime=Integer.parseInt(time[i][0].substring(10,12))*60+Integer.parseInt(time[i][0].substring(13,15));
+			endTime=Integer.parseInt(time[i][1].substring(10,12))*60+Integer.parseInt(time[i][1].substring(13,15));
+			System.out.println(startTime);
+			int day=Integer.parseInt(time[i][0].substring(7,9));
+			System.out.println(day);
+			tmp=b.get(day-11).query(x1, y1, x2, y2, startTime, endTime);
+			if (operate.equals("union")){
+				tmp.removeAll(result);
+				result.addAll(tmp);
+			}else if (operate.equals("intersection")){
+				result.retainAll(tmp);
+			}else if (operate.equals("Complement")){
+				result.removeAll(tmp);
+			}
+		}
+		ArrayList<CellTexi> ret=new ArrayList<CellTexi>();
+		HashMap<String,Integer> hm=new HashMap<String,Integer>(); 
+		int count=0;
+		for (TexiInfo ti:result){
+			if (!hm.containsKey(ti.name)){
+				hm.put(ti.name, count);
+				count++;
+				CellTexi tmp=new CellTexi();
+				tmp.ID=ti.name;
+				tmp.texiInfo.add(ti);
+				ret.add(tmp);
+			}else{
+				ret.get(hm.get(ti.name)).texiInfo.add(ti);
+			}
+		}
+		return ret;
+	}
+	
+	public static CellTexi getDataByID(String name,String date){
+		CellTexi ret=new CellTexi();
+		ret.ID=name;
+		TexiTraj x=new TexiTraj(name,date);
+		try {
+			ret.texiInfo=x.query();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+		
+	}
+	
+//	public static ArrayList<CellTexi> getDataBySpeed(String[] time,int[] speed) throws IOException{
+//		ArrayList<CellTexi> ret= new ArrayList<CellTexi>();
+//		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd HH:mm");
+//		
+//		try {
+//			Date sdate = sdf.parse(time[0]);
+//			Date edate=sdf.parse(time[1]);
+//			String date=time[0].substring(0,10);
+//			System.out.println(date);
+//			TexiTraj x=new TexiTraj(null, date);
+//			ret=x.queryBySpeed(speed, sdate.getTime(), edate.getTime());
+//			
+//			
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		
+//		return ret;
+//	}
+	public static  ArrayList<CellTexi> getDataBySpeed(String[][] pos, String[][] time, String operate,int[] speed) throws IOException{
+		int num=pos.length;
+		float x1,x2,y1,y2;
+		int startTime,endTime;
+		//System.out.println(time[0][0]);
+		ArrayList<TexiInfo> result=new ArrayList<TexiInfo>(); 
+		for(int i=0;i<num;i++){
+			ArrayList<TexiInfo> tmp=new ArrayList<TexiInfo>(); 
+			x1=Float.parseFloat(pos[i][0]);
+			y1=Float.parseFloat(pos[i][1]);
+			x2=Float.parseFloat(pos[i][2]);
+			y2=Float.parseFloat(pos[i][3]);
+			startTime=Integer.parseInt(time[i][0].substring(11,13))*60+Integer.parseInt(time[i][0].substring(14,16));
+			endTime=Integer.parseInt(time[i][1].substring(11,13))*60+Integer.parseInt(time[i][1].substring(14,16));
+			System.out.println(startTime);
+			System.out.println(endTime);
+			int day=Integer.parseInt(time[i][0].substring(8,10));
+			System.out.println(day);
+			tmp=b.get(day-11).query(x1, y1, x2, y2, startTime, endTime);
+			if (operate.equals("union")){
+				tmp.removeAll(result);
+				result.addAll(tmp);
+			}else if (operate.equals("intersection")){
+				result.retainAll(tmp);
+			}else if (operate.equals("Complement")){
+				result.removeAll(tmp);
+			}
+		}
+		ArrayList<CellTexi> ret=new ArrayList<CellTexi>();
+		HashMap<String,Integer> hm=new HashMap<String,Integer>(); 
+		int count=0;
+		for (TexiInfo ti:result){
+			if (ti.speed>speed[1]||ti.speed<speed[0]) continue;
+			if (!hm.containsKey(ti.name)){
+				hm.put(ti.name, count);
+				count++;
+				CellTexi tmp=new CellTexi();
+				tmp.ID=ti.name;
+				tmp.texiInfo.add(ti);
+				ret.add(tmp);
+			}else{
+				ret.get(hm.get(ti.name)).texiInfo.add(ti);
+			}
+		}
+		return ret;
+	}
+	
+}

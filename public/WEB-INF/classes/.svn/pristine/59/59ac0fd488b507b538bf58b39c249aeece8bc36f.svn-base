@@ -1,0 +1,74 @@
+package vaud.util;
+
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+
+
+public class StatUtil {
+	// t1 <= t < t2
+	public static double getMean(double[] input, int t1, int t2) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for (int i = t1; i < t2 && i < input.length && i >= 0; i++) {
+			stats.addValue(input[i]);
+		}
+		return stats.getMean();
+	}
+
+	// t1 <= t < t2
+	public static double getPercentile(double[] input, int rank, int t1, int t2) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for (int i = t1; i < t2 && i < input.length && i >= 0; i++) {
+			stats.addValue(input[i]);
+		}
+		return stats.getPercentile(rank);
+	}
+
+	public static double getVar(double[] input, int t1, int t2) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for (int i = t1; i < t2 && i < input.length && i >= 0; i++) {
+			stats.addValue(input[i]);
+		}
+		return stats.getVariance();
+	}
+
+	public static double getStd(double[] input, int t1, int t2) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for (int i = t1; i < t2 && i < input.length && i >= 0; i++) {
+			stats.addValue(input[i]);
+		}
+		return stats.getStandardDeviation();
+	}
+
+	public static double getMax(double[] input, int t1, int t2) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for (int i = t1; i < t2 && i < input.length && i >= 0; i++) {
+			stats.addValue(input[i]);
+		}
+		return stats.getMax();
+	}
+
+	public static double getMin(double[] input, int t1, int t2) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for (int i = t1; i < t2 && i < input.length && i >= 0; i++) {
+			stats.addValue(input[i]);
+		}
+		return stats.getMin();
+	}
+
+	public static double getSum(double[] input, int t1, int t2) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for (int i = t1; i < t2 && i < input.length && i >= 0; i++) {
+			stats.addValue(input[i]);
+		}
+		return stats.getSum();
+	}
+	
+	public static double[] getArrayRange(double[] input) {
+		double[] ret = new double[2];
+		
+		DescriptiveStatistics ds = new DescriptiveStatistics(input);
+		ret[0] = ds.getMin();
+		ret[1] = ds.getMax();
+		
+		return ret;
+	}
+}

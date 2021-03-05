@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>VAUD</title>
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="font/Montserrat-Regular.ttf">
+    <link rel="stylesheet" href="font/Montserrat-Light.otf">
+    <link rel="stylesheet" href="font/Montserrat-Bold.ttf">
+
+    <!--timepicker-->
+    <link type="text/css" href="css/jquery-ui-custom/jquery-ui.css" rel="stylesheet" />
+    <!--map-->
+    <link rel="stylesheet" href="css/map/leaflet.css" />
+    
+    <link rel="stylesheet" href="css/vaudmain.css">
+    <link rel="stylesheet" href="css/queryview.css">
+    <link rel="stylesheet" href="css/Node_Result.css">
+    <link rel="stylesheet" href="css/Node_Condition.css">
+    <link rel="stylesheet" href="css/map_object.css">
+    <link rel="stylesheet" href="css/map_objectlist.css">
+    <link rel="stylesheet" href="css/new_conditiondiv.css">
+    <link rel="stylesheet" href="css/map_option.css">
+    <link rel="stylesheet" href="css/log.css">
+    <link rel="stylesheet" href="css/Information_panel.css">
+    <link rel="stylesheet" href="css/BarChart.css">
+    <link rel="stylesheet" href="css/linechart.css">
+    <link rel="stylesheet" href="css/Force.css">
+    <link rel="stylesheet" href="css/Map_Legend.css">
+
+</head>
+<body >
+
+<div  id="sceneviewfold">
+    <div  id="sceneview" style="height:100%;">
+        <!-- <div id="mapcontainer" style="height:100%;"></div> -->
+    </div>
+    <svg id="mapobjectsvg" style="pointer-events:none  ;position:absolute;top:0;left:0;width:100%;height:100%;" ></svg>
+    <svg id="mapoptionsvg" style="pointer-events:none  ;position:absolute;bottom:0;left:0;width:100%;height:100px;" ></svg>
+</div>
+
+
+<div id="queryview" >    
+    <div id="nodelist">
+        <svg id="queryviewsvg" ></svg>
+    </div>
+    <div id="leftmenu">
+        <div id="new_node_div"></div>
+        <div id="log"></div>
+        <div id="help"></div>
+        <div id="compare"></div>
+    </div>    
+    <div id="queryrecommand"></div>
+    <div id="reconodelist"></div>
+</div>
+
+<script src="js/d3/d3.min.js"></script>
+
+<!--map-->
+<script src="js/map/leaflet.js"></script>
+<link   href="js/map/Leaflet-MiniMap-master/src/Control.MiniMap.css"rel="stylesheet"  />
+<script src="js/map/Leaflet-MiniMap-master/src/Control.MiniMap.js" type="text/javascript"></script>
+<link   href='js/map/Leaflet.draw-master/dist/leaflet.draw.css' rel='stylesheet' />
+<script src='js/map/Leaflet.draw-master/dist/leaflet.draw.js'></script>
+<script src="js/map/leaflet-heat.js"></script>
+<script src="js/echarts/echarts.min.js"></script>
+
+<!--timepicker-->
+    <script type="text/javascript" src="js/timepicker/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/timepicker/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/timepicker/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript" src="js/timepicker/jQAllRangeSliders-min.js"></script>
+<!--main-->
+<script src="js/main/querymodule.js"></script>
+<script src="js/main/Chart/Heatmap.js"></script>
+<script src="js/main/Chart/Chart_Line.js"></script>
+<script src="js/main/Chart/Chart_Radio.js"></script>
+<script src="js/main/Chart/BarChart.js"></script>
+<script src="js/main/Chart/Force.js"></script>
+<script src="js/main/Nodeclass/Node_List.js"></script>
+<script src="js/main/Nodeclass/Node_class.js"></script>
+<script src="js/main/Nodeclass/Reco_List.js"></script>
+
+
+<!-- timepicker -->
+<script src="js/main/TP.js"></script>
+
+<script src="js/main/GEO_Map.js"></script>
+<script src="js/main/Map_Legend.js"></script>
+<script src="js/main/new_node.js"></script>
+<script src="js/main/Log.js"></script>
+<script src="js/main/Information_panel.js"></script>
+<script src="js/main/compare_panel.js"></script>
+
+<script src="js/main/Node_Result.js"></script>
+<script src="js/main/Node_Condition_Selection.js"></script>
+<script src="js/main/Node_Condition_ShowList.js"></script>
+<script src="js/main/Reco_Condition_ShowList.js"></script>
+<script src="js/main/Node_Condition.js"></script>
+<script src="js/main/Reco_Condition.js"></script>
+<script src="js/main/New_Condition.js"></script>
+<script src="js/main/queryinterface.js"></script>
+<script src="js/main/Map_Object.js"></script>
+<script src="js/main/Map_Object_List.js"></script>
+<script src="js/main/queryrecommand.js"></script>
+
+<script type="text/javascript" src="js/main/Blog/Objectlist_blog.js"></script>
+<script type="text/javascript" src="js/main/Blog/Paint_blog.js"></script>
+<script type="text/javascript" src="js/main/Blog/Query_blog.js"></script>
+<script type="text/javascript" src="js/main/Blog/Result_Node_Blog_Analysis.js"></script>
+<script type="text/javascript" src="js/main/Blog/Result_Node_Blog_list.js"></script>
+
+<script type="text/javascript" src="js/main/Car/Objectlist_car.js"></script>
+<script type="text/javascript" src="js/main/Car/Paint_car.js"></script>
+<script type="text/javascript" src="js/main/Car/Query_car.js"></script>
+<script type="text/javascript" src="js/main/Car/Result_Node_Car_Analysis.js"></script>
+<script type="text/javascript" src="js/main/Car/Result_Node_Car_list.js"></script>
+
+<script type="text/javascript" src="js/main/Estate/Objectlist_estate.js"></script>
+<script type="text/javascript" src="js/main/Estate/Paint_estate.js"></script>
+<script type="text/javascript" src="js/main/Estate/Query_estate.js"></script>
+<script type="text/javascript" src="js/main/Estate/Result_Node_Estate_list.js"></script>
+
+<script type="text/javascript" src="js/main/People/Objectlist_people.js"></script>
+<script type="text/javascript" src="js/main/People/Query_people.js"></script>
+<script type="text/javascript" src="js/main/People/Paint_people.js"></script>
+<script type="text/javascript" src="js/main/People/Result_Node_People_list.js"></script>
+
+<script type="text/javascript" src="js/main/POI/Objectlist_poi.js"></script>
+<script type="text/javascript" src="js/main/POI/Paint_poi.js"></script>
+<script type="text/javascript" src="js/main/POI/Query_poi.js"></script>
+<script type="text/javascript" src="js/main/POI/Result_Node_Poi_Analysis.js"></script>
+<script type="text/javascript" src="js/main/POI/Result_Node_Poi_list.js"></script>
+
+<script type="text/javascript" src="js/main/Socialnetwork/Query_Socialnetwork.js"></script>
+<script type="text/javascript" src="js/main/Socialnetwork/Objectlist_socialnetwork.js"></script>
+<script type="text/javascript" src="js/main/Socialnetwork/Paint_socailnetwork.js"></script>
+<script type="text/javascript" src="js/main/Socialnetwork/Result_Node_Socialnetwork_list.js"></script>
+<script type="text/javascript" src="js/main/Socialnetwork/Result_Node_snt_Analysis.js"></script>
+
+</body>
+</html>

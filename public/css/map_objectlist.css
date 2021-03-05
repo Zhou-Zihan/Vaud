@@ -1,0 +1,111 @@
+#map_objectlistdiv{
+    position:absolute;
+    display: inline-block;
+    right:0px;
+    top:0px;
+    width:245px;
+    height:100%;
+    background-color: rgba(255,255,255,0.5);
+    /*border-radius:5px 0px 0px 5px;*/
+    color: #444;
+    overflow-x:hidden;cursor:default;
+    resize:vertical;
+}
+
+#map_objectlistdiv div.map_objectlist_drag{
+    background-color: #e5e5e5;
+    /*border-radius: 5px 0px 0px 0px;*/
+    color: #000;
+    position:absolute;
+    width:245px;
+    cursor:default;
+    float: left;
+    -webkit-user-select:none;
+}
+#map_objectlistdiv div.map_objectlist_drag:hover{
+    background-color: rgba(170,170,170,0.6);
+}
+#map_objectlistdiv div.map_objectlist_obj{
+    position:relative;
+    background-color: rgba(255,255,255,0.5);
+    top:40px;
+    width:100%;
+    cursor:default;
+    float: left;
+    -webkit-transition-duration: 0.5s;
+}
+#map_objectlistdiv div.map_objectlist_obj:hover{
+    background-color: rgba(198,239,220,0.5);
+}
+#map_objectlistdiv div.listobjid{
+    position:relative;
+    width:165px;
+    height: 20px;
+    padding:3px 40px 0 40px;
+    line-height: 20px;
+    cursor:default;
+    font-size: 14px;
+    color: #444;
+    text-align: center;
+    overflow: hidden;
+}
+#map_objectlistdiv div.map_objectlist_obj div.attr{
+    position:relative;
+    width:178px;
+    padding:5px 5px 5px 35px;
+    cursor:default;
+    margin-bottom: 4px;
+    margin-top: 0px;
+}
+#map_objectlistdiv div.map_objectlist_obj div.attr div{
+    position:relative;
+    width:100%;
+    cursor:default;
+    font-size: 12px;
+    line-height: 16px;
+    color: #767676;
+    text-align: center;
+
+}
+
+#map_objectlistdiv div.map_objectlist_obj div.list_trash{
+    position:absolute;
+    height:100%;
+    left:222px;
+    width:16px;
+}
+
+.cBox{
+    display: none;
+}
+
+.cBox + label {
+    background-color: #fff;
+    border: 2px solid #15c19c;
+    padding: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.cBox:checked + label {
+    background-color: #15c19c;
+    padding: 6px;
+    display: inline-block;
+}
+
+.map_objectlist_bottom{
+    height: 40px;
+    position: absolute;
+    width:253px;
+    bottom: 0;
+    background-color: #e5e5e5;
+    overflow-x:hidden;
+}
+.map_objectlist_objtype{
+    height: 40px;
+    width: 40px;
+    float: left;
+    position: relative;
+    background-color: #f2f2f2;
+}
+

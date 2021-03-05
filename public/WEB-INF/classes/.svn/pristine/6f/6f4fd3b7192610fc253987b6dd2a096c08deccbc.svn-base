@@ -1,0 +1,8 @@
+package vaud.data.datastructure;
+
+import java.util.ArrayList;
+
+public class CellPeople {
+	public String ID;
+	public ArrayList<peoplecell> pInfo=new ArrayList<peoplecell>();;
+}

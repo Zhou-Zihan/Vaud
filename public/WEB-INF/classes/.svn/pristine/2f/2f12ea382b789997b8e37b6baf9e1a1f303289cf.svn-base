@@ -1,0 +1,26 @@
+package vaud.data;
+
+import java.io.IOException;
+
+import com.jfinal.plugin.IPlugin;
+
+public class CellTowerDataPlugin implements IPlugin {
+	
+	@Override
+	public boolean start() {
+		try {
+			CellTowerDataManager.init();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean stop() {
+		CellTowerDataManager.close();
+		return true;
+	}
+
+}

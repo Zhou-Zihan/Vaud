@@ -1,0 +1,154 @@
+package vaud.data.util;
+
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import vaud.data.datastructure.TexiIndex;
+import vaud.data.datastructure.TexiInfo;
+
+public class TexiCellV2 {
+
+//	public static void main(String args[]) throws IOException {
+//		TexiCellV2 a = new TexiCellV2("data//texidata//TexiCellIndex0");
+//
+//		System.out.println("wancheng");
+//		ArrayList<TexiInfo> c = a.query(28.01340, 120.64900, 28.01343, 120.64940, 130, 149);
+//
+//		System.out.println(c.size());
+//		for (TexiInfo ti : c) {
+//			System.out.println(ti.toString());
+//		}
+//	}
+
+	public int count;
+	public String date;
+	public float t1 = (float) ((28.168 - 27.825) / 300.0);
+	public float t2 = (float) ((120.975 - 120.40) / 300.0);
+	public ArrayList<TexiIndex> cell = new ArrayList<TexiIndex>();
+	public HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+
+	public TexiCellV2(String path) throws IOException {
+		DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
+		count = in.readInt();
+		date=path.substring(path.length()-2,path.length());
+		int readtmp, readtmp2;
+		for (int i = 0; i < count; i++) {
+			TexiIndex ctmp = new TexiIndex();
+			ctmp.lalo = in.readInt();
+			ctmp.indexpos = in.readLong();
+			ctmp.texiInfoNum = in.readInt();
+			// System.out.println(ctmp.lalo);
+			// paircount=in.readInt();
+			// for(int j=0;j<paircount;j++)
+			// {
+			// TexiInfo ttmp=new TexiInfo();
+			// namelength=in.readInt();
+			// for (int k=0;k<namelength;k++)
+			// ttmp.name=ttmp.name+(char)in.readByte();
+			// //System.out.println(ttmp.name);
+			// ttmp.speed=in.readInt();
+			// ttmp.direction=in.readInt();
+			// ttmp.isPassengerIn=in.readInt();
+			// ttmp.la=in.readFloat();
+			// ttmp.lo=in.readFloat();
+			// ttmp.time=in.readInt();
+			// ctmp.texiInfo.add(ttmp);
+			// }
+			readtmp = in.readInt();
+			while (readtmp != -1) {
+				readtmp2 = in.readInt();
+				// ctmp.hm.put(readtmp,readtmp2);
+				ctmp.time.add(readtmp);
+				ctmp.pos.add(readtmp2);
+				readtmp = in.readInt();
+			}
+
+			hm.put(ctmp.lalo, cell.size());
+			cell.add(ctmp);
+		}
+		in.close();
+	}
+
+	public ArrayList<TexiInfo> query(double d, double f, double g, double h, int starttime, int endtime)
+			throws IOException {
+		ArrayList<TexiInfo> result = new ArrayList<TexiInfo>();
+		TexiIndex c = new TexiIndex();
+
+		RandomAccessFile rf = new RandomAccessFile("data//texidata//texiout"+date, "rw");
+
+		int l1 = (int) ((d - 27.825) / t1);
+		int r1 = (int) Math.ceil((g - 27.825) / t1);
+		int l2 = (int) ((f - 120.40) / t2);
+		int r2 = (int) Math.ceil((h - 120.40) / t2);
+		int op, tmp, s = 0, e = 0;
+		boolean flag = false, eflag = false;
+		if (l1 < 0)
+			l1 = 0;
+		if (l2 < 0)
+			l2 = 0;
+		if (r1 > 299)
+			r1 = 299;
+		if (r2 > 299)
+			r2 = 299;
+		for (int i = l1; i <= r1; i++)
+			for (int j = l2; j < r2; j++) {
+				op = 300 * i + j;
+				if (hm.get(op) != null) {
+					c = cell.get(hm.get(op));
+					for (int k = 0; k < c.time.size(); k++) {
+						tmp = c.time.get(k);
+						if (tmp >= starttime && tmp <= endtime && !flag) {
+							s = c.pos.get(k);
+							flag = true;
+						}
+						if (flag && tmp > endtime) {
+							e = c.pos.get(k);
+							eflag = true;
+							break;
+						}
+					}
+					if (flag && !eflag)
+						e = c.texiInfoNum;
+					long pos = c.indexpos + s * 29;
+					rf.seek(pos);
+					// System.out.println(pos);
+					// System.out.println(s);
+					// System.out.println(e);
+					for (int k = s; k < e; k++) {
+						// if (c.texiInfo.get(k).la>=d&&c.texiInfo.get(k).la<=g
+						// &&c.texiInfo.get(k).lo>=f&&c.texiInfo.get(k).lo<=h)
+						// result.add(c.texiInfo.get(k));
+						// System.out.println(k);
+						TexiInfo ttmp = new TexiInfo();
+						// namelength=in.readInt();
+						for (int loop = 0; loop < 5; loop++) {
+							// System.out.println(loop);
+							ttmp.name = ttmp.name + (char) rf.readByte();
+
+						}
+						// System.out.println(ttmp.name);
+						ttmp.speed = rf.readInt();
+						ttmp.direction = rf.readInt();
+						ttmp.isPassengerIn = rf.readInt();
+						ttmp.latitude = rf.readFloat();
+						ttmp.longitude = rf.readFloat();
+						ttmp.time = rf.readInt();
+						ttmp.date="2014-01-"+(Integer.parseInt(date)+1);
+						result.add(ttmp);
+
+					}
+
+				}
+			}
+		rf.close();
+		return result;
+
+	}
+
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>card_s_when_disabled</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-1" sketch:type="MSArtboardGroup" transform="translate(-80.000000, -40.000000)" fill="#1FB293">
+            <path d="M99.75,70.5 C105.687061,70.5 110.5,65.6870611 110.5,59.75 C110.5,53.8129389 105.687061,49 99.75,49 C93.8129389,49 89,53.8129389 89,59.75 C89,65.6870611 93.8129389,70.5 99.75,70.5 L99.75,70.5 Z M99.75,69 C94.6413661,69 90.5,64.8586339 90.5,59.75 C90.5,54.6413661 94.6413661,50.5 99.75,50.5 C104.858634,50.5 109,54.6413661 109,59.75 C109,64.8586339 104.858634,69 99.75,69 L99.75,69 Z M98.7782064,59.7947051 C98.7782064,60.1726454 98.9912795,60.5182968 99.3289283,60.6880971 L103.340606,62.7055305 C103.834013,62.95366 104.435147,62.7548234 104.683276,62.2614166 C104.931406,61.7680099 104.732569,61.166876 104.239162,60.9187466 L100.778206,59.1849976 L100.778206,53.75 C100.778206,53.1977152 100.330491,52.75 99.7782064,52.75 C99.2259216,52.75 98.7782064,53.1977152 98.7782064,53.75 L98.7782064,59.7947051 Z" id="Shape-Copy-11" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

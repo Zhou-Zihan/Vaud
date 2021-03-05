@@ -1,0 +1,23 @@
+.Bar_axis path,
+.Bar_axis line {
+	fill: none;
+	stroke: gray;
+	shape-rendering: crispEdges;
+}
+.Bar_axis text {
+	font-size: 5px;
+	fill: #4F4F4F ;
+}
+
+.Bar_bar {
+	fill: #8EE5EE;
+}
+
+.Bar_bar:hover {
+	fill: #1E90FF;
+	opacity: 0.7;
+}
+
+.x.Bar_axis path {
+	display: none;
+}

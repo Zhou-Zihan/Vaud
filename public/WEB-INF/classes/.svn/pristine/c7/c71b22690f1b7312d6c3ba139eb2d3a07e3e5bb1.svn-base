@@ -1,0 +1,11 @@
+package vaud.data.datastructure;
+
+import java.util.ArrayList;
+
+public class TexiIndex {
+	public int lalo;
+	public long indexpos;
+	public int texiInfoNum;
+	public ArrayList<Integer> time=new ArrayList<Integer>();
+	public ArrayList<Integer> pos=new ArrayList<Integer>();
+}

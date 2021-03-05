@@ -1,0 +1,19 @@
+package vaud.data.datastructure;
+
+public class weather {
+	
+	public int highTemperature;
+	public int lowTemperature;
+	public String date;
+	public String describe;
+	
+	public weather(String date,int high,int low,String describe){
+		this.date=date;
+		this.highTemperature=high;
+		this.lowTemperature=low;
+		this.describe=describe;
+	}
+	public weather(){}
+	
+
+}

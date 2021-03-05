@@ -1,0 +1,21 @@
+.legend {
+	font-family: sans-serif;
+	fill: gray;
+}
+			
+
+.Radar_tooltip {
+	padding: 5px;
+	fill : rgba(255, 250, 205, 0.8);
+	radius: 5px;
+	shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+}
+
+.Radar_tooltext {
+	fill: #4F4F4F;
+	margin: 0;
+	font-family: sans-serif;
+	font-size: 10px;
+	line-height: 15px;
+}

@@ -1,0 +1,261 @@
+package vaud.controller;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+
+import vaud.data.CellTowerDataManager;
+import vaud.data.OtherDataManager;
+import vaud.data.datastructure.CellPeople;
+import vaud.data.datastructure.PhoneConnection;
+import vaud.data.datastructure.StationAndTime;
+import vaud.data.datastructure.Weibo;
+import vaud.data.datastructure.peoplecell;
+import vaud.data.datastructure.poicell;
+import vaud.data.datastructure.valuecell;
+import vaud.data.datastructure.weather;
+
+import com.alibaba.fastjson.JSON;
+import com.jfinal.core.Controller;
+
+/**
+ * @author suhang
+ * query people,weibo,poi,value(loushi)
+ *
+ */
+/**
+ * @author Administrator
+ *
+ */
+public class GetWhich extends Controller {
+	
+	public void index() {
+		
+	}
+	
+	/**
+	 * 通过多个范围获取人
+	 */
+	public void getWhichByMulti() {
+		
+		int num = Integer.valueOf(getPara("num"));
+		String[][] pos = new String[num][];
+		String[][] time = new String[num][];
+		
+		for(int i=0; i<num; i++) {
+			pos[i] = getParaValues("pos[" + i + "][]");
+			time[i] = getParaValues("time[" + i + "][]");
+		}
+		
+		String operate = getPara("operate");
+
+		ArrayList<CellPeople> ret = CellTowerDataManager.getData(pos, time, operate);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+//		
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	/**
+	 * 通过单个范围获取人 
+	 */
+	public void getWhichBySingle() {
+		
+		String[] postemp = getParaValues("pos[]");
+		String[] timetemp = getParaValues("time[]");
+		
+		String[][] pos = new String[1][];
+		pos[0] = postemp;
+		
+		String[][] time = new String[1][];
+		time[0] = timetemp;
+		
+		ArrayList<CellPeople> ret = CellTowerDataManager.getData(pos, time, "union");
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	/**
+	 * @throws IOException
+	 * 通过id查询人的轨迹
+	 */
+	public void getWhoTraj() throws IOException {
+		
+		String id = getPara("id");
+		long idNeed = Long.parseLong(id);
+		
+		ArrayList<StationAndTime> ret = CellTowerDataManager.getTraj(idNeed);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	public void getMultiWhoTraj() throws NumberFormatException, IOException{
+		
+		String[] id = getParaValues("id[]");
+		
+		ArrayList<CellPeople> ret=CellTowerDataManager.getMultiTraj(id); 
+		
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	/**
+	 * @throws IOException
+	 * 查找人的轨迹，限定轨迹点个数
+	 */
+	public void getWhoTrajLimit() throws IOException {
+		int limit = Integer.valueOf(getPara("limit"));
+
+		String id = getPara("id");
+		long idNeed = Long.parseLong(id);
+
+
+
+		ArrayList<StationAndTime> ret = CellTowerDataManager.getTrajLimit(idNeed, limit);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	/**
+	 * 通过范围查询微博
+	 * @throws ParseException 
+	 */
+	public void getWeibo() throws ParseException {
+		int num = Integer.valueOf(getPara("num"));
+		String[][] pos = new String[num][];
+		String[][] time = new String[num][];
+		for(int i=0; i<num; i++) {
+			pos[i] = getParaValues("pos[" + i + "][]");
+			time[i] = getParaValues("time[" + i + "][]");
+		}
+		
+		ArrayList<Weibo> ret = OtherDataManager.getWeiboData(pos, time);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	public void getWeiboByWord(){
+		String[] time = getParaValues("time[]");
+		String word=getPara("word");
+		ArrayList<Weibo> ret=OtherDataManager.getWeiboByWord(time, word);
+		
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	/**
+	 * 通过范围查询标志建筑
+	 */
+	public void getPoi() {
+		int num = Integer.valueOf(getPara("num"));
+		String[][] pos = new String[num][];
+		
+		for(int i=0; i<num; i++) {
+			pos[i] = getParaValues("pos[" + i + "][]");
+		}
+		
+		ArrayList<poicell> ret = OtherDataManager.getPoiData(pos);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	/**
+	 * 通过范围查找楼市
+	 */
+	public void getValue() {
+		int num = Integer.valueOf(getPara("num"));
+		String[][] pos = new String[num][];
+		
+		for(int i=0; i<num; i++) {
+			pos[i] = getParaValues("pos[" + i + "][]");
+		}
+		
+		ArrayList<valuecell> ret = OtherDataManager.getValueData(pos);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	public void getValueByMulti(){
+		int num = Integer.valueOf(getPara("num"));
+		String[][] pos = new String[num][];
+		
+		for(int i=0; i<num; i++) {
+			pos[i] = getParaValues("pos[" + i + "][]");
+		}
+		int low= Integer.parseInt(getPara("low"));
+		int high= Integer.parseInt(getPara("high"));
+		ArrayList<valuecell> ret = OtherDataManager.getValueDataByPrice(low,high);
+		ArrayList<valuecell> ret2 = OtherDataManager.getValueData(pos);
+		ret.retainAll(ret2);
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+
+	public void getValueByPrice() {
+		int low= Integer.parseInt(getPara("low"));
+		int high= Integer.parseInt(getPara("high"));
+		
+		ArrayList<valuecell> ret = OtherDataManager.getValueDataByPrice(low,high);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	public void getWeather(){
+		String date=getPara("date");
+		System.out.println(date);
+		weather ret = OtherDataManager.getWeatherData(date);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+		
+	}
+	
+	public void getPhoneConnection(){
+		String id=getPara("id");
+		ArrayList<PhoneConnection>ret=OtherDataManager.getPhoneConnectionData(id);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	public void getPhoneConnectionExpand(){
+		String id=getPara("id");
+		int expand=Integer.parseInt(getPara("expand"));
+		ArrayList<PhoneConnection>ret=OtherDataManager.getPhoneConnectionDataExpand(id, expand);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+}

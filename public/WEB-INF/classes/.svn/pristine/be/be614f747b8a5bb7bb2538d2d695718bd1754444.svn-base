@@ -1,0 +1,92 @@
+package vaud.data.util;
+
+
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+
+
+import vaud.data.datastructure.*;
+public class PersonCell {
+/**
+ * 通过基站号查人
+ */
+	public static ArrayList<String> paths = new ArrayList<String>();
+
+	public HashMap<Integer,Integer>[] hm=new HashMap[15]; 
+	public PersonCell() throws IOException{
+		DataInputStream in = new DataInputStream(new BufferedInputStream(
+				new FileInputStream("data//peoplepos")));
+		int nametmp;
+		int sizetmp;
+		int idtmp=0;
+		int postmp=0;
+		for(int i=0;i<15;i++){
+			hm[i]=new HashMap<Integer,Integer>();
+			nametmp=in.readInt();
+			paths.add("data//pdata//"+nametmp+".bin");
+			sizetmp=in.readInt();
+			for(int j=0;j<sizetmp;j++){
+				idtmp=in.readInt();
+				postmp=in.readInt();
+				hm[i].put(idtmp, postmp);
+			}
+		}
+		in.close();
+	}
+	public ArrayList<peoplecell> query(int cellid,int stime,int etime,
+			double longitude,double latitude) throws IOException{
+		
+		Cell ctmp=new Cell(cellid);
+		int findpos=0,usize=0,ttime;
+		long tuid;
+		for (int i=0;i<15;i++){
+			if(hm[i].containsKey(cellid)){
+				findpos=hm[i].get(cellid);
+				RandomAccessFile rf = new RandomAccessFile(paths.get(i), "r");
+				rf.seek(findpos);
+				rf.readInt();
+				usize=rf.readInt();
+				for(int j=0;j<usize;j++){
+					ttime=rf.readInt();
+					
+					tuid=rf.readLong();
+					UserAndTime utmp=new UserAndTime(tuid, ttime);
+					ctmp.userAndTime.add(utmp);
+				}					
+				rf.close();
+			}				
+		}
+		Collections.sort(ctmp.userAndTime);
+		for(int i=0;i<ctmp.userAndTime.size();i++)
+		{
+			if(ctmp.time.size()!=0)
+			{
+			if (ctmp.time.get(ctmp.time.size()-1)!=ctmp.userAndTime.get(i).time)
+			{
+				ctmp.time.add(ctmp.userAndTime.get(i).time);
+				ctmp.pos.add(i);
+			}
+			}
+			else {
+				ctmp.time.add(ctmp.userAndTime.get(i).time);
+				ctmp.pos.add(i);
+			}
+		}
+		CellStation c=new CellStation();
+		c.cellID=cellid;
+		c.pos=ctmp.pos;
+		c.time=ctmp.time;
+		for(UserAndTime u:ctmp.userAndTime){
+			c.uid.add(u.uid);
+		}
+		
+		return c.query(stime,etime,longitude,latitude);
+	}
+
+}

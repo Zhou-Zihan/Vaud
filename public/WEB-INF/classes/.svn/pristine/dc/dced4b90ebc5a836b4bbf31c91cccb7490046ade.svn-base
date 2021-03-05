@@ -1,0 +1,105 @@
+package vaud.data.util;
+
+
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import vaud.data.datastructure.DataFormat;
+import vaud.data.datastructure.StationAndTime;
+
+public class TrajV2 {
+	/**
+	 * 通过ID查询人的轨迹
+	 */
+
+	public int sizeall;
+	public long readPos(String path,long idNeed) throws IOException{
+		DataInputStream in= new DataInputStream(new FileInputStream(path));
+		sizeall=in.readInt();
+		long uid,pos;
+		long lastpos=0;
+		for(int i=0;i<sizeall;i++){
+			uid=in.readLong();
+			pos=in.readLong();
+			if (uid>idNeed){
+				in.close();
+				return lastpos;
+			}
+			lastpos=pos;
+			
+		}
+		in.close();
+		return lastpos;
+	}
+	
+	public ArrayList<StationAndTime> limitsAndP(long idneed,int times) throws IOException{
+		ArrayList<StationAndTime> tmp=this.sAndP(idneed);
+		ArrayList<StationAndTime> result=new ArrayList<StationAndTime>();
+		if (tmp.size()<times)
+			return tmp;
+		int t=tmp.size()/times;
+		for(int i=0;i<times;i++)
+			result.add(tmp.get(i*t));
+		
+		return result;
+	}
+	
+	public ArrayList<StationAndTime> sAndP(long idNeed) throws IOException
+	{
+		ArrayList<StationAndTime> tmp=new ArrayList<StationAndTime>();
+		StationAndTime a;
+		String send="746030110905917";
+		long end=Long.parseLong(send);
+		long pos=readPos("data//pos.bin",idNeed);	
+		RandomAccessFile rf = new RandomAccessFile("data//2014-01-14.trajprune", "rw");
+		rf.seek(pos);
+		for (int i=0;i<38500;i++){
+			long userid = rf.readLong();
+			int rec_size = rf.readInt();
+			byte[] b = new byte[rec_size * 12];
+			rf.read(b, 0, b.length);
+			if (userid==idNeed){
+				int cell,truetime;
+				long time;
+				for (int j = 0; j < rec_size; j++) {
+					time = byte2long(b, j * 12);
+					cell = byte2int(b, j * 12 + 8);
+					Calendar c = Calendar.getInstance();
+					c.setTimeInMillis(time);	
+					truetime=c.get(Calendar.HOUR_OF_DAY)*60+c.get(Calendar.MINUTE);
+					a=new StationAndTime(cell,truetime);
+					a.uid=idNeed;
+					tmp.add(a);
+				}
+				rf.close();
+				return tmp;
+			}
+			if (userid==end){
+				rf.close();
+				return tmp;
+			}
+		}
+		rf.close();
+		
+		
+		return tmp;
+	}
+
+public static int byte2int(byte[] b, int off) {
+	byte[] bb = new byte[4];
+	System.arraycopy(b, off, bb, 0, 4);
+	return DataFormat.bytes2int(bb);
+}
+
+public static long byte2long(byte[] b, int off) {
+	byte[] bb = new byte[8];
+	System.arraycopy(b, off, bb, 0, 8);
+	return DataFormat.bytes2long(bb);
+}
+	
+
+}

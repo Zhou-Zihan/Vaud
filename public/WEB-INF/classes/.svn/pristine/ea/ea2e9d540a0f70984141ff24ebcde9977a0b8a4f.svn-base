@@ -1,0 +1,62 @@
+package vaud.data.datastructure;
+
+import java.util.ArrayList;
+
+
+
+public class CellStation {
+	
+	public int cellID;
+	public int cellUserNum;
+	public ArrayList<Long> uid=new ArrayList<Long>();
+	public ArrayList<Integer> pos=new ArrayList<Integer>();
+	public ArrayList<Integer> time=new ArrayList<Integer>();
+	public CellStation(){
+		
+	}
+	public ArrayList<peoplecell> query(int start,int end,double longitude,double latitude){
+		ArrayList<peoplecell> re=new ArrayList<peoplecell>();
+		int i,s=0,e=0;
+		boolean flag=false,eflag=false;
+		int num=0;
+		int tmp=0;
+		int stime=0,etime=0;
+		for (i=0;i<pos.size();i++)
+		{
+			tmp=time.get(i);
+			//找到开始的
+			if (tmp>=start && tmp<=end && !flag){
+				s=pos.get(i);
+				stime=i;
+				flag=true;
+			}
+			//找到结束的
+			if (flag && tmp>end){
+				e=pos.get(i);
+				etime=i;
+				eflag=true;
+				break;
+			}			
+		}
+		if (flag && !eflag) {e=uid.size();etime=1445;}
+		if (!flag) return null;
+		int timenow=stime;
+		for(i=s;i<e;i++)
+		{
+			peoplecell ptmp=new peoplecell();
+			if (timenow+1<time.size()){
+				if (pos.get(timenow+1)==i)
+					timenow+=1;
+			}
+			
+			ptmp.id=uid.get(i).toString();
+			ptmp.time=time.get(timenow).toString()+pos.get(timenow).toString();
+			ptmp.latitude=latitude;
+			ptmp.longitude=longitude;
+			ptmp.cell=cellID+"";
+			re.add(ptmp);
+		}
+		return re;
+		
+	}
+}

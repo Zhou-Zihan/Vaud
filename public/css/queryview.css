@@ -1,0 +1,108 @@
+#queryviewsvg {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+#nodelist {
+	pointer-events: visiblePainted;
+	z-index: 0;
+}
+
+#leftmenu {
+	position: absolute;
+	display: inline-block;
+	left: 0px;
+	width: 40px;
+	height: 100%;
+	top: 40%;
+	font-weight: bolder;
+	z-index: 1000000;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+#queryrecommand {
+	position: absolute;
+	display: inline-block;
+	right: 0px;
+	width: 300px;
+	height: 100%;
+	top: 40%;
+	z-index: 1000000;
+	background-color: rgba(226, 222, 217, 0.7);
+}
+
+#new_node_div {
+	position: absolute;
+	display: inline-block;
+	left: 0px;
+	width: 40px;
+	height: 40px;
+	top: 20px;
+	background-color: rgb(27, 189, 156);
+}
+
+#leftmenu div.mouse_on_tag {
+	position: absolute;
+	display: inline-block;
+	left: 40px;
+	top: 0px;
+	width: 100px;
+	height: 40px;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	font-size: 14px;
+	line-height: 40px;
+	text-align: center;
+}
+#leftmenu svg.mouse_on_tag_xiaosanjiao {
+	position: absolute;
+	left: -6px;
+	top: 0px;
+	width: 6px;
+	height: 40px;
+	pointer-events: visiblePainted;
+}
+
+#log {
+	position: absolute;
+	display: inline-block;
+	left: 0px;
+	width: 40px;
+	height: 40px;
+	top: 80px;
+	background-color: rgb(27, 189, 156);
+}
+
+#help {
+	position: absolute;
+	display: inline-block;
+	left: 0px;
+	width: 40px;
+	height: 40px;
+	top: 140px;
+	background-color: rgb(27, 189, 156);
+}
+
+#compare {
+	position: absolute;
+	display: inline-block;
+	left: 0px;
+	width: 40px;
+	height: 40px;
+	top: 200px;
+	background-color: rgb(27, 189, 156);
+}
+
+#coverdiv {
+	z-index: 3;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+}

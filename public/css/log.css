@@ -1,0 +1,62 @@
+#querylog {
+    z-index: 1;
+    position:absolute;
+    background-color: rgba(255,255,255,0.8);
+    top:80px;
+    left:40px;
+    width :170px;
+    height:50%;
+    pointer-events:visiblePainted;
+    overflow:auto;
+    color:black; overflow-x: hidden;
+}
+
+
+#querylog div.logtip{
+    position:absolute;
+    font-size:13px;
+    width :170px;
+    height: 40px;
+    cursor:default;
+    background-color: #e5e5e5 ;
+    font-weight:bolder;
+    line-height: 40px;
+    padding: 0 0 0 10px;
+}
+#querylog div.logattr{
+    top:40px;
+    position:relative;
+    left:0px;
+    width :100%;
+    line-height: 14px;
+    cursor:pointer;
+    overflow-x: hidden;
+}
+#querylog div.logattr_undo{
+   color:lightgrey;
+}
+
+#querylog div.logtext{
+    padding:6px 5px 6px 25px;
+    position:relative;
+    font-size:12px;
+    font-weight: lighter;
+    cursor:pointer;
+}
+
+#querylog div.lognum{
+    position:absolute;
+    font-size: 12px;
+    width :25px;
+    cursor:pointer;
+    text-align: center;
+    top: 6px;
+}
+
+#querylog div.logattr:hover{
+    color: #15c19c;
+}
+
+#querylog div.logattr:active{
+    background-color: rgba(214,235,214,0.5);
+}

@@ -1,0 +1,280 @@
+package vaud.data;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.log4j.Logger;
+
+import vaud.data.datastructure.Cell;
+import vaud.data.datastructure.CellPeople;
+import vaud.data.datastructure.CellTexi;
+import vaud.data.datastructure.Station;
+import vaud.data.datastructure.Location;
+import vaud.data.datastructure.StationAndTime;
+import vaud.data.datastructure.TexiInfo;
+import vaud.data.datastructure.peoplecell;
+import vaud.data.util.PersonCell;
+import vaud.data.util.StationParse;
+import vaud.data.util.TrajV2;
+
+import com.jfinal.kit.PropKit;
+
+public class CellTowerDataManager {
+	protected static final Logger logger = Logger
+			.getLogger(CellTowerDataManager.class);
+	
+	public static ArrayList<Station> stationlist=new ArrayList<Station>();
+	
+	public static PersonCell personControl;
+	
+	public static TrajV2 traj;
+	
+	public static void init() throws IOException {
+		//Data read
+		String datapath = PropKit.use("resource.properties").get("celltower.resource.path");//read the path from resource.properties
+		
+			stationlist=StationParse.parse("data//station.txt");
+			personControl=new PersonCell();
+			traj=new TrajV2();
+		
+		logger.info("Data read finished");
+	}
+	
+	
+//	public static void main(String args[]) throws IOException{
+//		CellTowerDataManager a=new CellTowerDataManager();
+//		String[] postemp={"28.0", "120.755", "28.016", "120.771"};
+//		String[][] pos = new String[1][];
+//		pos[0] = postemp;
+//		//System.out.println(pos[0][0]);
+//		
+//		String[] timetemp={"2014-1-14 00:00", "2014-1-14 24:00"};
+//		
+//		String[][] time = new String[1][];
+//		time[0] = timetemp;
+//		ArrayList<CellPeople> ret=new ArrayList<CellPeople>();
+//		
+//			String datapath = PropKit.use("resource.properties").get("celltower.resource.path");//read the path from resource.properties
+//			
+//			a.stationlist=StationParse.parse("data//station.txt");
+////			for(Station s:a.stationlist){
+////				System.out.println(s.CELL);
+////			}
+//			a.personControl=new PersonCell();
+//			a.traj=new TrajV2();
+//			long startTime = System.currentTimeMillis();//获取当前时间
+//			ret=a.getData(pos, time, "union");	
+//			long endTime = System.currentTimeMillis();
+//			System.out.println("程序运行时间："+(endTime-startTime)+"ms");
+//
+//		
+//		System.out.println();
+//		System.out.println(ret.size());
+////		for (CellPeople p:ret){
+////			System.out.println(p.ID);
+////		}
+//		//System.out.println("end");
+//	}
+	
+	public static void close() {
+		
+	}
+
+	public static ArrayList<CellPeople> getData(String[][] pos, String[][] time, String operate) {
+		ArrayList<peoplecell> ret=new ArrayList<peoplecell>();
+		int num=pos.length;
+		float x1,x2,y1,y2;
+		int startTime,endTime;
+		for(int i=0;i<num;i++){
+			ArrayList<peoplecell> tmp=new ArrayList<peoplecell>(); 
+			x1=Float.parseFloat(pos[i][0]);
+			y1=Float.parseFloat(pos[i][1]);
+			x2=Float.parseFloat(pos[i][2]);
+			y2=Float.parseFloat(pos[i][3]);
+			startTime=Integer.parseInt(time[i][0].substring(10,12))*60+Integer.parseInt(time[i][0].substring(13,15));
+			endTime=Integer.parseInt(time[i][1].substring(10,12))*60+Integer.parseInt(time[i][1].substring(13,15));
+			
+			System.out.println(startTime);
+			System.out.println(endTime);
+			
+			Location[] a = new Location[2];
+			a[0]=new Location();
+			a[1]=new Location();
+			a[0].lon=x1;
+			a[0].lat=y1;
+			a[1].lon=x2;
+			a[1].lat=y2;
+			//tmp=singleQuery(a,startTime,endTime);
+			int count=0;
+			for (Station station:stationlist){
+				//System.out.println(station.CELL);
+				if (isinthearea(station, a)){
+					count=count+1;
+				ArrayList<peoplecell> ttmp = new ArrayList<peoplecell>();
+					try {
+						long sTime = System.currentTimeMillis();//获取当前时间
+						
+						
+					if ((ttmp=personControl.query(station.CELL, startTime, endTime
+							,station.longitude,station.latitude))!=null)
+						tmp.addAll(ttmp);
+					long eTime = System.currentTimeMillis();
+					System.out.println("程序运行时间："+(eTime-sTime)+"ms"+count);
+					} catch (IOException e) {
+					e.printStackTrace();
+					}
+								
+				}
+			}
+			System.out.println(count);
+			if (operate.equals("union")){
+				tmp.removeAll(ret);
+				ret.addAll(tmp);
+			}else if (operate.equals("intersection")){
+				ret.retainAll(tmp);
+			}else if (operate.equals("Complement")){
+				ret.removeAll(tmp);
+			}
+		}
+//		ArrayList<peoplecell> retnew=new ArrayList<peoplecell>();
+//		boolean flag=false;
+//		for(int i=0;i<ret.size();i++){
+//			for(int m=0;m<retnew.size();m++){
+//				if(retnew.get(m).id.equals(ret.get(i).id)){
+//					flag=true;
+//					break;
+//				}
+//			}
+//			if(!flag){
+//				retnew.add(ret.get(i));
+//			}else{
+//				flag=false;
+//			}
+//		}
+//		
+//		return retnew;
+		
+		ArrayList<CellPeople> result=new ArrayList<CellPeople>();
+		HashMap<String,Integer> hm=new HashMap<String,Integer>(); 
+		int count=0;
+		for (peoplecell p:ret){
+			if (!hm.containsKey(p.id)){
+				hm.put(p.id, count);
+				count++;
+				CellPeople tmp=new CellPeople();
+				tmp.ID=p.id;
+				tmp.pInfo.add(p);
+				result.add(tmp);
+			}else{
+				result.get(hm.get(p.id)).pInfo.add(p);
+			}
+		}
+		return result;
+		
+	}
+	
+	
+	public static ArrayList<StationAndTime> getTrajLimit(long id,int limit) throws IOException{
+		
+		
+		ArrayList<StationAndTime> ret=traj.limitsAndP(id, limit);
+		return ret;
+		
+	}
+	
+	public static ArrayList<CellPeople> getMultiTraj(String[] id) throws NumberFormatException, IOException{
+		ArrayList<CellPeople> ret= new ArrayList<CellPeople>();
+		System.out.println(id);
+		int num=id.length;
+		for(int i=0;i<num;i++){
+			ArrayList<StationAndTime> tmp=traj.sAndP(Long.parseLong(id[i]));
+			CellPeople cp=new CellPeople();
+			cp.ID=id[i];
+			for(StationAndTime sat:tmp){
+				peoplecell tmp2=new peoplecell();
+				tmp2.cell=""+sat.sid;
+				tmp2.id=""+sat.uid;
+				
+				for (Station station:stationlist){
+					if (station.CELL==sat.sid){
+						tmp2.latitude=station.longitude;
+						tmp2.longitude=station.latitude;	
+						break;
+					}
+				}
+				tmp2.time=""+sat.time;
+				cp.pInfo.add(tmp2);
+			}
+			ret.add(cp);
+		}
+		return ret;
+	}
+	
+	public static ArrayList<StationAndTime> getTraj(long id) throws IOException{
+		
+		ArrayList<StationAndTime> ret=traj.sAndP(id);
+		
+		
+		for(int i=0;i<ret.size();i++){
+			for (Station station:stationlist){
+				if (station.CELL==ret.get(i).sid){
+					ret.get(i).lat=station.longitude;
+					ret.get(i).lon=station.latitude;	
+				}
+			}
+		}
+		return ret;
+		
+	}
+	
+//	public  ArrayList<peoplecell> singleQuery(Location[] area, int start,int end) throws IOException{
+//		ArrayList<peoplecell> ret=new ArrayList<peoplecell>();
+//		for (Station station:stationlist){
+//			if (isinthearea(station, area)){
+//				
+//				
+//				System.out.println(station.CELL);
+//				System.out.println(start);
+//				System.out.println(end);
+//				
+//						ArrayList<peoplecell> tmp;
+//						a.query(65082,0,1440);
+////						if ((tmp=a.query(65082,0,1440))!=null);
+////						{
+////							 
+////							ret.addAll(tmp);}
+//				
+//				
+//			}
+//		}
+//		return ret;
+//	}
+	
+	
+	public static  boolean isinthearea(Station station, Location[] area) {
+		double x1 = area[0].getLon();
+		double y1 = area[0].getLat();
+		double x2 = area[1].getLon();
+		double y2 = area[1].getLat();
+		if (x1 > x2) {
+			double temp = x1;
+			x1 = x2;
+			x2 = temp;
+		}
+		if (y1 > y2) {
+			double temp = y1;
+			y1 = y2;
+			y2 = temp;
+		}
+		if (isin(station.longitude, x1, x2) && isin(station.latitude, y1, y2))
+			return true;
+		return false;
+	}
+	public static  boolean isin(double x, double x1, double x2) {
+		if (x > x1 && x < x2)
+			return true;
+		else
+			return false;
+	}
+}

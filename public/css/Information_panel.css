@@ -1,0 +1,43 @@
+
+
+
+#Information_panel  .Information_td{
+	padding:10px 8px 11px 40px;
+}
+
+#Information_panel  .dataset_img{
+	padding:5px 0px 5px 0;
+	width:30px;
+	height:30px;
+	position: relative;
+	left:5px;
+}
+#Information_panel  .information_panel_attribute{
+	padding:10px 10px 10px 10px;
+}
+
+#Information_panel td{
+	padding:0;
+	border-bottom: 1px solid rgb(229,229,229);
+	border-right:1px solid rgb(229,229,229);
+}
+#Information_panel td:hover{
+	cursor:pointer;
+	background-color: rgb(229,229,229)
+}
+
+#Information_panel th{
+	border-bottom: 1px solid rgb(229,229,229);
+	border-right:1px solid rgb(229,229,229);
+}
+
+
+
+#information_panel_statistic{
+	position:absolute;
+	top:0;
+	left:1225px;
+	width:300px;
+	height:398px;
+	background-color: white;
+}

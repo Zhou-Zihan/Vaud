@@ -1,0 +1,16 @@
+package vaud.data.datastructure;
+
+import java.sql.Timestamp;
+
+public class PhoneConnection {
+	
+	public String otherid;
+	public String startTime;
+	public int hour;
+	public int dura;
+	public double this_longitude;
+	public double this_latitude;
+	public double other_longitude;
+	public double other_latitude;
+	public int iscaller;
+}

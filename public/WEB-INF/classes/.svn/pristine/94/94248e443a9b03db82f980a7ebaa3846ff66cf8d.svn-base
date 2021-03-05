@@ -1,0 +1,12 @@
+package vaud.data.datastructure;
+
+public class Location {
+	public double lat,lon;
+	public double getLon(){
+		return lon;
+	}
+	
+	public double getLat(){
+		return lat;
+	}
+}

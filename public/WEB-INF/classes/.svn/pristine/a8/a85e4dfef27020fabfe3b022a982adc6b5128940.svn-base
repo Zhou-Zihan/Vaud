@@ -1,0 +1,20 @@
+package vaud.data.datastructure;
+
+
+
+import java.util.ArrayList;
+
+public class Cell {
+	//public long time;
+	public int cellnum;
+	//public double longitude, latitude;
+	public ArrayList<UserAndTime> userAndTime=new ArrayList<UserAndTime>();
+	public ArrayList<Integer> pos=new ArrayList<Integer>();
+	public ArrayList<Integer> time=new ArrayList<Integer>();
+	public Cell(int cellnum) {
+		this.cellnum = cellnum;
+	}
+	
+	
+	
+}

@@ -1,0 +1,371 @@
+package vaud.data;
+
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+import vaud.data.datastructure.PhoneConnection;
+import vaud.data.datastructure.Weibo;
+import vaud.data.datastructure.poicell;
+import vaud.data.datastructure.valuecell;
+import vaud.data.datastructure.weather;
+import vaud.data.util.WeiboParse;
+
+import com.mysql.jdbc.PreparedStatement;
+
+/**
+ * @author suhang
+ * @description operations about weibo, poi, value(楼市) data
+ *
+ */
+public class OtherDataManager {
+	protected static final Logger logger = Logger
+			.getLogger(OtherDataManager.class);
+	
+	public static ArrayList<Weibo> weibo=new ArrayList<Weibo>(); 
+	public static ArrayList<poicell> poi=new ArrayList<poicell>();
+	public static ArrayList<valuecell> value=new ArrayList<valuecell>(); 
+	public static ArrayList<weather> weatherlist=new ArrayList<weather>();
+	
+	public static void init() {
+		//Data read
+		
+		
+		//weibo data init
+		
+		//更换微博数据源，先注释掉原来的代码
+		try {
+//			CsvReader r = new CsvReader("data//event.csv", ',',Charset.forName("GBK"));
+//			r.readHeaders();
+//			while (r.readRecord()) {
+//				Weibo wtmp=new Weibo();
+//				wtmp.date=r.get("date");
+//				wtmp.time=Integer.parseInt(r.get("time"));
+//				wtmp.Ccontent=r.get("Ccontent");
+//				wtmp.Tcontent=r.get("Tcontent");
+//				wtmp.name=r.get("name");
+//				wtmp.lon=Double.parseDouble(r.get("lon"));
+//				wtmp.lat=Double.parseDouble(r.get("lat"));
+//				weibo.add(wtmp);
+//				//System.out.println(wtmp.toString());
+//			}
+//			r.close();
+		
+		weibo=WeiboParse.weiboInit();
+		
+		//poi data init
+		
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("data//poi.txt"),"utf-8"));
+			String putin;
+			String[] split;
+			while ((putin = in.readLine()) != null) {
+				split = putin.split("\t");
+				poicell temp = new poicell(split[0], split[1], split[2],
+						Double.parseDouble(split[3]),
+						Double.parseDouble(split[4]), split[5], split[6]);
+				poi.add(temp);
+				//System.out.println(temp.toString());
+				}
+			
+
+			in.close();
+		
+		//value data init
+		
+			in = new BufferedReader(new InputStreamReader(new FileInputStream("data//value.txt"),"unicode"));
+			while ((putin = in.readLine()) != null) {
+				split = putin.split(" ");
+				valuecell temp = new valuecell(split[0], split[1], split[2],
+						split[3], Double.parseDouble(split[4]),
+						Double.parseDouble(split[5]),
+						Double.parseDouble(split[6]),
+						Integer.parseInt(split[7]));
+				value.add(temp);
+			}
+			in.close();
+			
+		//weather data init
+			
+			in = new BufferedReader(new InputStreamReader(new FileInputStream("data//weather.txt"),"unicode"));
+			
+			while ((putin = in.readLine()) != null) {
+				split = putin.split(",");
+				weather temp = new weather(split[0], Integer.parseInt(split[1])
+						, Integer.parseInt(split[2]),
+						split[3]);
+				weatherlist.add(temp);
+			}
+			in.close();
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		logger.info("other Data read finished");
+	}
+	
+	public static void close() {
+		
+	}
+
+	public static ArrayList<Weibo> getWeiboData(String[][] pos, String[][] time) throws ParseException  {
+		ArrayList<Weibo> ret=new ArrayList<Weibo>();
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd HH:mm");
+		
+		int posnum=pos.length;
+		float x1,x2,y1,y2;
+		for(int i=0;i<posnum;i++){
+			x1=Float.parseFloat(pos[i][0]);
+			y1=Float.parseFloat(pos[i][1]);
+			x2=Float.parseFloat(pos[i][2]);
+			y2=Float.parseFloat(pos[i][3]);
+			Date sdate=sdf.parse(time[i][0]);
+			Date edate=sdf.parse(time[i][1]);
+			
+			//startTime=Integer.parseInt(time[i][0].substring(10,12))*60+Integer.parseInt(time[i][0].substring(13,15));
+			//endTime=Integer.parseInt(time[i][1].substring(10,12))*60+Integer.parseInt(time[i][1].substring(13,15));
+
+			for(Weibo wei:weibo){
+				if (wei.lon>y1&&wei.lon<y2&&wei.lat>x1&&wei.lat<x2&&
+						wei.tdate.after(sdate)&&wei.tdate.before(edate)){										
+					ret.add(wei);
+				}
+			}
+			
+		}
+		return ret;
+	}
+	
+	public static ArrayList<Weibo> getWeiboByWord(String[] time,String word){
+		ArrayList<Weibo> ret=new ArrayList<Weibo>();
+		
+		String date=time[0].substring(0,10);
+		for (Weibo wei:weibo){
+			if (wei.date.equals(date)&&wei.Ccontent.contains(word)){
+				ret.add(wei);
+			}
+		}
+		return ret;
+	}
+	
+	public static ArrayList<poicell> getPoiData(String[][] pos){
+		
+		
+		ArrayList<poicell> ret=new ArrayList<poicell>();
+		int posnum=pos.length;
+		float x1,x2,y1,y2;
+		java.sql.Connection conn=null;
+		
+		String url="jdbc:mysql://10.76.0.193/mobiledata?"+
+				"user=root&password=1234567890";
+		
+			
+		try {
+					Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+		}
+		try {
+				conn=DriverManager.getConnection(url);
+			} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+		}
+				
+		for(int i=0;i<posnum;i++){
+			x1=Float.parseFloat(pos[i][0]);
+			y1=Float.parseFloat(pos[i][1]);
+			x2=Float.parseFloat(pos[i][2]);
+			y2=Float.parseFloat(pos[i][3]);
+			
+			java.sql.PreparedStatement pst=null;
+			
+			try {
+				pst = (PreparedStatement)conn.prepareStatement
+							("select * from poi where (latitude between "+x1+" and "+x2+") and (longitude between "+y1+" and "+y2+") limit 100");
+					
+				
+		        ResultSet rs = pst.executeQuery();
+		        System.out.println("wancheng");
+		        System.out.println("============================");
+		        while (rs.next()) {
+		            poicell tmp=new poicell();
+		            tmp.area=rs.getString(2);
+		            tmp.type=rs.getString(3);
+		            tmp.longitude=rs.getDouble(4);
+		            tmp.latitude=rs.getDouble(5);
+		            tmp.detail=rs.getString(7);
+		            tmp.phone=rs.getString(8);
+		        	
+		        	ret.add(tmp);
+		         }
+		            pst.close();
+		            
+		        
+		            
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
+			
+			
+		}
+		
+		
+	
+	    try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	        
+			
+		return ret;
+		
+		
+		
+	}
+	
+	
+	public static weather getWeatherData(String date){
+		weather ret= new weather();
+		for (weather w:weatherlist){
+			if (w.date.equals(date)){
+				ret=w;
+				break;
+			}
+		}
+		return ret;
+	}
+	
+	public static ArrayList<valuecell> getValueData(String[][] pos){
+		ArrayList<valuecell> ret=new ArrayList<valuecell>();
+		int num=pos.length;
+		float x1,x2,y1,y2;
+		for(int i=0;i<num;i++){
+			x1=Float.parseFloat(pos[i][0]);
+			y1=Float.parseFloat(pos[i][1]);
+			x2=Float.parseFloat(pos[i][2]);
+			y2=Float.parseFloat(pos[i][3]);
+		
+			for(valuecell wei:value){
+				
+				if (wei.longitude>y1&&wei.longitude<y2&&wei.latitude>x1&&wei.latitude<x2){										
+					ret.add(wei);
+				}
+				
+			}
+			
+		}
+		return ret;
+	}
+	
+	public static ArrayList<valuecell> getValueDataByPrice(int low,int high){
+		ArrayList<valuecell> ret=new ArrayList<valuecell>();
+		
+		
+			for(valuecell wei:value){
+				
+				if (wei.Price>=low&&wei.Price<=high){										
+					ret.add(wei);
+				}
+				
+			}
+		return ret;
+	}
+	
+	public static ArrayList<PhoneConnection> getPhoneConnectionData(String id){
+		ArrayList<PhoneConnection> ret=new ArrayList<PhoneConnection>();
+		
+		java.sql.Connection conn=null;
+		
+		String url="jdbc:mysql://10.76.0.169/geoscanner?"+
+				"user=vag&password=123456";
+		
+			
+			try {
+					Class.forName("com.mysql.jdbc.Driver");
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+			}
+				
+				
+			try {
+					conn=DriverManager.getConnection(url);
+			} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+			}
+				
+			java.sql.PreparedStatement pst=null;
+		
+			try {
+				pst = (PreparedStatement)conn.prepareStatement
+						("select * from mobile_rtt where b_id='"+id+"' or a_id='"+id+"'");
+				
+			
+	        ResultSet rs = pst.executeQuery();
+	        while (rs.next()) {
+	            PhoneConnection tmp=new PhoneConnection();
+	            String a=rs.getString(2);
+	            String b=rs.getString(3);
+	            tmp.thisid=id;
+	            if (id.equals(a)) {
+	            	tmp.iscaller=1;
+	            	
+	            	if (b!=null) tmp.otherid=b;
+	            	
+	            	tmp.this_latitude=rs.getDouble(12);
+	            	tmp.this_longitude=rs.getDouble(11);
+	            	tmp.other_longitude=rs.getDouble(13);
+		        	tmp.other_latitude=rs.getDouble(14);
+	            } else
+	            {
+	            	tmp.iscaller=0;
+	            	if (a!=null) tmp.otherid=a;
+	            	tmp.other_latitude=rs.getDouble(12);
+	            	tmp.other_longitude=rs.getDouble(11);
+	            	tmp.this_longitude=rs.getDouble(13);
+		        	tmp.this_latitude=rs.getDouble(14);
+	            }
+	        	tmp.startTime=rs.getTimestamp(4).toString();
+	        	tmp.hour=rs.getInt(5);
+	        	tmp.dura=rs.getInt(6);
+	        	ret.add(tmp);
+	         }
+	            System.out.println("");
+	            pst.close();
+	            conn.close();
+	        
+	            
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		return ret;
+	}
+	
+	
+}

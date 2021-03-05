@@ -1,0 +1,112 @@
+package vaud.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import vaud.data.CarDataManager;
+import vaud.data.datastructure.CellTexi;
+
+import com.alibaba.fastjson.JSON;
+import com.jfinal.core.Controller;
+
+public class GetCar extends Controller {
+	/**
+	 * 所有与出租车有关的操作
+	 */
+	
+	public void index() {
+		
+	}
+	
+	public void getCarByMulti() {
+		/**
+		 * 通过经纬度查询出租车
+		 */
+		int num = Integer.valueOf(getPara("num"));
+		String[][] pos = new String[num][];
+		String[][] time = new String[num][];
+		
+		for(int i=0; i<num; i++) {
+			pos[i] = getParaValues("pos[" + i + "][]");
+			time[i] = getParaValues("time[" + i + "][]");
+		}
+		
+		String operate = getPara("operate");
+		int order= Integer.parseInt(getPara("order"));
+		ArrayList<CellTexi> ret = null;
+		try {
+			ret = CarDataManager.getData(pos, time, operate);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+		
+	}
+	
+	public void getMultiCarTraj(){
+		String[] id=getParaValues("name[]");
+		String date = getPara("date");
+		ArrayList<CellTexi> ret=new ArrayList<CellTexi>();
+		for (int i=0;i<id.length;i++){
+			CellTexi tmp=CarDataManager.getDataByID(id[i], date);
+			tmp.ID=id[i];
+			ret.add(tmp);
+		}
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	public void getCarTraj() {
+		/**
+		 * 通过出租车号查询轨迹
+		 */
+
+		
+		String name = getPara("name");
+		String date = getPara("date");
+
+		CellTexi ret = null;
+		ret = CarDataManager.getDataByID(name,date);
+//		Undoredo.historylist.add(JSON.toJSONString(ret));
+//		Undoredo.position+=1;
+		int order= Integer.parseInt(getPara("order"));
+		Undoredo.saveOrder(order, JSON.toJSONString(ret));
+		renderJson(JSON.toJSONString(ret));
+	}
+	
+	public void getCarBySpeed(){
+		
+		String[] postemp = getParaValues("pos[]");
+		String[] timetemp = getParaValues("time[]");
+		
+		String[][] pos = new String[1][];
+		pos[0] = postemp;
+		
+		String[][] time = new String[1][];
+		time[0] = timetemp;
+		String[] speedtmp = getParaValues("speed[]");
+		int[] speed=new int[2];
+		speed[0]=Integer.parseInt(speedtmp[0]);
+		speed[1]=Integer.parseInt(speedtmp[1]);
+		
+		
+		try {
+			//ArrayList<CellTexi> ret=CarDataManager.getDataBySpeed(time, speed);
+			ArrayList<CellTexi> ret=CarDataManager.getDataBySpeed(pos,time, "union",speed);
+			int order= Integer.parseInt(getPara("order"));
+			Undoredo.saveOrder(order, JSON.toJSONString(ret));
+			renderJson(JSON.toJSONString(ret));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
+}

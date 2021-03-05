@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="267px" height="158px" viewBox="0 0 267 158" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>气泡</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="VAUD-Copy" sketch:type="MSArtboardGroup" transform="translate(-775.000000, -36.000000)" fill="#F2F2F2">
+            <g id="气泡" sketch:type="MSLayerGroup" transform="translate(776.000000, 37.000000)">
+                <path d="M14.820372,156 L259.326527,156 C262.082743,156 264.320372,153.765083 264.320372,151.008174 L264.320372,4.99182601 C264.320372,2.23523641 262.084551,0 259.326527,0 L19.3142164,0 C16.5580003,0 14.3203716,2.23491663 14.3203716,4.99182601 L14.3203722,141.979088 L-1.77635684e-15,156 L14.820372,156 Z" id="Rectangle-804-Copy-2" stroke="#15C19C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.8" sketch:type="MSShapeGroup"></path>
+                <rect id="Rectangle-510" fill-opacity="0.7" sketch:type="MSShapeGroup" x="214" y="29" width="49" height="49"></rect>
+                <rect id="Rectangle-804-Copy" fill-opacity="0.7" sketch:type="MSShapeGroup" x="15" y="29" width="200" height="25"></rect>
+                <rect id="Rectangle-804-Copy-3" fill-opacity="0.7" sketch:type="MSShapeGroup" x="15" y="53" width="200" height="25"></rect>
+                <rect id="Rectangle-804" fill-opacity="0.7" sketch:type="MSShapeGroup" x="15" y="1" width="248" height="28" rx="5"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

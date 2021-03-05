@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>card_b_what_direction</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="what" sketch:type="MSArtboardGroup" transform="translate(-40.000000, 0.000000)" stroke="#15C19C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M61.3739792,29.9998815 C61.3257978,29.9998815 61.2771618,29.9960179 61.2282985,29.9882907 C60.8221651,29.9226093 60.5108037,29.5921572 60.4689858,29.1826147 L59.6703553,21.3292629 L51.8170034,20.5306323 C51.4076882,20.4890417 51.0774634,20.1776803 51.011782,19.7713196 C50.9458734,19.3651862 51.1613264,18.9654164 51.5367782,18.7967813 L68.7184712,11.0797921 C69.0627868,10.9252478 69.4666475,10.9993381 69.733691,11.2661544 C70.0007345,11.5329706 70.0748249,11.9372859 69.9200533,12.2813742 L62.2030641,29.4630672 C62.0546561,29.7932921 61.7271585,29.9998815 61.3739792,29.9998815 L61.3739792,29.9998815 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

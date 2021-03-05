@@ -1,0 +1,15 @@
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+.node:hover {
+	stroke: #ff6e1c;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+.link:hover {
+	stroke: #ff6e1c;
+}

@@ -1,0 +1,32 @@
+package vaud.test;
+
+import java.util.List;
+
+import vaud.conf.Configration;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+public class AjaxTestController extends Controller {
+	public void index() {
+		render("indextest.html");
+	}
+	
+	public void post() {
+		System.out.println(getPara("input1"));
+		//this.renderJson("{\"ob1\":\"sds\", \"ob2\":15}");
+		
+		//List<Record> users = Db.use("mysql").find("select * from user");
+		
+		
+		this.renderJson("{\"sds\":[1, 2, 3, 4]}");
+//		System.out.println(Configration.dbset.val1);
+//		System.out.println(Configration.dbset.val2);
+		
+		//System.out.println(TEDataManager.sql("lll"));
+		
+	}
+	
+	
+}

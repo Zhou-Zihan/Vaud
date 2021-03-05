@@ -1,0 +1,29 @@
+.map_legend{
+    color: #222;
+    font-size: 12px;
+    font-weight: lighter;
+    height: 25px;
+    line-height: 20px;
+    position: absolute;
+    left: 15px;
+}
+
+.map_legend_trajicon{
+    height: 5px;
+    width: 23.5px;
+    border-radius: 20px;
+    border: 2px solid #ffffff;
+    position: relative;
+    top: 8px;
+    margin-right: 5.5px;
+    float: left;
+}
+
+.map_legend_pointicon{
+    height: 25px;
+    width: 32px;
+    position: relative;
+    left: 3px;
+    float: left;
+    bottom:0px;
+}

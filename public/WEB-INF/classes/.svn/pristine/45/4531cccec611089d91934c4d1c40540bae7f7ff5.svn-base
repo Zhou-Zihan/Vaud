@@ -1,0 +1,24 @@
+package vaud.data.datastructure;
+
+import java.util.Date;
+
+/**
+ * @author suhang
+ * @description store weibo data
+ *
+ */
+public class Weibo {
+	public String date;
+	public int time;
+	public String name;
+	public String Ccontent;//chinese content
+	public String Tcontent;//translated content
+	public String PositionName;
+	public double lon;
+	public double lat;
+	public Date tdate;
+	public String toString(){
+		return ""+date+" "+time+" "+name+" "+Ccontent+" "+Tcontent+" "+lon+" "+lat;
+	}
+
+}

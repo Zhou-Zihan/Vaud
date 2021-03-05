@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>direction2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-8" sketch:type="MSArtboardGroup" transform="translate(-45.000000, -128.000000)" fill="#FFFFFF">
+            <g id="direction2" sketch:type="MSLayerGroup" transform="translate(45.000000, 128.000000)">
+                <path d="M15.087093,9.64201481 L11.6331405,6.20153916 C11.3633953,5.93282028 10.9259884,5.93282028 10.6562188,6.20153916 L7.20229064,9.64201481 C6.93256979,9.91073369 6.93256979,10.3464127 7.20229064,10.6151316 C7.47206024,10.8838748 7.90946715,10.8838748 8.17921238,10.6151316 L10.4539038,8.34927549 L10.4539038,16.3214391 C10.4539038,16.7014809 10.7631762,17.0095488 11.144704,17.0095488 C11.5261831,17.0095488 11.8354799,16.7015052 11.8354799,16.3214391 L11.8355043,8.34927549 L14.11022,10.6151073 C14.2450804,10.7494668 14.4218807,10.8166586 14.5986565,10.8166586 C14.7754324,10.8166586 14.9522326,10.749491 15.0871174,10.6151316 C15.3568382,10.3463884 15.3568382,9.91075796 15.087093,9.64201481 L15.087093,9.64201481 Z" id="Shape-Copy-5" sketch:type="MSShapeGroup" transform="translate(11.144702, 11.504774) rotate(45.000000) translate(-11.144702, -11.504774) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

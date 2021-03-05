@@ -1,0 +1,34 @@
+package vaud.data.datastructure;
+
+import java.util.ArrayList;
+
+
+public class poicell {
+	public String id = "";
+	public String area;
+	public String type;
+	
+	public double longitude = -1000;
+	public double latitude = -1000;
+	
+	public String detail;
+	public String phone;
+	
+	public ArrayList<String> carid = new ArrayList<String>();
+	public ArrayList<Integer> cellUserNum = new ArrayList<Integer>();
+	public ArrayList<Integer> eventid=new ArrayList<Integer>();
+	public poicell(String id,String area, String type,double  d,double e,String detail,String phone) {
+		this.id = id;		
+		this.area = area;		
+		this.type = type;		
+		this.longitude=d;
+		this.latitude = e;
+		this.detail = detail;		
+		this.phone = phone;		
+	}
+	public poicell(){}
+	
+	public String toString() {
+		return id + ", " + area+", " + type+","+detail+" ,"+phone;
+	}
+}

@@ -1,0 +1,43 @@
+.Line_axis path,
+.Line_axis line {
+	fill: none;
+	stroke: gray;
+	shape-rendering: crispEdges;
+}
+.Line_axis text {
+	font-size: 5px;
+	fill: #4F4F4F ;
+}
+
+.Line_line {
+	fill: none;
+	stroke-width: 2.5px;
+}
+
+circle{
+	cursor: pointer;
+}
+
+circle:hover{
+	fill: #EEB4B4;
+	stroke: #EEB4B4;
+}
+
+.Line_tooltip {
+	position: absolute;
+	width: 150px;
+	height: auto;
+	padding: 5px;
+	background-color: rgba(255, 250, 205, 0.8);
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+	pointer-events: none;
+}
+
+.Line_tooltip p {
+	color: #4F4F4F;
+	margin: 0;
+	font-family: sans-serif;
+	font-size: 10px;
+	line-height: 15px;
+}

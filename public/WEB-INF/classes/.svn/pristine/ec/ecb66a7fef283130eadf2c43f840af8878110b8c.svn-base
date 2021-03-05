@@ -1,0 +1,146 @@
+package  vaud.data.util;
+
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import vaud.data.datastructure.*;
+
+public class TexiTraj {
+	
+	public String name;
+	public String date;
+	public String path = "data//TRK20140114";
+	static SimpleDateFormat o_time = new SimpleDateFormat("HHmmss");
+	ArrayList<String> paths = new ArrayList<String>();
+
+public static void main(String args[]) throws IOException{
+	TexiTraj x=new TexiTraj("T0230","2014-01-13");
+	ArrayList<TexiInfo> a=x.query();
+	for (TexiInfo ti:a){
+		if(ti.time<200)
+			System.out.println(ti.toString());
+	}
+}
+
+//构造函数，参数name为出租车id，参数date为日期
+
+	public TexiTraj(String name,String date){
+		this.name=name;
+		this.date=date;
+		File file=new File("data//201401TRK");
+		File[] files=file.listFiles();
+		for (File fl:files){
+			String tmp=fl.toString();
+			if (tmp.substring(tmp.length()-2,tmp.length()).equals(date.substring(date.length()-2,date.length()))){
+				this.path=tmp;
+				break;
+			}
+		}
+	}
+	
+//获取所有路径
+	public void GetAllPath(String path) {
+		File file = new File(path);
+		File[] files = file.listFiles();
+		for(File fl : files){
+			if(fl.isDirectory())
+			{
+				GetAllPath(fl.toString());
+			} else {
+				paths.add(fl.getPath());
+			}
+		}
+		
+	}
+	
+	public ArrayList<TexiInfo> query() throws IOException {
+		GetAllPath(path);
+		ArrayList<TexiInfo> tmp=new ArrayList<TexiInfo>();
+		for(String onepath : paths){
+			
+			if (onepath.substring(onepath.length()-9, onepath.length()-4).equals(name)){
+				//System.out.println(onepath.substring(onepath.length()-9, onepath.length()-4));
+				DataInputStream in = new DataInputStream(new BufferedInputStream(
+						new FileInputStream(onepath)));
+				
+				byte[] b = new byte[39];
+				while(in.read(b) >= 0) {//read 39 bytes one time
+					float lo = byte2float(b, 0);//longitude
+					float la = byte2float(b, 4);//latitude
+					long time = byte2long(b, 8);//time
+					int on_time = Integer.parseInt(o_time.format(time).toString());
+					on_time=on_time/100;
+					int isPassengerIn = b[16];
+					int speed = b[18];
+					int direction = b[20];
+					TexiInfo infotmp=new TexiInfo(name
+							,speed,direction,isPassengerIn,on_time,la,lo);
+					infotmp.date=date;
+					tmp.add(infotmp);
+				}
+				in.close();
+			}
+		}
+		return tmp;
+	}
+	
+//通过速度查找出租车
+	public ArrayList<CellTexi> queryBySpeed(int[] speedlimit,long stime,long etime) throws IOException  {
+		GetAllPath(path);
+		ArrayList<CellTexi> tmp=new ArrayList<CellTexi>();
+		for(String onepath : paths){
+			int flag=0;
+			CellTexi ctmp=new CellTexi();
+//				System.out.println(onepath.substring(onepath.length()-9, onepath.length()-4));
+				DataInputStream in = new DataInputStream(new BufferedInputStream(
+						new FileInputStream(onepath)));
+				
+				byte[] b = new byte[39];
+				while(in.read(b) >= 0) {//read 39 bytes one time
+					float lo = byte2float(b, 0);//longitude
+					float la = byte2float(b, 4);//latitude
+					long time = byte2long(b, 8);//time
+					
+					int on_time = Integer.parseInt(o_time.format(time).toString());
+					on_time=on_time/100;
+					int isPassengerIn = b[16];
+					int speed = b[18];
+					int direction = b[20];
+					
+					if (speed<speedlimit[0]||speed>speedlimit[1]) continue;
+					if (time<stime||time>etime) continue;
+					
+					TexiInfo infotmp=new TexiInfo(onepath.substring(onepath.length()-9, onepath.length()-4)
+							,speed,direction,isPassengerIn,on_time,la,lo);
+					infotmp.date=date;
+					ctmp.texiInfo.add(infotmp);
+					flag=1;
+				}
+				in.close();
+				if (flag==1)
+					tmp.add(ctmp);
+		}
+		return tmp;
+	}
+	
+	
+	public static float byte2float(byte[] b, int off) {
+		byte[] bb = new byte[4];
+		System.arraycopy(b, off, bb, 0, 4);
+		int temp = DataFormat.bytes2int(bb);
+		return Float.intBitsToFloat(Integer.reverseBytes(temp));
+	}
+	
+	public static long byte2long(byte[] b, int off) {
+		byte[] bb = new byte[8];
+		System.arraycopy(b, off, bb, 0, 8);
+		return DataFormat.bytes2long(bb);
+	}
+
+}
+

@@ -1,0 +1,456 @@
+/************************* Public css Class ******************************/
+/************************* Map Pop  ******************************/
+
+.mappoppoi{
+    width:266px;
+    height: 138px;
+    /*pointer-events:visiblePainted;*/
+    position: absolute;
+    background-image: url("../image/map_pop_poi&network.svg");
+    background-repeat: no-repeat;
+    padding-left: 18px;
+    overflow: hidden;
+}
+
+.mappopsnt{
+    width:266px;
+    height: 138px;
+    /*pointer-events:visiblePainted;*/
+    position: absolute;
+    background-image: url("../image/map_pop_poi&network.svg");
+    background-repeat: no-repeat;
+    padding-left: 18px;
+    overflow: hidden;
+}
+
+.mappopestate{
+    width:266px;
+    height: 138px;
+    /*pointer-events:visiblePainted;*/
+    position: absolute;
+    background-image: url("../image/map_pop_poi&network.svg");
+    background-repeat: no-repeat;
+    padding-left: 18px;
+    overflow: hidden;
+}
+
+.mappoptitle{
+    height: 28px;
+    line-height: 28px;
+    padding-left: 30px;
+    font-size: 13px;
+    color: #444;
+    font-weight: bolder;
+    overflow: hidden;
+
+}
+.mappopicon{
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 0;
+}
+
+.mappopdelete{
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    top: 6px;
+    right: 28px;
+    cursor: pointer;
+
+}
+
+.mappopjiejing{
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 28px;
+    right: 16px;
+    cursor: pointer;
+
+}
+.mappopattr{
+    width: 195px;
+    height: 25px;
+    line-height: 25px;
+    top: 0;
+    left: 5px;
+    padding-left: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    cursor: default;
+    color: #444;
+    overflow: hidden;
+}
+
+.mappopattrdrag{
+    color: #15c19c;
+    cursor: pointer;
+}
+
+.mappopattrdrag_select{
+    background-color: #c6efdc;
+}
+
+/*******************************************************/
+
+
+
+
+/****************
+*   highlight
+*****************/
+#sceneviewfold .highlight_delete{
+
+}
+
+
+/****************
+*   car
+*****************/
+#sceneviewfold polyline.cartraj {
+    pointer-events: visiblepainted;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #c6efdc;
+}
+
+#sceneviewfold polyline.cartrajismove{
+    stroke-width:3;
+    stroke-opacity: 1;
+}
+#sceneviewfold polyline.cartrajisnotmove{
+    stroke-opacity: 1;
+}
+#sceneviewfold polyline.cartrajismovebg{
+    stroke-width:15;
+    stroke: rgba(0,0,0,0.04);
+}
+#sceneviewfold polyline.cartrajpassagein{
+    /*stroke: rgb(255,110,28);*/
+    stroke: #15c19c;
+}
+
+#sceneviewfold div.highlightcar {
+
+    position:absolute;
+    background-color: rgba(242,242,242,0.5);
+    color: #000000;
+    width :252px;
+    height:320px;
+    pointer-events:visiblePainted;
+    top: 0px;
+    right: 247px;
+    /*border-radius:8px;*/
+    border:2px solid #15c19c;
+    /*border-bottom:2px solid #15c19c;
+    border-left:2px solid #15c19c;*/
+
+}
+.highlightcartitle{
+    width: 222px;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 30px;
+    background-color: rgba(242,242,242,0.8);
+    font-size: 14px;
+    color: #000;
+    cursor: default;
+}
+
+#sceneviewfold div.highlightcarattr{
+    /*padding:2px 5px 2px 5px;*/
+    background-color: rgba(242,242,242,0.8);
+    width: 208px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    top: 28px;
+    position:absolute;
+    color:#15c19c;
+    font-size:12px;
+    font-weight: lighter;
+    cursor:pointer;
+}
+
+#sceneviewfold div.highlightcarattr:hover{
+    /*border:2px solid rgb(27,189,156);*/
+    background-color: #c6efdc;
+    font-weight: bolder;
+}
+
+#sceneviewfold div.highlightcar_tip{
+    top: 35px;
+    width: 100%;
+    height:35px;
+    margin: 0px auto;
+    position:relative;
+    color:#000000;
+}
+#sceneviewfold div.highlightcar_tip div.highlightcar_tipattr {
+    position:relative;
+    width:82px;
+    height:35px;
+    border-right: 1px solid #cccccc;
+    background-color: rgba(242,242,242,0.8);
+    float: left;
+    display: block;
+    cursor:pointer;
+    text-align: center;
+    overflow:hidden;
+    font-weight:normal;
+    color:#4c4c4c;
+    font-size:12px;
+    line-height: 35px;
+    /*padding:4px 0 6px 0 ;*/
+    /*margin:2px 0 2px 0 ;*/
+    /*border-top-left-radius: 8px;*/
+    /*border-top-right-radius: 8px;*/
+    /*background-color: rgb(189,239,220);*/
+}
+#sceneviewfold div.highlightcar_tip div.highlightcar_tipattr_select {
+    background-color: #15c19c;
+    color:#fff;
+    font-weight:bolder;
+}
+#sceneviewfold div.highlightcar_tip div.highlightcar_tipattr:hover{
+    background-color:#c6efdc;
+    color:#000;
+}
+
+
+/****************
+*   people
+*****************/
+#sceneviewfold polyline.peopletraj{
+    pointer-events:visiblepainted;
+    fill:none;
+    stroke-width:1;
+    stroke:rgb(242,110,28);
+    /*stroke:darkslategray;*/
+}
+#sceneviewfold polyline.peopletrajismove{
+    stroke-width:3
+}
+
+#sceneviewfold polyline.peopletrajismovebg{
+    stroke-width:15;
+    stroke: rgba(0,0,0,0.04);
+}
+
+
+#sceneviewfold div.highlightpeople {
+
+    position:absolute;
+    background-color: rgba(242,242,242,0.5);
+    color: #000000;
+    width :190px;
+    height:63px;
+    pointer-events:visiblePainted;
+    top: 42px;
+    right: 247px;
+    border:2px solid #15c19c;
+}
+.highlightpeopletitle{
+    width: 160px;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 30px;
+    background-color: rgba(242,242,242,0.8);
+    font-size: 14px;
+    color: #000;
+    cursor: default;
+}
+
+#sceneviewfold div.highlightpeopleattr{
+    /*padding:2px 5px 2px 5px;*/
+    background-color: rgba(242,242,242,0.8);
+    width: 190px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    top: 28px;
+    position:absolute;
+    color:#15c19c;
+    font-size:12px;
+    font-weight: lighter;
+    cursor:pointer;
+}
+
+#sceneviewfold div.highlightpeopleattr:hover{
+    /*border:2px solid rgb(27,189,156);*/
+    background-color: #c6efdc;
+    font-weight: bolder;
+}
+
+
+
+/*****************
+ *   blog
+ ****************/
+
+#sceneviewfold div.highlightblog {
+
+    color: #444;
+    width :265px;
+    height:160px;
+    background-image: url("../image/map_pop_blog.svg");
+    position:absolute;
+    background-repeat: no-repeat;
+    pointer-events:visiblePainted;
+    padding-left: 18px;
+    overflow: hidden;
+}
+#sceneviewfold div.highlightblogtip{
+    height:28px;
+    line-height: 28px;
+    position:relative;
+    width :218px;
+    font-size:13px;
+    font-weight:bolder ;
+    color: #444;
+    cursor:default;
+    padding-left: 30px;
+}
+#sceneviewfold div.highlightblogattr{
+    width: 195px;
+    height: 25px;
+    line-height: 25px;
+    font-size:12px;
+    color: #15c19c;
+    font-weight:normal;
+    /*color:white;*/
+    cursor:pointer;
+    top: 0px;
+    left: 5px;
+    padding-left: 5px;
+}
+#sceneviewfold div.highlightblogattr:hover{
+    background-color:#c6efdc;
+    font-weight: bolder;
+}
+
+
+#sceneviewfold div.highlightblogtext{
+    border-top:1px solid #cccccc;
+    /*color:white;*/
+    -webkit-user-select:text;
+    position:relative;
+    bottom:0;
+    font-size:12px;
+    width :235px;
+    height:64px;
+    line-height: 17px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    overflow: auto;
+}
+
+/*#sceneviewfold div.highlightblogstreetview{*/
+    /*position: absolute;*/
+    /*top: 30px;*/
+    /*right: 0px;*/
+
+/*}*/
+/****************
+*  estate
+*****************/
+#sceneviewfold div.highlightestate {
+
+    position:absolute;
+    background-color: rgba(242,242,242,0.5);
+    color: #000000;
+    width :200px;
+    height:140;
+    pointer-events:visiblePainted;
+    top: 42px;
+    right: 247px;
+    /*border-radius:8px;*/
+    border:2px solid #15c19c;
+}
+#sceneviewfold div.highlightestatetip{
+    height:28px;
+    line-height: 28px;
+    position:relative;
+    width :200px;
+    font-size:13px;
+    font-weight:bolder ;
+    color: #000000;
+    cursor:default;
+    padding-left: 30px;
+}
+
+#sceneviewfold div.highlightestateattr{
+    width: 145px;
+    height: 25px;
+    line-height: 25px;
+    font-size:12px;
+    color: #15c19c;
+    font-weight:lighter;
+    /*color:white;*/
+    cursor:pointer;
+    top: 0px;
+    left: 5px;
+    padding-left: 5px;
+}
+
+#sceneviewfold div.highlightestateattr:hover{
+     background-color:#c6efdc;
+    font-weight: bolder;
+}
+
+#sceneviewfold div.highlightestatetext {
+    position:relative;
+    padding:2px 25px 2px 10px;
+    font-size:13px;
+    color:black;
+    cursor:default;
+    font-weight: normal;
+}
+
+/****************
+*  poi
+*****************/
+#sceneviewfold div.highlightpoi {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding:5px 5px 5px 5px;
+    position:absolute;
+    background-color: rgba(0,0,0,0.5);
+    width :140px;
+    pointer-events:visiblePainted;
+    color:white;
+}
+#sceneviewfold div.highlightpoiattr{
+    position:relative;
+    padding:2px 25px 2px 10px;
+    font-size:13px;
+    cursor:pointer;
+    color:white;
+}
+#sceneviewfold div.highlightpoiattr:hover{
+    background-color: lightgrey;
+    color:#4e4e4e;
+}
+
+
+
+#sceneviewfold div.highlight_social_networklist {
+
+    position:absolute;
+    background-color: rgba(242,242,242,0.5);
+    color: #000000;
+    width :252px;
+    height:320px;
+    pointer-events:visiblePainted;
+    top: 0px;
+    right: 247px;
+    border:2px solid #15c19c;
+
+}

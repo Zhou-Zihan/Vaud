@@ -1,0 +1,41 @@
+package vaud.data.util;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import vaud.data.datastructure.Station;
+
+public class StationParse {
+public static void main(String args[]) throws IOException{
+	ArrayList<Station> a=StationParse.parse("data//station.txt");
+	for (Station t:a){
+		System.out.println(t.toString());
+	}
+}
+	public static ArrayList<Station> parse(String path) throws IOException{
+		ArrayList<Station> ret=new ArrayList<Station>();
+		
+		File file = new File(path);
+	    BufferedReader in = null;
+	    in = new BufferedReader(new FileReader(file));
+	    String stmp;
+	    while ((stmp=in.readLine()) != null) {
+	    	Station tmp = new Station();
+		String[] sstmp=stmp.split(" ");
+		
+		tmp.CELL=Integer.parseInt(sstmp[0]);
+		tmp.latitude=Double.parseDouble(sstmp[1]);
+		tmp.longitude=Double.parseDouble(sstmp[2]);
+
+		ret.add(tmp);
+	    }
+		in.close();
+		
+		return ret;
+		
+	}
+
+}

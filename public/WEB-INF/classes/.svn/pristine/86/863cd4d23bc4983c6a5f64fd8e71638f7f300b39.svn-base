@@ -1,0 +1,21 @@
+package vaud.data.datastructure;
+
+public class peoplecell {
+	
+	public String id = "";
+	public String cell = "";
+	public String time = "";
+	public double longitude = -1000;
+	public double latitude = -1000;
+	
+	public peoplecell(String id, String cell,String time) {
+
+		this.id = id;		this.cell=cell;
+		this.time = time;
+	}
+	public peoplecell(){}
+	
+	public String toString() {
+		return id + ", " + cell+", " + time;
+	}
+}

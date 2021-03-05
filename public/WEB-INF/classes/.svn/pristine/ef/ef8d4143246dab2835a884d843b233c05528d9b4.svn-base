@@ -1,0 +1,33 @@
+package vaud.util;
+
+import org.apache.log4j.Logger;
+
+public class Timer {
+    long startTime;
+    long stopTime;
+    
+    protected final Logger logger = Logger.getLogger(Timer.class);
+
+    public Timer() {
+        startTime = -1;
+        stopTime = -1;
+    }
+    
+    public void start() {
+        startTime = System.nanoTime();
+    }
+    
+    public long stop() {
+        stopTime = System.nanoTime();
+        logger.info("cost: " + elapsedSeconds() + " seconds");
+        return stopTime - startTime;
+    }
+
+    public boolean ranFor(double seconds) {
+        return (System.nanoTime() - startTime) / 1e9 >= seconds;
+    }
+
+    public double elapsedSeconds() {
+        return (stopTime - startTime) / 1e9;
+    }
+}

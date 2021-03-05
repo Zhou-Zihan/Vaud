@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="54px" viewBox="0 0 100 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>chart_linechart_pop</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-9" sketch:type="MSArtboardGroup" transform="translate(-16.000000, -3.000000)" stroke="#FF6E1C" fill-opacity="0.7" fill="#FFFFFF">
+            <path d="M16,5.99880447 C16,4.3426105 17.3380125,3 18.9928014,3 L113.007199,3 C114.660077,3 116,4.35189035 116,5.99880447 L116,45.1725979 C116,46.8287919 114.655398,48.1714024 112.996461,48.1714024 L74.0421691,48.1714024 C73.4906588,48.1714024 72.7760561,48.5241246 72.4430405,48.9632095 L66.6005309,56.6666268 C66.2688669,57.1039297 65.735801,57.1057116 65.3948471,56.6505169 L59.6489007,48.9793193 C59.314684,48.5331191 58.5894705,48.1714024 58.0431203,48.1714024 L18.9925785,48.1714024 C17.339823,48.1714024 16,46.8195121 16,45.1725979 L16,5.99880447 Z" id="chart_linechart_pop" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,37 @@
+package vaud.data.datastructure;
+
+import java.util.ArrayList;
+
+public class valuecell {
+	public String id = "";
+	public String areaname = "";
+	public String type = "";
+	public String detailname="";
+	public int time;
+	public String date="2014-01-14";
+	public double longitude = -1000;
+	public double latitude = -1000;
+	public double mianji;
+	public int  Price;
+	
+	
+	public ArrayList<String> carid = new ArrayList<String>();
+	public ArrayList<Integer> cellUserNum = new ArrayList<Integer>();
+	public ArrayList<Integer> eventid=new ArrayList<Integer>();
+	public valuecell(String id,String areaname,String type ,String  detailname,double latitude,double longitude,double mianji,int junjia) {
+		
+		this.id = id;		
+		this.areaname=areaname;
+		this.type = type;
+		this.detailname = detailname;
+		this.latitude = latitude;		
+		this.longitude=longitude;
+		this.mianji = mianji;
+		this.Price = junjia;
+	}
+	public valuecell(){}
+	
+	public String toString() {
+		return areaname + ", " + detailname+"\n" +"Price:"+Price+" per square meter";
+	}
+}

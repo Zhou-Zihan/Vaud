@@ -1,0 +1,19 @@
+.ZoomOut {
+	fill:  #C1CDCD;
+	opacity: 0.4;
+	cursor: pointer;
+}
+.ZoomOutText {
+	pointer-events: none;
+	fill : #363636;
+  }
+.ZoomOverlay {
+	pointer-events: all;
+	fill:none;
+}
+.ZoomBand {
+	fill : #C1CDCD;
+	opacity: 0.3;
+	stroke-width: 1px;
+	stroke: gray;
+}

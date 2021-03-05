@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="188px" height="92px" viewBox="0 0 188 92" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>card_s_bg_2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-11" sketch:type="MSArtboardGroup" transform="translate(-52.000000, -201.000000)">
+            <path d="M233,229 L233,287.000732 C233,289.761751 230.756717,292 227.997903,292 L58.0020972,292 C55.2395152,292 53,289.752814 53,287.000732 L53,229.977578 L53,229.977578 C53.164681,229.992419 53.3314552,230 53.5,230 C56.5375661,230 59,227.537566 59,224.5 C59,221.462434 56.5375661,219 53.5,219 C53.3314552,219 53.164681,219.007581 53,219.022422 L53,206.999268 C53,204.238249 55.2432833,202 58.0020972,202 L227.997903,202 C230.760485,202 233,204.247186 233,206.999268 L233,220 C230.514719,220 228.5,222.014719 228.5,224.5 C228.5,226.985281 230.514719,229 233,229 Z" id="Rectangle-812" stroke="#15C19C" fill="#F2F2F2" sketch:type="MSShapeGroup"></path>
+            <path d="M93,246.3 L193,246.3" id="Line" stroke="#D3D3D3" stroke-width="0.6" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <circle id="Oval-320" stroke="#858585" stroke-width="2" sketch:type="MSShapeGroup" cx="233.5" cy="224.5" r="5.5"></circle>
+        </g>
+    </g>
+</svg>

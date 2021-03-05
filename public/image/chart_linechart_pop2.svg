@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="101px" height="46.243px"
+	 viewBox="-0.5 8.25 101 46.243" enable-background="new -0.5 8.25 101 46.243" xml:space="preserve">
+<title>chart_linechart_pop</title>
+<desc>Created with Sketch.</desc>
+<g id="Page-1" sketch:type="MSPage">
+	<g id="Artboard-9" transform="translate(-16.000000, -3.000000)" sketch:type="MSArtboardGroup">
+		<path id="chart_linechart_pop" sketch:type="MSShapeGroup" fill="#FFFFFF" fill-opacity="0.7" stroke="#FF6E1C" d="M16,14.263
+			c0-1.388,1.338-2.513,2.993-2.513h94.015c1.652,0,2.992,1.133,2.992,2.513v32.826c0,1.387-1.345,2.513-3.004,2.513H74.042
+			c-0.552,0-1.267,0.295-1.599,0.663l-5.843,6.454c-0.332,0.367-0.865,0.368-1.206-0.013l-5.746-6.428
+			c-0.334-0.374-1.06-0.677-1.606-0.677h-39.05c-1.653,0-2.993-1.134-2.993-2.513V14.263z"/>
+	</g>
+</g>
+</svg>

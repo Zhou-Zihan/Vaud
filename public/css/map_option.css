@@ -1,0 +1,13 @@
+/*box-shadow: 0 1px 5px rgba(0,0,0,0.65);*/
+#mapoptionsvg rect.timelineattr{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    height:35px;
+    width:10px;
+    pointer-events:visiblepainted;
+    fill:rgba(0,0,0,0.3);
+    color:white;
+}
+
+

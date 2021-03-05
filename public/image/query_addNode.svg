@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>query_addNode</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-8" sketch:type="MSArtboardGroup" transform="translate(-255.000000, -270.000000)" fill="#FFFFFF">
+            <path d="M276.571429,288.428571 L276.571429,280.571429 C276.571429,279.707167 275.864359,279 275,279 C274.135641,279 273.428571,279.707167 273.428571,280.571429 L273.428571,288.428571 L265.571429,288.428571 C264.707069,288.428571 264,289.135739 264,290 C264,290.864261 264.707069,291.571429 265.571429,291.571429 L273.428571,291.571429 L273.428571,299.428571 C273.428571,300.292833 274.135641,301 275,301 C275.864359,301 276.571429,300.292833 276.571429,299.428571 L276.571429,291.571429 L284.428571,291.571429 C285.292931,291.571429 286,290.864261 286,290 C286,289.135739 285.292931,288.428571 284.428571,288.428571 L276.571429,288.428571 Z" id="Shape-Copy-13" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

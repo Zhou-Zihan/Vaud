@@ -1,0 +1,9 @@
+package vaud.test;
+//
+import com.jfinal.core.Controller;
+
+public class indexcontroller extends Controller {
+	public void index() {
+		render("index.html");
+	}
+}

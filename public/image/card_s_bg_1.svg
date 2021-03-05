@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="186px" height="90px" viewBox="0 0 186 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>card_s_bg_1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-11" sketch:type="MSArtboardGroup" transform="translate(-53.000000, -63.000000)">
+            <path d="M233,90.9886709 L233,148.000732 C233,150.761751 230.756717,153 227.997903,153 L58.0020972,153 C55.2395152,153 53,150.752814 53,148.000732 L53,90.9972226 L53,90.9972226 C53.058597,90.9990696 53.1174251,91 53.1764706,91 C56.2140367,91 58.6764706,88.5375661 58.6764706,85.5 C58.6764706,82.4624339 56.2140367,80 53.1764706,80 C53.1174251,80 53.058597,80.0009304 53,80.0027774 L53,67.9992682 C53,65.2382486 55.2432833,63 58.0020972,63 L227.997903,63 C230.760485,63 233,65.2471855 233,67.9992682 L233,80.0113291 C232.88234,80.0038147 232.763674,80 232.644118,80 C229.606552,80 227.144118,82.4624339 227.144118,85.5 C227.144118,88.5375661 229.606552,91 232.644118,91 C232.763674,91 232.88234,90.9961853 233,90.9886709 Z" id="Rectangle-812" fill="#15C19C" sketch:type="MSShapeGroup"></path>
+            <circle id="Oval-320" stroke="#858585" stroke-width="2" sketch:type="MSShapeGroup" cx="232.5" cy="85.5" r="5.5"></circle>
+            <path d="M93,107.3 L193,107.3" id="Line" stroke="#0DA383" stroke-width="0.6" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+package vaud.data.datastructure;
+
+
+public class StationAndTime {
+	public long uid;
+	public  double lat;
+	public  double lon;
+	public int sid;
+	public int time;
+	public StationAndTime(int sid,int time){
+		this.sid=sid;
+		this.time=time;
+	}
+}

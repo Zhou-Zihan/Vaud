@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+
+    <title>ajaxtest</title>
+    
+    <script src="js/timepicker/jquery-1.7.1.min.js"></script>
+	<script src = "js/main/querymodule.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+
+      <div class="form-signin" method="POST" action="/login">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="_submit" onclick="submitfn()">test</button>
+		 <button class="btn btn-lg btn-primary btn-block" type="submit" id="_undo" onclick="undo()">undo</button>
+		 <button class="btn btn-lg btn-primary btn-block" type="submit" id="_redo" onclick="redo()">redo</button>
+      </div>
+
+    </div> <!-- /container -->
+
+	<script type="text/javascript">
+		function undo() {
+		qm.getByOrder(2,
+				function(data){
+                	console.log(data);
+                }
+				);
+		}
+		function redo() {
+		
+			qm.redo(
+				function(data){
+                	console.log(data);
+                }
+				);
+		}
+		
+		function submitfn() {
+			
+			// qm.getWhichByMulti(
+			//   [[28.0454, 120.657, 28.0456, 120.66]],
+   //            [['2014-1-14 00:00', '2014-1-14 24:00']],
+   //            1,
+			//   'union', 
+			// 	function(data) {
+			// 		console.log(data);
+			// 	}
+			// );
+
+			// qm.getMultiWhoTraj(
+			//   ['460025577422131','460008603658912'], 2,
+
+			// 	function(data) {
+			// 		console.log(data);
+			// 	}
+			// );
+
+			// qm.getWhoTraj(
+			//   '460025577422131', 2,
+
+			// 	function(data) {
+			// 		console.log(data);
+			// 	}
+			// );
+
+			// qm.getWeiboByWord(
+			// 	['2014-01-14 00:00', '2014-01-14 24:00'],'车',1,
+
+			// 	function(data) {
+			// 		console.log(data);
+			// 	}
+			// );
+
+			// qm.getWhoTrajLimit(
+			//   '460025577422131',
+			//   300, 
+			// 	function(data) {
+			// 		console.log(data);
+			// 	}
+			// );
+			// qm.getWeibo(
+			// 	[[27.0, 119.649, 29.01343, 121.00]],
+   //              [['2014-01-14 00:00', '2014-01-14 24:00']],
+   //              1,
+   //              function(data){
+   //              	console.log(data);
+   //              }
+			// 	);
+
+			// qm.getPoi(
+			// 	[[28.0, 119.649, 29.01343, 121.00]],
+                
+   //              1,2,
+   //              function(data){
+   //              	console.log(data);
+   //              }
+			// 	);
+//			qm.getValue(
+//				[[27.0, 119.649, 29.01343, 121.00]],
+//
+//                1,
+//                function(data){
+//                	console.log(data);
+//                }
+//				);
+
+			// qm.getValueByMulti(
+			// 	12000,15000,
+			// 	[[28.0, 119.649, 29.01343, 121.00]],1,
+   //             1,
+   //             function(data){
+   //             	console.log(data);
+   //             }
+			// 	);
+
+			// qm.getValueByPrice(
+			// 	12000,15000,
+
+   //             1,
+   //             function(data){
+   //             	console.log(data);
+   //             }
+			// 	);
+			
+			// qm.getCarByMulti(
+			// 	[[28.01340, 120.649, 28.01343, 120.6494]], 
+			// 	[['2014-1-13 12:00', '2014-1-13 19:00']], 
+			// 	1, 
+			// 	 // [[27.0, 119.649, 29.01343, 121.00]],
+   //   //            [['2014-1-14 00:00', '2014-1-14 24:00']],
+   //   //            1,
+
+			// 	'union', 1,
+			// 	function(data) {
+			// 		// console.log(data[0].ID);
+			// 		// console.log(data[0].texiInfo[0]);
+			// 		// for(var i=0;i<data[0].texiInfo.length;i++){
+			// 		// 	console.log(data[0].texiInfo[i]);
+			// 		// }
+			// 		console.log(data);
+			// 	}
+			// );
+			
+			 // qm.getWhichBySingle(
+			 // 	[120.32, 143.2, 143.43, 143.5],
+			 // 	['2014-1-14 23:00', '2014-1-14 23:05'],
+			 // 	function(data) {
+			 // 		console.log(data);
+			 // 	}
+			 // );
+
+
+			// qm.getPhoneConnection(
+			// 		'460008603658912',1,
+			// 		function(data){
+			// 			console.log(data);
+			// 		}
+			// 	);
+
+			// qm.getCarTraj(
+			// 	'T1085', '2014-01-13',1,
+			// 	function(data) {
+			// 		console.log(data);
+			// 	}
+			// );
+
+		// qm.getMultiCarTraj(
+		// 		['T5038','08317'], '2014-01-13',1,
+		// 		function(data) {
+		// 			console.log(data);
+		// 		}
+		// 	);
+
+	qm.getCarBySpeed(
+		[28.01340, 120.649, 28.01343, 120.6494],
+		['2014-01-13 12:00','2014-01-13 19:00'],['1','21'],1,
+		function(data) {
+			 		console.log(data);
+			 	}
+		);
+
+	
+		}
+
+	</script>
+
+    </body>
+</html>
