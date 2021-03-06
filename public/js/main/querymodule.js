@@ -50,7 +50,7 @@ QueryDb.getWeibo = function(condition,func){
 		QueryDb.query({
 				data:condition,
 				url:"http://10.76.0.196:7001/weibo",
-				type:"GET"
+				type:"POST"
 			}
 			// {
 			// 	reqType: "queryDb",

@@ -204,7 +204,7 @@ function query(count) {
     }
 
 //    query_mcts_test();
-    QueryDb.getrecommend()
+    // QueryDb.getrecommend()
 
 }
 

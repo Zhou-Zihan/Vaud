@@ -110,7 +110,6 @@ function queryblog(count){
     var condition=thisnode.getcondition();
     var sqlobject={};
 
-    //TODO--等接口
     if(condition.length>0){
         for(var i=0;i<condition.length;i++){
             var thiscondition=condition[i];
@@ -118,29 +117,31 @@ function queryblog(count){
 
             }
             if(thiscondition.type=="what"){
-
+                sqlobject.keyword=thiscondition.data[1];
             }
             if(thiscondition.type=="where"){
                 sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
             }
             if(thiscondition.type=="time"){
-                sqlobject.time=thiscondition.data;
-            }
-            if(thiscondition.type=="speed"){
-
+                sqlobject.time=thiscondition.data
             }
             if(thiscondition.type=="+"){
                 for(var ii=0;ii<thiscondition.data.length;ii++){
                     if(thiscondition.type=="where"){
-                        sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
+                        sqlobject.geo=[thiscondition.data[ii].data[3],thiscondition.data[ii].data[1],thiscondition.data[ii].data[2],thiscondition.data[ii].data[0]]
                     }
                     if(thiscondition.type=="time"){
-                        sqlobject.time=thiscondition.data;
+                        sqlobject.time=thiscondition.data[ii].data;
+                    }
+                    if(thiscondition.type=="what"){
+                        sqlobject.keyword=thiscondition.data[ii].data[1];
                     }
                 }
             }
         }
     }
+
+    console.log(condition, sqlobject);
 
     QueryDb.getWeibo(
         sqlobject,

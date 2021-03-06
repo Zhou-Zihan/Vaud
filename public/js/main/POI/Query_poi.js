@@ -124,6 +124,9 @@ function poi_handlecondition(sqlobject, condition){
             //     sqlobject.geo=poi_union_geo(sqlobject.geo,tempgeo);
             // }
         }
+        if(thiscondition.type=="which"){
+            sqlobject.keyword=thiscondition.data;
+        }
         if(thiscondition.type=="+"){
             var temp_sqlobject={}
             for(var ii=0;ii<thiscondition.data.length;ii++){
@@ -134,6 +137,9 @@ function poi_handlecondition(sqlobject, condition){
                         var tempgeo=[thiscondition.data[ii].data[3],thiscondition.data[ii].data[1],thiscondition.data[ii].data[2],thiscondition.data[ii].data[0]]
                         temp_sqlobject.geo=poi_intersection_geo(temp_sqlobject.geo,tempgeo)
                     }
+                }
+                if(thiscondition.data[ii].type=="which"){
+                    temp_sqlobject.keyword=thiscondition.data[ii].data;
                 }
             }
             if(sqlobject.geo==null)
