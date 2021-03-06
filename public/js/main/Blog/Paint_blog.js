@@ -192,7 +192,7 @@ function highlightpaint_blogtraj(blog){
             .style("font-size", "10px")
             .text("Time: "+thiscelltime)
             .on("mousedown",function(){
-                new_conditiondiv("timepoint",{date:thiscelltime.split(" ")[0],time:thiscelltime.split(" ")[1]}
+                new_conditiondiv("timepoint",{date:thiscelltime.split(" ")[0],time:thiscelltime.split(" ")[1],id:blog.data.id,source:"blog"}
                     ,d3.event.x,d3.event.y,blog.node,1);
             });
 
@@ -202,7 +202,7 @@ function highlightpaint_blogtraj(blog){
             .text("Extract position")
             .on("mousedown",function(){
                 new_conditiondiv("positionpoint",
-                    {lat:blog.data.lat,lon:blog.data.lng},d3.event.x,d3.event.y,blog.node,1);
+                    {lat:blog.data.lat,lon:blog.data.lng,id:blog.data.id,source:"blog"},d3.event.x,d3.event.y,blog.node,1);
             })
 
         highlightblog.append("img")

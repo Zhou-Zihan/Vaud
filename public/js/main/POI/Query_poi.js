@@ -100,6 +100,8 @@ function querypoi(count){
             log("query poi from node"+count)
         }
     )
+
+    return sqlobject;
 }
 
 function poi_union_geo(geo1, geo2){

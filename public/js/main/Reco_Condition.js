@@ -8,6 +8,7 @@ function condition_reconode_newnode(reconode){
     newnode.setnodetype("condition")
     newnode.settype(reconode.type)
     newnode.changecondition(reconode.condition)
+    newnode.recoid=reconode.ID
     recolist.pushitem(newnode);
     recolist.pushresult({
         num: reconode.resultnum,

@@ -150,13 +150,6 @@ QueryDb.getrecommend = function(condition,func){
 			url:"http://10.189.206.177:5000/recommend",
 			type:"POST"
 		}
-		// {
-			// reqType:"queryDb",
-			// operate:"select",
-			// column:"*",
-			// table:"taxi_traj",
-			// limit:condition,
-		// }
 		, function(result) {
 			func(result);
 		}, false);

@@ -174,4 +174,6 @@ function queryblog(count){
             log("Search blogs from " + d3.select("#nodenamenode"+count)[0][0].outerText)
         }
     )
+
+    return sqlobject;
 }

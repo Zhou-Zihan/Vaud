@@ -31,7 +31,7 @@ function new_conditiondiv(type,data,mousex,mousey,activenode,numble){
                     linepaint();
                 }
 
-                //²åÈëÊý¾Ý
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if(type=="positionpoint"){
                     data_wherepoint_placein(data,node)
                     show_conditionlist("node"+node);
@@ -161,13 +161,13 @@ function new_conditiondiv(type,data,mousex,mousey,activenode,numble){
                 })
                 linepaint();
 
-                //²åÈëÊý¾Ý
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if(type=="positionpoint")
-                    data_wherepoint_placein(data, nodelist.getlistlength() - 1);
+                    data_wherepoint_placein(data, nodelist.getlistlength() - 1,true);
                 if(type=="positionlist")
                     data_wherelist_placein(data,nodelist.getlistlength() - 1,numble)
                 if(type=="timepoint")
-                    data_timepoint_placein(data,nodelist.getlistlength() - 1)
+                    data_timepoint_placein(data,nodelist.getlistlength() - 1,true)
                 if(type=="timelist")
                     data_timelist_placein(data,nodelist.getlistlength() - 1,numble)
                 if(type=="blog")
@@ -273,7 +273,7 @@ function new_conditiondiv(type,data,mousex,mousey,activenode,numble){
 
 }
 
-function data_wherepoint_placein(data,node){
+function data_wherepoint_placein(data,node,isnewnode_fromexit){
     var whereinterval = [
         data.lat-0.002,
         data.lon-0.002,
@@ -282,6 +282,14 @@ function data_wherepoint_placein(data,node){
         "region"
     ]
     var tempnode=nodelist.getlistiditem("node" + node);
+    if(typeof isnewnode_fromexit!=='undefined'){
+        tempnode.fromexist_id=data.id;
+        tempnode.fromexist_attr={
+            type:"S",
+            data:[whereinterval[3],whereinterval[1],whereinterval[2],whereinterval[0]]
+        };
+        tempnode.fromexist_source=data.source;
+    }
     tempnode.pushwherelistitem(whereinterval);
     nodelist.changelistiditem("node" + node,tempnode)
     log("Extract position into "+d3.select("#nodenamenode"+node)[0][0].outerText)
@@ -307,12 +315,20 @@ function data_wherelist_placein(data,node,numble){
     log("Extract positions into node"+node)
 }
 
-function data_timepoint_placein(data,node){
+function data_timepoint_placein(data,node,isnewnode_fromexit){
     var time = gettimestring(data.time,2)
     var timeinterval = [data.date +" "+time[0],
         data.date +" "+time[1]]
 
     var tempnode=nodelist.getlistiditem("node" + node);
+    if(typeof isnewnode_fromexit!=='undefined'){
+        tempnode.fromexist_id=data.id;
+        tempnode.fromexist_attr={
+            type:"T",
+            data:[timeinterval[0].split(" ")[1]+":00",timeinterval[1].split(" ")[1]+":00"]
+        };
+        tempnode.fromexist_source=data.source;
+    }
     tempnode.pushtimelistitem(timeinterval);
     nodelist.changelistiditem("node" + node,tempnode)
     log("Extract timearea into node"+node)
@@ -365,9 +381,9 @@ function gettimestring(time,time_jiange){
 }
 
 
-function data_blog_placein(data,node){
+function data_blog_placein(data,node,){
         tempnode = nodelist.getlistiditem("node" + node);
-        tempnode.pushwhichlistitem(data.userid);
+        tempnode.pushwhichlistitem(data.name);
         nodelist.changelistiditem("node" + node,tempnode)
     log("Extract position into "+d3.select("#nodenamenode"+node)[0][0].outerText)
 }

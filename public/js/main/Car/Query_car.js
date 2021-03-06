@@ -197,7 +197,7 @@ function querycar(count){
     let flagwhere=false;
     var sqlobject={
         time:["00:00:00", "23:59:59"],
-        geo:[180, 0, 90, 0]
+        geo:[130, 110, 30, 20]
     };
     if(condition.length>0){
         for(var i=0;i<condition.length;i++){
@@ -212,7 +212,7 @@ function querycar(count){
                 sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
             }
             if(thiscondition.type=="time"){
-                sqlobject.time=[thiscondition.data[0].split(" ")[1]+":00",thiscondition.data[1].split(" ")[1]+":00"];
+                sqlobject.time=[thiscondition.data[0].split(" ")[1]+":00",thiscondition.data[1].split(" ")[1]+":00"]
             }
             if(thiscondition.type=="speed"){
 
@@ -230,6 +230,8 @@ function querycar(count){
         }
     }
     querycarnormal(sqlobject,count);
+    
+    return sqlobject;
 }
 
 function querycarnormal(sqlobject,count){
@@ -264,7 +266,7 @@ function querycarnormal(sqlobject,count){
                     d3.select("#nodediv" + count).style("top").split("px")[0]])
                 var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
                 tempnode.setdatalist(tempcar);
-                tempnode.timearea=["2014-1-01 "+sqlobject.time[0].substr(0,5), "2014-1-01 "+sqlobject.time[1].substr(0,5)];
+                // tempnode.timearea=["2014-1-01 "+sqlobject.time[0].substr(0,5), "2014-1-01 "+sqlobject.time[1].substr(0,5)];
                 nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
 
                 lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))

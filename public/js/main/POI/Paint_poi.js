@@ -132,7 +132,7 @@ function highlightpaint_poitraj(poi){
             .text("Extract Position")
             .on("mousedown",function(){
                 new_conditiondiv("positionpoint",
-                    {lat:poi.data.latitude,lon:poi.data.longitude},d3.event.x,d3.event.y,poi.node,1);
+                    {lat:poi.data.latitude,lon:poi.data.longitude,id:poi.data.id,source:"point_of_interest"},d3.event.x,d3.event.y,poi.node,1);
             })
 
         highlightpoi.append("div")

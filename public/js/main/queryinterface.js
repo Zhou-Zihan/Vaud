@@ -156,12 +156,13 @@ function linepaint(){
 
 function query(count) {
     var thisnode=nodelist.getlistiditem("node"+count);
+    var sqlobject;
 
     if(thisnode.type=="blog")
-        queryblog(count);
+        sqlobject=queryblog(count);
 
     if(thisnode.type=="car")
-         querycar(count);
+        sqlobject=querycar(count);
 
     if(thisnode.type=="people")
         querypeople(count);
@@ -170,7 +171,7 @@ function query(count) {
         queryestate(count);
 
     if(thisnode.type=="point_of_interest")
-        querypoi(count);
+        sqlobject=querypoi(count);
 
     if(thisnode.type=="social_network")
         querysocialnetwork(count)
@@ -203,12 +204,62 @@ function query(count) {
             );
     }
 
-//    query_mcts_test();
-    // QueryDb.getrecommend()
+    // query_mcts_test();
+    query_recommend(count,sqlobject)
 
 }
 
-function query_mcts_test(){
+function query_recommend(count,sqlobject){
+    var queryobject={}
+
+    var thisnode = nodelist.getlistiditem("node" + count)
+    var has_father=-1
+    if(thisnode.recoid!=-1){
+        queryobject.behavior="selectRecommend"
+    }else{
+        var father_and_son = nodelist.getfather_and_son()
+        for(var i=0;i<father_and_son.length;i++){
+            if(father_and_son[i].son==count){
+                //childQuery 父节点ID TODO
+                has_father=father_and_son[i].father
+                var fathernode=nodelist.getlistiditem("node"+has_father)
+                has_father=fathernode.recoid
+            }
+        }
+        if(has_father==-1){
+            queryobject.behavior="rootQuery"
+        }else{
+            queryobject.behavior="childQuery"
+        }
+    }
+    
+    if(queryobject.behavior=="selectRecommend"){
+        queryobject.id=thisnode.recoid;
+    }
+    if(queryobject.behavior=="rootQuery"){
+        queryobject.source=thisnode.type;
+        queryobject.sqlobject=sqlobject;
+    }
+    if(queryobject.behavior=="childQuery"){
+        queryobject.source=thisnode.type;
+        queryobject.father=has_father;
+        queryobject.dataid=thisnode.fromexist_id;
+        queryobject.dataattr=thisnode.fromexist_attr;
+        queryobject.datasource=thisnode.fromexist_source;
+    }
+
+    console.log(queryobject)
+    query_mcts_draw()
+
+    // QueryDb.getrecommend(
+    //     queryobject,
+    //     function(data){
+    //         console.log(data)
+    //     }
+    // )
+}
+
+function query_mcts_draw(){
     // here to mcts
 
     recolist=Recolist.createNew();
@@ -216,6 +267,7 @@ function query_mcts_test(){
     data=[
         {
             id:0,
+            ID:3,
             father:[0,1],
             type:"blog",
             condition:[{type: "what", data: ["key word","丢失"]}],
@@ -224,6 +276,7 @@ function query_mcts_test(){
         },
         {
             id:1,
+            ID:6,
             father:[1],
             type:"car",
             condition:[{type:"where",data: [27.9762107716664, 120.59864044189453, 28.0207723855426, 120.69168090820311, "region"]}],
@@ -232,6 +285,7 @@ function query_mcts_test(){
         },
         {
             id:2,
+            ID:14,
             father:[0],
             type:"people",
             condition:[{type:"+",data:[{type:"time",data:["2014-1-01 00:00", "2014-1-01 00:00"]},{type:"where",data: [28.01652921631991, 120.64567565917967, 28.0207723855426, 120.65425872802733, "region"]}]}],

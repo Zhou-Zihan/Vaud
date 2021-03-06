@@ -119,7 +119,7 @@ function highlightpaint_cartraj(car){
                     console.log()
                     if(car.data.texiInfo[i].time<timearea[1]&&
                         car.data.texiInfo[i].time>timearea[0]){
-                        positionselection.push({nodecount:car.node,data:car.data.texiInfo[i]})
+                        positionselection.push({nodecount:car.node,data:car.data.texiInfo[i],id:car.data.ID})
                     }
                 }
                 repaint_map_carpositionselection();
@@ -680,7 +680,7 @@ function showcarlistchart(carlist,highlightcar) {
 
 function repaint_map_carpositionselection() {
     d3.select("#mapobjectsvg").selectAll(".map_positionselection").remove();
-     d3.select("#mapobjectsvg").selectAll(".selectcarpositionthis").remove();
+    d3.select("#mapobjectsvg").selectAll(".selectcarpositionthis").remove();
     for (var i = 0; i < positionselection.length;i++){
         var latlon=[positionselection[i].data.latitude,positionselection[i].data.longitude]
         var p = map.latLngToContainerPoint(L.latLng(latlon[0], latlon[1]))
@@ -769,7 +769,7 @@ function repaint_map_carpositionselection() {
                     .style("font-size","14px")
                     .attr("count",d3.select(this).attr("count"))
                     .on("mousedown",function(){
-                        new_conditiondiv("timepoint",{date:thiscelltime.split(" ")[0],time:thiscelltime.split(" ")[1]},
+                        new_conditiondiv("timepoint",{date:thiscelltime.split(" ")[0],time:thiscelltime.split(" ")[1],id:positionselection[d3.select(this).attr("count")].id,source:"car"},
                             d3.event.x,d3.event.y,data.nodecount,1);
                     })
 
@@ -787,7 +787,7 @@ function repaint_map_carpositionselection() {
                         var data=positionselection[d3.select(this).attr("count")];
                         var latlon=[data.data.latitude,data.data.longitude]
                         new_conditiondiv("positionpoint",
-                            {lat: latlon[0], lon: latlon[1]}, d3.event.x, d3.event.y,data.nodecount, 1);
+                            {lat: latlon[0], lon: latlon[1],id:positionselection[d3.select(this).attr("count")].id,source:"car"}, d3.event.x, d3.event.y,data.nodecount, 1);
                     })
 
             })

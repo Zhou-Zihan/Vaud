@@ -16,12 +16,13 @@ function condition_node_newnode(mouse,node) {
         newnode.setnodetype("condition")
         newnode.settype(node.gettype())
         newnode.changecondition(node.getcondition())
-        newnode.fromRecommend=true;
+        newnode.recoid=node.recoid;
         nodelist.pushitem(newnode);
     }else{
         newnode.setid("node"+nodelist.getlistlength())
         newnode.setnodetype("condition")
         newnode.settype("car")
+        newnode.recoid=-1;
         nodelist.pushitem(newnode);
     }
 
