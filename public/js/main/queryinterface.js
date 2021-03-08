@@ -165,7 +165,7 @@ function query(count) {
         sqlobject=querycar(count);
 
     if(thisnode.type=="people")
-        querypeople(count);
+        sqlobject=querypeople(count);
 
     if(thisnode.type=="estate")
         queryestate(count);
@@ -204,7 +204,6 @@ function query(count) {
             );
     }
 
-    // query_mcts_test();
     query_recommend(count,sqlobject)
 
 }
@@ -220,10 +219,16 @@ function query_recommend(count,sqlobject){
         var father_and_son = nodelist.getfather_and_son()
         for(var i=0;i<father_and_son.length;i++){
             if(father_and_son[i].son==count){
-                //childQuery 父节点ID TODO
+                has_father=father_and_son[i].father
+                break
+            }
+        }
+        for(var i=0;i<father_and_son.length;i++){
+            if(father_and_son[i].son==has_father){
                 has_father=father_and_son[i].father
                 var fathernode=nodelist.getlistiditem("node"+has_father)
                 has_father=fathernode.recoid
+                break
             }
         }
         if(has_father==-1){
@@ -249,14 +254,42 @@ function query_recommend(count,sqlobject){
     }
 
     console.log(queryobject)
-    query_mcts_draw()
 
-    // QueryDb.getrecommend(
-    //     queryobject,
-    //     function(data){
-    //         console.log(data)
-    //     }
-    // )
+    QueryDb.getrecommend(
+        queryobject,
+        function(data){
+            console.log(data)
+            
+            recolist=Recolist.createNew();
+            d3.selectAll(".reconodediv").remove();
+
+            //data.id 
+            thisnode.recoid=data.id;
+
+            //data.recommendrecomm
+            for(var i=0;i<data.recommend.length;i++){
+                var o=data.recommend[i];
+                //idx
+                o.idx=i;
+                //condition
+                o.condition=[];
+                if(o.type=="S"){
+                    o.condition.push({type:"where",data:[o.data[3], o.data[1], o.data[2], o.data[0],'region']})
+                }
+                if(o.type=="T"){
+                    o.condition.push({type:"time",data:["2014-1-01 "+o.data[0].substr(0,5),"2014-1-01 "+o.data[1].substr(0,5)]})
+                }
+                recolist.pushfather_and_son({
+                    father:o.father,
+                    son:o.idx
+                })
+
+                condition_reconode_newnode(o);
+            }
+
+            console.log(nodelist, recolist);            
+        }
+    )
 }
 
 function query_mcts_draw(){
@@ -306,46 +339,65 @@ function query_mcts_draw(){
 }
 
 function linepaint_for_reco(id){
+    // debugger
     var pointlist=recolist.getfather_and_son();
     for(var i= 0;i<pointlist.length;i++){
-        if(pointlist[i].son==id){
-            for(f in pointlist[i].father){
-                if(nodelist.getlistindexof(pointlist[i].father[f]).islive){
-                    if(nodelist.getlistindexof(pointlist[i].father[f]).showdetail){
-                        var fatherx =(d3.select("#nodediv" + pointlist[i].father[f]).style("left").split("px")[0] - 1 + 286),
-                            fathery =(d3.select("#nodediv" + pointlist[i].father[f]).style("top").split("px")[0] - 1 + 43);
-                    }else{
-                        var fatherx =(d3.select("#nodediv" + pointlist[i].father[f]).style("left").split("px")[0] - 1 + 185),
-                            fathery =(d3.select("#nodediv" + pointlist[i].father[f]).style("top").split("px")[0] - 1 + 23);
-                    }
+        if(pointlist[i].son==id){            
+            //f:recoid -> id
+            var ff=find_node_son(pointlist[i].father);            
 
-                    sonx=document.getElementById("reconodediv"+id).offsetLeft-5;
-                    sony=document.getElementById("reconodediv"+id).offsetTop+15;
-
-                    var fathersonx=fatherx-sonx;
-                    var fathersony=fathery-sony;
-                    if(fathersonx<0)
-                        fathersonx=0-fathersonx;
-                    if(fathersony<0)
-                        fathersony=0-fathersony;
-
-                    d3.select("#queryviewsvg").append('path')
-                        .attr("id","reco_path")
-                        .attr('style', 'stroke:#858585; fill:none; stroke-width:2; stroke-dasharray:8 8')
-                        .attr("d", "M" +
-                            fatherx + "," + fathery
-                            + " C" + (sonx - fathersonx / 3) + "," + fathery
-                            + " " + (fatherx+ fathersonx / 3) + "," + sony
-                            + " " + sonx + "," + sony);
-                    d3.select("#queryviewsvg").append('polygon')
-                        .attr("id","reco_polygon")
-                        .attr('style', 'stroke:#858585;fill:#858585;')
-                        .attr('points',
-                            (sonx+10) + "," + sony
-                            + " " + sonx + "," + (sony-5)
-                            + " " + sonx + "," + (sony+5));
+            if(nodelist.getlistiditem("node"+ff).islive){
+                if(nodelist.getlistiditem("node"+ff).showdetail){
+                    var fatherx =(d3.select("#nodediv" + ff).style("left").split("px")[0] - 1 + 286),
+                        fathery =(d3.select("#nodediv" + ff).style("top").split("px")[0] - 1 + 43);
+                }else{
+                    var fatherx =(d3.select("#nodediv" + ff).style("left").split("px")[0] - 1 + 185),
+                        fathery =(d3.select("#nodediv" + ff).style("top").split("px")[0] - 1 + 23);
                 }
+
+                sonx=document.getElementById("reconodediv"+id).offsetLeft-5;
+                sony=document.getElementById("reconodediv"+id).offsetTop+15;
+
+                var fathersonx=fatherx-sonx;
+                var fathersony=fathery-sony;
+                if(fathersonx<0)
+                    fathersonx=0-fathersonx;
+                if(fathersony<0)
+                    fathersony=0-fathersony;
+
+                d3.select("#queryviewsvg").append('path')
+                    .attr("id","reco_path")
+                    .attr('style', 'stroke:#858585; fill:none; stroke-width:2; stroke-dasharray:8 8')
+                    .attr("d", "M" +
+                        fatherx + "," + fathery
+                        + " C" + (sonx - fathersonx / 3) + "," + fathery
+                        + " " + (fatherx+ fathersonx / 3) + "," + sony
+                        + " " + sonx + "," + sony);
+                d3.select("#queryviewsvg").append('polygon')
+                    .attr("id","reco_polygon")
+                    .attr('style', 'stroke:#858585;fill:#858585;')
+                    .attr('points',
+                        (sonx+10) + "," + sony
+                        + " " + sonx + "," + (sony-5)
+                        + " " + sonx + "," + (sony+5));
             }
+            
+        }
+    }
+}
+
+function find_node_son(recoid){
+    var count;
+    for(var i=0;i<nodelist.list.length;i++){
+        var node=nodelist.list[i];
+        if(node.recoid==recoid){
+            count=node.id.substr(4);
+        }
+    }
+    var pointlist=nodelist.getfather_and_son();
+    for(var i= 0;i<pointlist.length;i++){
+        if(pointlist[i].father==count){
+            return pointlist[i].son
         }
     }
 }
