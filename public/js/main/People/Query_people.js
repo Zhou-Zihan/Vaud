@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/3/23.
  */
-function querypeople(count){
+function querypeople_old(count){
     /*******************************
      *   load data
      *******************************/
@@ -229,4 +229,82 @@ function querypeople(count){
         );
     }
       
+}
+
+function querypeople(count){
+    // debugger
+    var thisnode = nodelist.getlistiditem("node" + count);
+    var condition=thisnode.getcondition();
+    var sqlobject={
+        time:["00:00:00", "23:59:59"],
+        geo:[130, 110, 30, 20]
+    };
+    if(condition.length>0){
+        for(var i=0;i<condition.length;i++){
+            var thiscondition=condition[i];
+            if(thiscondition.type=="which"){
+
+            }
+            if(thiscondition.type=="what"){
+
+            }
+            if(thiscondition.type=="where"){
+                sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
+            }
+            if(thiscondition.type=="time"){
+                sqlobject.time=[thiscondition.data[0].split(" ")[1]+":00",thiscondition.data[1].split(" ")[1]+":00"]
+            }
+            if(thiscondition.type=="speed"){
+
+            }
+            if(thiscondition.type=="+"){
+                for(var ii=0;ii<thiscondition.data.length;ii++){
+                    if(thiscondition.data[ii].type=="where"){
+                        sqlobject.geo=[thiscondition.data[ii].data[3],thiscondition.data[ii].data[1],thiscondition.data[ii].data[2],thiscondition.data[ii].data[0]]
+                    }
+                    if(thiscondition.data[ii].type=="time"){
+                        sqlobject.time=[thiscondition.data[ii].data[0].split(" ")[1]+":00",thiscondition.data[ii].data[1].split(" ")[1]+":00"];
+                    }
+                }
+            }
+        }
+    }
+    console.log(sqlobject)
+    QueryDb.getPeople(
+        sqlobject,
+        function(data){
+            console.log(data)
+            
+            let temppeople = new Map();
+            data.forEach(o=>{
+                if(!temppeople.has(o.id))
+                    temppeople.set(o.id,{ID:o.id,pInfo:[]});
+                o.points.forEach(point=>{
+                    point.time = new Date(point.time);
+                    temppeople.get(o.id).pInfo.push(point);
+                })
+            })
+            temppeople = [...temppeople.values()]
+            console.log(temppeople)
+
+            data_node_newnode("people",[d3.select("#nodediv"+count).style("left").split("px")[0]-1+400,
+                                        d3.select("#nodediv"+count).style("top").split("px")[0]])
+            var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
+            tempnode.setdatalist(temppeople);
+            nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
+
+            lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))
+            show_data_nodetip(lastnode,"record");
+            nodelist.getlistiditem("node" + count).showdetail=false;
+            hide_condition_nodedetail(d3.select("#node" + count));
+
+            nodelist.pushfather_and_son({
+                father: count,
+                son: nodelist.getlist().length - 1
+            })
+            linepaint();
+            log("query people from node"+count)
+        }
+    )
+    return sqlobject;
 }

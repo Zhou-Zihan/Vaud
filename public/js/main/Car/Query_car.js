@@ -244,13 +244,7 @@ function querycarnormal(sqlobject,count){
                 // 2013-12-31T16:00:18.000Z
                 let tempcar = new Map();
                 data.forEach(o=>{
-                    // o.time=new Date(o.time)
-                    // if(tempcar.has(o.Taxi_name))
-                    //     tempcar.get(o.Taxi_name).texiInfo.push(o)
-                    // else{
-                    //     tempcar.set(o.Taxi_name,{ID:o.Taxi_name,texiInfo:[o]})
-                    // }
-                    var Taxi_name = o.carNo.replace(/([.][^.]+)$/,"");
+                    var Taxi_name = o.id.replace(/([.][^.]+)$/,"");
                     if(!tempcar.has(Taxi_name))
                         tempcar.set(Taxi_name,{ID:Taxi_name,texiInfo:[]});
                     o.points.forEach(point=>{

@@ -6,7 +6,11 @@ QueryDb.query = function (myData, successFunc, isAsync) {
 		type: myData.type,
 		data: myData.data,
 		async: isAsync,
-		success: successFunc,
+		success: function(res) {
+			// console.log(res)
+			successFunc(res)
+		},
+		crossDomain: true,
 		error: function (xhr, status, error) {
 			console.log('Error: ' + error.message);
 			$('#lblResponse').html('Error connecting to the server.');
@@ -147,7 +151,18 @@ QueryDb.getcarbygeoindex=function(condition,timeString,func){
 QueryDb.getrecommend = function(condition,func){
 	QueryDb.query({
 			data:"TEST",
-			url:"http://10.189.206.177:5000/recommend",
+			url:"http://10.186.54.191:5000/recommend",
+			type:"POST"
+		}
+		, function(result) {
+			func(result);
+		}, false);
+};
+
+QueryDb.getPeople=function(condition,func){
+	QueryDb.query({
+			data:condition,
+			url:"http://10.76.0.196:7001/phone",
 			type:"POST"
 		}
 		, function(result) {

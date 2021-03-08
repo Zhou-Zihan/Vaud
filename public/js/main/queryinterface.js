@@ -255,10 +255,11 @@ function query_recommend(count,sqlobject){
 
     console.log(queryobject)
 
-    QueryDb.getrecommend(
-        queryobject,
-        function(data){
-            console.log(data)
+    // QueryDb.getrecommend(
+    //     queryobject,
+    //     function(data){
+    //         console.log(data)
+    var data={"id": 1, "recommend": [{"id": 3, "father": 1, "source": "point_of_interest", "type": "S", "data": [120.66808428955079, 120.66408428955079, 28.01710810852051, 28.01310810852051]}, {"id": 7, "father": 1, "source": "car", "type": "T", "data": ["00:03:00", "00:07:00"]}]}
             
             recolist=Recolist.createNew();
             d3.selectAll(".reconodediv").remove();
@@ -288,10 +289,11 @@ function query_recommend(count,sqlobject){
             }
 
             console.log(nodelist, recolist);            
-        }
-    )
+//         }
+//     )
 }
 
+//not used
 function query_mcts_draw(){
     // here to mcts
 
@@ -410,5 +412,17 @@ function regularwhen(when){
            +when.split(" ")[0].split("-")[2]+
            " "+when.split(" ")[1]
         return newwhen;
+    }
+}
+
+function query_result(node){
+    if(node.type=="car"){
+
+    }
+    if(node.type=="blog"){
+
+    }
+    if(node.type=="people"){
+        
     }
 }
