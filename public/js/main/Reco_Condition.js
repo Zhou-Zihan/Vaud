@@ -10,9 +10,8 @@ function condition_reconode_newnode(reconode){
     newnode.changecondition(reconode.condition)
     newnode.recoid=reconode.id;
     recolist.pushitem(newnode);
-    // var result=query_result(reconode);
     // recolist.pushresult({
-    //     // num: reconode.resultnum,
+    //     num: result.length,
     //     data: result
     // })
 
@@ -36,13 +35,13 @@ function condition_reconode_newnode(reconode){
         .style('z-index',1000001)
         .on("mouseover", function(){
             linepaint_for_reco(reconode.idx);
-            // show_result_heatmap(reconode.idx);
+            show_result_heatmap(reconode.idx);
         })
         .on("mouseout", function(){
             d3.selectAll("#reco_polygon").remove();
             d3.selectAll("#reco_path").remove();
-            // objectheat_latlon = [];
-            // heatmapalive_detection()
+            objectheat_latlon = [];
+            heatmapalive_detection()
         });
     
     //background img
@@ -70,8 +69,8 @@ function condition_reconode_newnode(reconode){
     }
 
     //reco - data number
-    reconodediv.append("div")
-        .attr("class", "reco_num")
+    var datanumber=reconodediv.append("div")
+        .attr("class", "reco_num"+reconode.idx)
         .style("position","absolute")
         .style("top","6px")
         .style("right","10px")
@@ -81,7 +80,7 @@ function condition_reconode_newnode(reconode){
         .style('text-align','center')
         .style('font-weight','bold')
         .style('font-size','13px')
-        .text(reconode.resultnum)
+        .text("")
         
     reconodediv.append("div")
         .style("position","absolute")
@@ -95,13 +94,13 @@ function condition_reconode_newnode(reconode){
         .style('font-size','16px')
         .text("Condition List")
         .on("mousedown",function(){
-            new_reco_drag(reconode.idx,reconode.resultnum,reconode.source,d3.event.x,d3.event.y);            
+            new_reco_drag(reconode.idx,reconode.source,d3.event.x,d3.event.y);            
         });
     
     show_reco_conditionlist(reconode.idx);
 }
 
-function new_reco_drag(count,num,type,mousex,mousey){
+function new_reco_drag(count,type,mousex,mousey){
     d3.select("body").append("div")
         .attr("class","drag_conditiondiv")
         .on("mousemove",function(){
@@ -167,14 +166,18 @@ function new_reco_drag(count,num,type,mousex,mousey){
         .style("float","left")
         .attr("height","20px" )
         .attr("width","14px" )
-        .style("left","40px")
+        .style("left","35px")
+        .style("top","4px")
+        .style("font-size","13px")
+        .style("font-weight","bold")
         .style("color","white")
-        .text(num)
+        .text(recolist.results[count].num)
     
 }
 
 function show_result_heatmap(id){
-    var result = recolist.getresult(id).data;
+    // debugger
+    var result = recolist.results[id].data;
     var reconode = recolist.getlistindexof(id);
     if(reconode.type=="car"){
         var latlngs=[];

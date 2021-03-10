@@ -255,11 +255,11 @@ function query_recommend(count,sqlobject){
 
     console.log(queryobject)
 
-    // QueryDb.getrecommend(
-    //     queryobject,
-    //     function(data){
-    //         console.log(data)
-    var data={"id": 1, "recommend": [{"id": 3, "father": 1, "source": "point_of_interest", "type": "S", "data": [120.66808428955079, 120.66408428955079, 28.01710810852051, 28.01310810852051]}, {"id": 7, "father": 1, "source": "car", "type": "T", "data": ["00:03:00", "00:07:00"]}]}
+    QueryDb.getrecommend(
+        queryobject,
+        function(data){
+            console.log(data)
+            // var data={"id": 1, "recommend": [{"id": 3, "father": 1, "source": "point_of_interest", "type": "S", "data": [120.66808428955079, 120.66408428955079, 28.01710810852051, 28.01310810852051]}, {"id": 7, "father": 1, "source": "car", "type": "T", "data": ["00:03:00", "00:07:00"]}]}
             
             recolist=Recolist.createNew();
             d3.selectAll(".reconodediv").remove();
@@ -284,13 +284,15 @@ function query_recommend(count,sqlobject){
                     father:o.father,
                     son:o.idx
                 })
-
                 condition_reconode_newnode(o);
+            }
+            for(var i=0;i<data.recommend.length;i++){                
+                query_result(data.recommend[i]);
             }
 
             console.log(nodelist, recolist);            
-//         }
-//     )
+        }
+    )
 }
 
 //not used
@@ -416,13 +418,72 @@ function regularwhen(when){
 }
 
 function query_result(node){
-    if(node.type=="car"){
-
+    if(node.source=="car"){
+        var sqlobject={
+            time:["00:00:00", "23:59:59"],
+            geo:[130, 110, 30, 20]
+        };
+        // sqlobject=car_handlecondition(sqlobject, node.condition); 
+        sqlobject={
+            geo:[120.63331604003908, 120.62850952148436, 28.02016622874853, 28.01713539358922],
+            time:["00:00:00", "00:05:00"]
+        }
+        QueryDb.getcar(
+            sqlobject,
+            function(data){                
+                recolist.results[node.idx]={
+                    num:data.length,
+                    data:data
+                }
+                d3.select(".reco_num"+node.idx).text(data.length);
+            }
+        )
     }
-    if(node.type=="blog"){
-
+    if(node.source=="blog"){
+        var sqlobject=bolg_handlecondition(sqlobject, node.condition); 
+        QueryDb.getWeibo(
+            sqlobject,
+            function(data){
+                data.forEach(o=>{
+                    o.time=new Date(o.time)
+                })
+                recolist.results[node.idx]={
+                    num:data.length,
+                    data:data
+                }
+                d3.select(".reco_num"+node.idx).text(data.length);
+            }
+        )
     }
-    if(node.type=="people"){
-        
+    if(node.source=="people"){
+        var sqlobject={
+            time:["00:00:00", "23:59:59"],
+            geo:[130, 110, 30, 20]
+        };
+        sqlobject=people_handlecondition(sqlobject, node.condition); 
+        QueryDb.getPeople(
+            sqlobject,
+            function(data){
+                recolist.results[node.idx]={
+                    num:data.length,
+                    data:data
+                }
+                d3.select(".reco_num"+node.idx).text(data.length);
+            }
+        )
+    }
+    if(node.source=="point_of_interest"){
+        var sqlobject={};
+        sqlobject = poi_handlecondition(sqlobject, node.condition);
+        QueryDb.getPoi(
+            sqlobject,
+            function(data){
+                recolist.results[node.idx]={
+                    num:data.length,
+                    data:data
+                }
+                d3.select(".reco_num"+node.idx).text(data.length);
+            }
+        )
     }
 }

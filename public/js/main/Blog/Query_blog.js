@@ -111,34 +111,7 @@ function queryblog(count){
     var sqlobject={};
 
     if(condition.length>0){
-        for(var i=0;i<condition.length;i++){
-            var thiscondition=condition[i];
-            if(thiscondition.type=="which"){
-
-            }
-            if(thiscondition.type=="what"){
-                sqlobject.keyword=thiscondition.data[1];
-            }
-            if(thiscondition.type=="where"){
-                sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
-            }
-            if(thiscondition.type=="time"){
-                sqlobject.time=thiscondition.data
-            }
-            if(thiscondition.type=="+"){
-                for(var ii=0;ii<thiscondition.data.length;ii++){
-                    if(thiscondition.type=="where"){
-                        sqlobject.geo=[thiscondition.data[ii].data[3],thiscondition.data[ii].data[1],thiscondition.data[ii].data[2],thiscondition.data[ii].data[0]]
-                    }
-                    if(thiscondition.type=="time"){
-                        sqlobject.time=thiscondition.data[ii].data;
-                    }
-                    if(thiscondition.type=="what"){
-                        sqlobject.keyword=thiscondition.data[ii].data[1];
-                    }
-                }
-            }
-        }
+        sqlobject=bolg_handlecondition(sqlobject, condition);        
     }
 
     console.log(condition, sqlobject);
@@ -175,5 +148,37 @@ function queryblog(count){
         }
     )
 
+    return sqlobject;
+}
+
+function bolg_handlecondition(sqlobject, condition){
+    for(var i=0;i<condition.length;i++){
+        var thiscondition=condition[i];
+        if(thiscondition.type=="which"){
+
+        }
+        if(thiscondition.type=="what"){
+            sqlobject.keyword=thiscondition.data[1];
+        }
+        if(thiscondition.type=="where"){
+            sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
+        }
+        if(thiscondition.type=="time"){
+            sqlobject.time=thiscondition.data
+        }
+        if(thiscondition.type=="+"){
+            for(var ii=0;ii<thiscondition.data.length;ii++){
+                if(thiscondition.type=="where"){
+                    sqlobject.geo=[thiscondition.data[ii].data[3],thiscondition.data[ii].data[1],thiscondition.data[ii].data[2],thiscondition.data[ii].data[0]]
+                }
+                if(thiscondition.type=="time"){
+                    sqlobject.time=thiscondition.data[ii].data;
+                }
+                if(thiscondition.type=="what"){
+                    sqlobject.keyword=thiscondition.data[ii].data[1];
+                }
+            }
+        }
+    }
     return sqlobject;
 }

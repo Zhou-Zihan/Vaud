@@ -200,34 +200,7 @@ function querycar(count){
         geo:[130, 110, 30, 20]
     };
     if(condition.length>0){
-        for(var i=0;i<condition.length;i++){
-            var thiscondition=condition[i];
-            if(thiscondition.type=="which"){
-
-            }
-            if(thiscondition.type=="what"){
-
-            }
-            if(thiscondition.type=="where"){
-                sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
-            }
-            if(thiscondition.type=="time"){
-                sqlobject.time=[thiscondition.data[0].split(" ")[1]+":00",thiscondition.data[1].split(" ")[1]+":00"]
-            }
-            if(thiscondition.type=="speed"){
-
-            }
-            if(thiscondition.type=="+"){
-                for(var ii=0;ii<thiscondition.data.length;ii++){
-                    if(thiscondition.data[ii].type=="where"){
-                        sqlobject.geo=[thiscondition.data[ii].data[3],thiscondition.data[ii].data[1],thiscondition.data[ii].data[2],thiscondition.data[ii].data[0]]
-                    }
-                    if(thiscondition.data[ii].type=="time"){
-                        sqlobject.time=[thiscondition.data[ii].data[0].split(" ")[1]+":00",thiscondition.data[ii].data[1].split(" ")[1]+":00"];
-                    }
-                }
-            }
-        }
+        sqlobject=car_handlecondition(sqlobject, condition);        
     }
     querycarnormal(sqlobject,count);
     
@@ -275,4 +248,37 @@ function querycarnormal(sqlobject,count){
                 linepaint();
                 log("Search taxis from " + d3.select("#nodenamenode"+count)[0][0].outerText)
           });
+}
+
+function car_handlecondition(sqlobject, condition){
+    for(var i=0;i<condition.length;i++){
+        var thiscondition=condition[i];
+        if(thiscondition.type=="which"){
+
+        }
+        if(thiscondition.type=="what"){
+
+        }
+        if(thiscondition.type=="where"){
+            sqlobject.geo=[thiscondition.data[3],thiscondition.data[1],thiscondition.data[2],thiscondition.data[0]]
+        }
+        if(thiscondition.type=="time"){
+            sqlobject.time=[thiscondition.data[0].split(" ")[1]+":00",thiscondition.data[1].split(" ")[1]+":00"]
+        }
+        if(thiscondition.type=="speed"){
+
+        }
+        if(thiscondition.type=="+"){
+            for(var ii=0;ii<thiscondition.data.length;ii++){
+                if(thiscondition.data[ii].type=="where"){
+                    sqlobject.geo=[thiscondition.data[ii].data[3],thiscondition.data[ii].data[1],thiscondition.data[ii].data[2],thiscondition.data[ii].data[0]]
+                }
+                if(thiscondition.data[ii].type=="time"){
+                    sqlobject.time=[thiscondition.data[ii].data[0].split(" ")[1]+":00",thiscondition.data[ii].data[1].split(" ")[1]+":00"];
+                }
+            }
+        }
+    }
+
+    return sqlobject;
 }

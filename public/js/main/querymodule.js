@@ -2,9 +2,10 @@ var QueryDb = {};
 QueryDb.query = function (myData, successFunc, isAsync) {
 	$.ajax({
 		dataType: "json",
+		contentType: 'application/json',
 		url: myData.url,
 		type: myData.type,
-		data: myData.data,
+		data: JSON.stringify(myData.data),
 		async: isAsync,
 		success: function(res) {
 			// console.log(res)
@@ -36,13 +37,6 @@ QueryDb.getPoi = function(condition,func){
 			url:"http://10.76.0.196:7001/poi",
 			type:"POST"
 		}
-			// {
-			// reqType:"queryDb",
-			// operate:"select",
-			// column:"*",
-			// table:"poi",
-			// limit:condition,
-			// }
 		, function(result) {
 			func(result);
 		}, true);
@@ -56,13 +50,6 @@ QueryDb.getWeibo = function(condition,func){
 				url:"http://10.76.0.196:7001/weibo",
 				type:"POST"
 			}
-			// {
-			// 	reqType: "queryDb",
-			// 	operate: "select",
-			// 	column: "*",
-			// 	table: "blog",
-			// 	limit:condition,
-			// }
 			, function(data) {
 				result=data;
 			}, false);
@@ -89,13 +76,6 @@ QueryDb.getcar=function(condition,func){
 			url:"http://10.76.0.196:7001/taxi",
 			type:"POST"
 		}
-		// {
-			// reqType:"queryDb",
-			// operate:"select",
-			// column:"*",
-			// table:"taxi_traj",
-			// limit:condition,
-		// }
 		, function(result) {
 			func(result);
 		}, false);
@@ -148,10 +128,10 @@ QueryDb.getcarbygeoindex=function(condition,timeString,func){
     })
 };
 
-QueryDb.getrecommend = function(condition,func){
+QueryDb.getrecommend=function(condition,func){
 	QueryDb.query({
-			data:"TEST",
-			url:"http://10.186.54.191:5000/recommend",
+			data:condition,
+			url:"http://10.186.94.222:5000/recommend",
 			type:"POST"
 		}
 		, function(result) {
@@ -170,7 +150,23 @@ QueryDb.getPeople=function(condition,func){
 		}, false);
 };
 
+QueryDb.recommend_init=function(func){
+	QueryDb.query(
+		{
+			data:"TEST",
+			url:"http://10.186.94.222:5000/init",
+			type:"POST"
+		}
+		,function(result) {
+			func(result);
+		}, false);
+}
 
+QueryDb.recommend_init(
+	function(data){
+		console.log(data)
+	}
+);
 
 var qm = (function() {
 
