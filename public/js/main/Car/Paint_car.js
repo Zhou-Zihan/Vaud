@@ -328,6 +328,7 @@ function showcarchart(car,highlightcar) {
         for (var i = 0; i < thisdata.length; i++) {
             latlngs.push(L.latLng(thisdata[i].latitude, thisdata[i].longitude))
         }
+        // debugger
         // {gradient:{0: '#ffffff',0.8: 'red'}
         Heatmap_Object.setOptions({radius: 10,max: thisdata.length/5000*mapheatmap_value})
         objectheat_latlon=latlngs;

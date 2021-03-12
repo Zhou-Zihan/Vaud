@@ -284,10 +284,6 @@ function data_wherepoint_placein(data,node,isnewnode_fromexit){
     var tempnode=nodelist.getlistiditem("node" + node);
     if(typeof isnewnode_fromexit!=='undefined'){
         tempnode.fromexist_id=data.id;
-        tempnode.fromexist_attr={
-            type:"S",
-            data:[whereinterval[3],whereinterval[1],whereinterval[2],whereinterval[0]]
-        };
         tempnode.fromexist_source=data.source;
     }
     tempnode.pushwherelistitem(whereinterval);
@@ -323,12 +319,8 @@ function data_timepoint_placein(data,node,isnewnode_fromexit){
     var tempnode=nodelist.getlistiditem("node" + node);
     if(typeof isnewnode_fromexit!=='undefined'){
         tempnode.fromexist_id=data.id;
-        tempnode.fromexist_attr={
-            type:"T",
-            data:[timeinterval[0].split(" ")[1]+":00",timeinterval[1].split(" ")[1]+":00"]
-        };
         tempnode.fromexist_source=data.source;
-    }
+    } 
     tempnode.pushtimelistitem(timeinterval);
     nodelist.changelistiditem("node" + node,tempnode)
     log("Extract timearea into node"+node)

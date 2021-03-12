@@ -249,8 +249,7 @@ function query_recommend(count,sqlobject){
         queryobject.source=thisnode.type;
         queryobject.father=has_father;
         queryobject.dataid=thisnode.fromexist_id;
-        queryobject.dataattr=thisnode.fromexist_attr;
-        queryobject.datasource=thisnode.fromexist_source;
+        queryobject.sqlobject=sqlobject;
     }
 
     console.log(queryobject)
@@ -274,6 +273,19 @@ function query_recommend(count,sqlobject){
                 o.idx=i;
                 //condition
                 o.condition=[];
+                // //search for the exact data
+                // var father=find_node_son(o.father);
+
+                // for(var m=0;m<o.type.length;m++){
+                //     if(o.type[m]=="S"){
+                //         var temp_where = []
+                //         o.condition.push({type:"where",data:[temp_where[3], temp_where[1], temp_where[2], temp_where[0],'region']})
+                //     }
+                //     if(o.type[m]=="T"){
+                //         var temp_time = gettimestring()
+                //         o.condition.push({type:"time",data:[]})
+                //     }
+                // }
                 if(o.type=="S"){
                     o.condition.push({type:"where",data:[o.data[3], o.data[1], o.data[2], o.data[0],'region']})
                 }
@@ -286,7 +298,7 @@ function query_recommend(count,sqlobject){
                 })
                 condition_reconode_newnode(o);
             }
-            for(var i=0;i<data.recommend.length;i++){                
+            for(var i=0;i<data.recommend.length;i++){    
                 query_result(data.recommend[i]);
             }
 
@@ -423,11 +435,11 @@ function query_result(node){
             time:["00:00:00", "23:59:59"],
             geo:[130, 110, 30, 20]
         };
-        // sqlobject=car_handlecondition(sqlobject, node.condition); 
-        sqlobject={
-            geo:[120.63331604003908, 120.62850952148436, 28.02016622874853, 28.01713539358922],
-            time:["00:00:00", "00:05:00"]
-        }
+        sqlobject=car_handlecondition(sqlobject, node.condition); 
+        // sqlobject={
+        //     geo:[120.63331604003908, 120.62850952148436, 28.02016622874853, 28.01713539358922],
+        //     time:["00:00:00", "00:05:00"]
+        // }
         QueryDb.getcar(
             sqlobject,
             function(data){                

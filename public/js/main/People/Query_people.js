@@ -232,7 +232,6 @@ function querypeople_old(count){
 }
 
 function querypeople(count){
-    // debugger
     var thisnode = nodelist.getlistiditem("node" + count);
     var condition=thisnode.getcondition();
     var sqlobject={
@@ -282,7 +281,7 @@ function querypeople(count){
     return sqlobject;
 }
 
-function people_handlecondition(){
+function people_handlecondition(sqlobject, condition){
     for(var i=0;i<condition.length;i++){
         var thiscondition=condition[i];
         if(thiscondition.type=="which"){

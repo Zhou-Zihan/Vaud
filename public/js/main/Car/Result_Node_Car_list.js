@@ -22,6 +22,7 @@ function  show_carlist(node) {
         })
         .on("mouseup", function () {
             isabledrag_new_condition=false;
+            // debugger
             add_mapobject("carlist",data,node.attr("count"))
             // debugger
             console.log(nodelist.getlistindexof(node.attr("count")))
