@@ -246,36 +246,7 @@ function querypeople(count){
         sqlobject,
         function(data){
             console.log(data)
-            
-            let temppeople = new Map();
-            data.forEach(o=>{
-                if(!temppeople.has(o.id))
-                    temppeople.set(o.id,{ID:o.id,pInfo:[]});
-                o.points.forEach(point=>{
-                    point.time = new Date(point.time);
-                    temppeople.get(o.id).pInfo.push(point);
-                })
-            })
-            temppeople = [...temppeople.values()]
-            console.log(temppeople)
-
-            data_node_newnode("people",[d3.select("#nodediv"+count).style("left").split("px")[0]-1+400,
-                                        d3.select("#nodediv"+count).style("top").split("px")[0]])
-            var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
-            tempnode.setdatalist(temppeople);
-            nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
-
-            lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))
-            show_data_nodetip(lastnode,"record");
-            nodelist.getlistiditem("node" + count).showdetail=false;
-            hide_condition_nodedetail(d3.select("#node" + count));
-
-            nodelist.pushfather_and_son({
-                father: count,
-                son: nodelist.getlist().length - 1
-            })
-            linepaint();
-            log("query people from node"+count)
+            people_handleresult(data, count);            
         }
     )
     return sqlobject;
@@ -311,4 +282,36 @@ function people_handlecondition(sqlobject, condition){
         }
     }
     return sqlobject;
+}
+
+function people_handleresult(data, count){
+    let temppeople = new Map();
+    data.forEach(o=>{
+        if(!temppeople.has(o.id))
+            temppeople.set(o.id,{ID:o.id,pInfo:[]});
+        o.points.forEach(point=>{
+            point.time = new Date(point.time);
+            temppeople.get(o.id).pInfo.push(point);
+        })
+    })
+    temppeople = [...temppeople.values()]
+    console.log(temppeople)
+
+    data_node_newnode("people",[d3.select("#nodediv"+count).style("left").split("px")[0]-1+400,
+                                d3.select("#nodediv"+count).style("top").split("px")[0]])
+    var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
+    tempnode.setdatalist(temppeople);
+    nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
+
+    lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))
+    show_data_nodetip(lastnode,"record");
+    nodelist.getlistiditem("node" + count).showdetail=false;
+    hide_condition_nodedetail(d3.select("#node" + count));
+
+    nodelist.pushfather_and_son({
+        father: count,
+        son: nodelist.getlist().length - 1
+    })
+    linepaint();
+    log("query people from node"+count)
 }

@@ -160,13 +160,26 @@ QueryDb.recommend_init=function(func){
 		,function(result) {
 			func(result);
 		}, false);
+};
+
+QueryDb.getByDataId=function(condition,fun){
+	QueryDb.query({
+		data:condition,
+		url:"http://10.76.0.196:7001/queryByDataId",
+		type:"POST"
+	}
+	, function(result) {
+		func(result);
+	}, false);
 }
 
-QueryDb.recommend_init(
-	function(data){
-		console.log(data)
-	}
-);
+
+
+// QueryDb.recommend_init(
+// 	function(data){
+// 		console.log(data)
+// 	}
+// );
 
 var qm = (function() {
 

@@ -128,7 +128,7 @@ function new_reco_drag(count,type,mousex,mousey){
             }
             linepaint();
             
-            query(nodelist.getlistlength()-1)
+            query(nodelist.getlistlength()-1, recolist.results[count].data)
 
             d3.select(".drag_conditiondiv").remove();
         })

@@ -213,40 +213,7 @@ function querycarnormal(sqlobject,count){
             sqlobject,
             function(data){
                 console.log(data)
-
-                // 2013-12-31T16:00:18.000Z
-                let tempcar = new Map();
-                data.forEach(o=>{
-                    var Taxi_name = o.id.replace(/([.][^.]+)$/,"");
-                    if(!tempcar.has(Taxi_name))
-                        tempcar.set(Taxi_name,{ID:Taxi_name,texiInfo:[]});
-                    o.points.forEach(point=>{
-                        point.time = new Date(point.time);
-                        tempcar.get(Taxi_name).texiInfo.push(point);
-                    })
-                })
-                tempcar = [...tempcar.values()]
-                console.log(tempcar)
-
-
-                data_node_newnode("car", [d3.select("#nodediv" + count).style("left").split("px")[0] - 1 + 400,
-                    d3.select("#nodediv" + count).style("top").split("px")[0]])
-                var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
-                tempnode.setdatalist(tempcar);
-                // tempnode.timearea=["2014-1-01 "+sqlobject.time[0].substr(0,5), "2014-1-01 "+sqlobject.time[1].substr(0,5)];
-                nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
-
-                lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))
-                show_data_nodetip(lastnode, "record");
-                nodelist.getlistiditem("node" + count).showdetail = false;
-                hide_condition_nodedetail(d3.select("#node" + count));
-
-                nodelist.pushfather_and_son({
-                    father: count,
-                    son: nodelist.getlist().length - 1
-                })
-                linepaint();
-                log("Search taxis from " + d3.select("#nodenamenode"+count)[0][0].outerText)
+                car_handleresult(data, count);                
           });
 }
 
@@ -281,4 +248,40 @@ function car_handlecondition(sqlobject, condition){
     }
 
     return sqlobject;
+}
+
+function car_handleresult(data, count){
+    // 2013-12-31T16:00:18.000Z
+    let tempcar = new Map();
+    data.forEach(o=>{
+        var Taxi_name = o.id.replace(/([.][^.]+)$/,"");
+        if(!tempcar.has(Taxi_name))
+            tempcar.set(Taxi_name,{ID:Taxi_name,texiInfo:[]});
+        o.points.forEach(point=>{
+            point.time = new Date(point.time);
+            tempcar.get(Taxi_name).texiInfo.push(point);
+        })
+    })
+    tempcar = [...tempcar.values()]
+    console.log(tempcar)
+
+
+    data_node_newnode("car", [d3.select("#nodediv" + count).style("left").split("px")[0] - 1 + 400,
+        d3.select("#nodediv" + count).style("top").split("px")[0]])
+    var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
+    tempnode.setdatalist(tempcar);
+    // tempnode.timearea=["2014-1-01 "+sqlobject.time[0].substr(0,5), "2014-1-01 "+sqlobject.time[1].substr(0,5)];
+    nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
+
+    lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))
+    show_data_nodetip(lastnode, "record");
+    nodelist.getlistiditem("node" + count).showdetail = false;
+    hide_condition_nodedetail(d3.select("#node" + count));
+
+    nodelist.pushfather_and_son({
+        father: count,
+        son: nodelist.getlist().length - 1
+    })
+    linepaint();
+    log("Search taxis from " + d3.select("#nodenamenode"+count)[0][0].outerText)
 }

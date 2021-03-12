@@ -81,23 +81,8 @@ function querypoi(count){
         sqlobject,
         function(data){
             console.log("query_poi result",data)
-            data_node_newnode("point_of_interest",[d3.select("#nodediv"+count).style("left").split("px")[0]-1+400,
-            d3.select("#nodediv"+count).style("top").split("px")[0]])
-            var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
-            tempnode.setdatalist(data);
-            nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
-
-            lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))
-            show_data_nodetip(lastnode,"record");
-            nodelist.getlistiditem("node" + count).showdetail=false;
-            hide_condition_nodedetail(d3.select("#node" + count));
-
-            nodelist.pushfather_and_son({
-                father: count,
-                son: nodelist.getlist().length - 1
-            })
-            linepaint();
-            log("query poi from node"+count)
+            poi_handleresult(data, count);
+           
         }
     )
 
@@ -151,4 +136,24 @@ function poi_handlecondition(sqlobject, condition){
         }
     }
     return sqlobject;
+}
+
+function poi_handleresult(data, count){
+    data_node_newnode("point_of_interest",[d3.select("#nodediv"+count).style("left").split("px")[0]-1+400,
+    d3.select("#nodediv"+count).style("top").split("px")[0]])
+    var tempnode = nodelist.getlistindexof(nodelist.getlistlength() - 1);
+    tempnode.setdatalist(data);
+    nodelist.changelistiditem(nodelist.getlistlength() - 1, tempnode)
+
+    lastnode = d3.select("#node" + (nodelist.getlistlength() - 1))
+    show_data_nodetip(lastnode,"record");
+    nodelist.getlistiditem("node" + count).showdetail=false;
+    hide_condition_nodedetail(d3.select("#node" + count));
+
+    nodelist.pushfather_and_son({
+        father: count,
+        son: nodelist.getlist().length - 1
+    })
+    linepaint();
+    log("query poi from node"+count)
 }

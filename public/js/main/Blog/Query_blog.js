@@ -111,7 +111,7 @@ function queryblog(count){
     var sqlobject={};
 
     if(condition.length>0){
-        sqlobject=bolg_handlecondition(sqlobject, condition);        
+        sqlobject=blog_handlecondition(sqlobject, condition);        
     }
 
     console.log(condition, sqlobject);
@@ -119,39 +119,15 @@ function queryblog(count){
     QueryDb.getWeibo(
         sqlobject,
         function(data){
-            data.forEach(o=>{
-                o.time=new Date(o.time)
-            })
-
-            data_node_newnode("blog"
-                ,[d3.select("#nodediv"+count).style("left").split("px")[0]-1+400,
-                    d3.select("#nodediv"+count).style("top").split("px")[0]]
-            )
-            var tempnode=nodelist.getlistindexof(nodelist.getlistlength()-1);
-            tempnode.setdatalist(data);
-            nodelist.changelistiditem(nodelist.getlistlength()-1,tempnode)
-
-            //show_detail
-            lastnode=d3.select("#node" + (nodelist.getlistlength()-1))
-            show_data_nodetip(lastnode,"record");
-            nodelist.getlistiditem("node" + count).showdetail=false;
-            hide_condition_nodedetail(d3.select("#node" + count));
-
-            //draw line
-            nodelist.pushfather_and_son({
-                father: count,
-                son: nodelist.getlist().length - 1
-            })
-            linepaint();
-
-            log("Search blogs from " + d3.select("#nodenamenode"+count)[0][0].outerText)
+            console.log(data);
+            blog_handleresult(data, count);            
         }
     )
 
     return sqlobject;
 }
 
-function bolg_handlecondition(sqlobject, condition){
+function blog_handlecondition(sqlobject, condition){
     for(var i=0;i<condition.length;i++){
         var thiscondition=condition[i];
         if(thiscondition.type=="which"){
@@ -181,4 +157,33 @@ function bolg_handlecondition(sqlobject, condition){
         }
     }
     return sqlobject;
+}
+
+function blog_handleresult(data, count){
+    data.forEach(o=>{
+        o.time=new Date(o.time)
+    })
+
+    data_node_newnode("blog"
+        ,[d3.select("#nodediv"+count).style("left").split("px")[0]-1+400,
+            d3.select("#nodediv"+count).style("top").split("px")[0]]
+    )
+    var tempnode=nodelist.getlistindexof(nodelist.getlistlength()-1);
+    tempnode.setdatalist(data);
+    nodelist.changelistiditem(nodelist.getlistlength()-1,tempnode)
+
+    //show_detail
+    lastnode=d3.select("#node" + (nodelist.getlistlength()-1))
+    show_data_nodetip(lastnode,"record");
+    nodelist.getlistiditem("node" + count).showdetail=false;
+    hide_condition_nodedetail(d3.select("#node" + count));
+
+    //draw line
+    nodelist.pushfather_and_son({
+        father: count,
+        son: nodelist.getlist().length - 1
+    })
+    linepaint();
+
+    log("Search blogs from " + d3.select("#nodenamenode"+count)[0][0].outerText)
 }
