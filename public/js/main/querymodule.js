@@ -173,8 +173,6 @@ QueryDb.getByDataId=function(condition,fun){
 	}, false);
 }
 
-
-
 QueryDb.recommend_init(
 	function(data){
 		console.log(data)

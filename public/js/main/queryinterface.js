@@ -219,9 +219,8 @@ function query(count, isfrom_reco_result) {
         }
 
     }
-    // debugger
+    
     query_recommend(count,sqlobject)
-
 }
 
 function query_recommend(count,sqlobject){
@@ -266,6 +265,9 @@ function query_recommend(count,sqlobject){
         queryobject.source=thisnode.type;
         queryobject.father=has_father;
         queryobject.dataid=thisnode.fromexist_id;
+        if(thisnode.type=="car"){
+            queryobject.dataid += ".LOG"
+        }
         queryobject.sqlobject=sqlobject;
     }
 
@@ -275,7 +277,7 @@ function query_recommend(count,sqlobject){
         queryobject,
         function(data){
             console.log(data)
-            debugger
+            // debugger
             
             recolist=Recolist.createNew();
             d3.selectAll(".reconodediv").remove();
