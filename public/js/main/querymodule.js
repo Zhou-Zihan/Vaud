@@ -169,17 +169,17 @@ QueryDb.getByDataId=function(condition,fun){
 		type:"POST"
 	}
 	, function(result) {
-		func(result);
+		fun(result);
 	}, false);
 }
 
 
 
-// QueryDb.recommend_init(
-// 	function(data){
-// 		console.log(data)
-// 	}
-// );
+QueryDb.recommend_init(
+	function(data){
+		console.log(data)
+	}
+);
 
 var qm = (function() {
 

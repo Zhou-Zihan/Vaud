@@ -271,33 +271,19 @@ function query_recommend(count,sqlobject){
 
     console.log(queryobject)
 
-    // QueryDb.getrecommend(
-    //     queryobject,
-    //     function(data){
-    //         console.log(data)
-            var data={
-                "id": 1, 
-                "recommend": [
-                    {"id": 3, 
-                    "father": 1, 
-                    "source": "point_of_interest", 
-                    "dataid": "2a35a121667b63be42d63e84",
-                    "mode": 2,
-                    "sqlobject":{"geo":[120.66808428955079, 120.66408428955079, 28.01710810852051, 28.01310810852051]}
-                }, {"id": 7, 
-                    "father": 1, 
-                    "source": "car", 
-                    "dataid": "b7da67d30347bc9cb04c49c2",
-                    "mode": 1,
-                    "sqlobject":{"time": ["00:03:00", "00:07:00"]}
-                }]
-            }
+    QueryDb.getrecommend(
+        queryobject,
+        function(data){
+            console.log(data)
+            debugger
             
             recolist=Recolist.createNew();
             d3.selectAll(".reconodediv").remove();
 
             //data.id 
-            thisnode.recoid=data.id;
+            if(queryobject.behavior!="selectRecommend"){
+                thisnode.recoid=data.id;
+            }
 
             //data.recommendrecomm
             for(var i=0;i<data.recommend.length;i++){
@@ -315,7 +301,7 @@ function query_recommend(count,sqlobject){
                 }
                 if(temp_condition.length==1){
                     o.condition=temp_condition;
-                }else if(temp_condition==2){
+                }else if(temp_condition.length==2){
                     o.condition.push({type:"+", data:temp_condition});
                 }
                 recolist.pushfather_and_son({
@@ -324,13 +310,13 @@ function query_recommend(count,sqlobject){
                 })
                 condition_reconode_newnode(o);
             }
-            for(var i=0;i<data.recommend.length;i++){    
+            for(var i=0;i<data.recommend.length;i++){   
                 query_result(data.recommend[i], thisnode.type);
             }
 
             console.log(nodelist, recolist);            
-    //     }
-    // )
+        }
+    )
 }
 
 function linepaint_for_reco(id){
@@ -409,7 +395,7 @@ function regularwhen(when){
 }
 
 function query_result(node,idtype){
-    const match = {"people": 0, "taxi": 1, "blog": 2, "point_of_interest": 3};
+    const match = {"people": 0, "car": 1, "blog": 2, "point_of_interest": 3};
 
     var sqlobject={
         targetSource: match[node.source],
@@ -422,6 +408,7 @@ function query_result(node,idtype){
     QueryDb.getByDataId(
         sqlobject,
         function(data){
+            // debugger
             console.log(data)
             recolist.results[node.idx]={
                 num:data.length,
