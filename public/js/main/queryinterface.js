@@ -220,7 +220,7 @@ function query(count, isfrom_reco_result) {
 
     }
     
-    query_recommend(count,sqlobject)
+    // query_recommend(count,sqlobject)
 }
 
 function query_recommend(count,sqlobject){

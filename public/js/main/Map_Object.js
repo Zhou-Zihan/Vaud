@@ -163,6 +163,7 @@ function add_mapobject(type,id,node){
     }
 
     if(type=="people") {
+        //TODO
             qm.getMultiWhoTraj(
                 [id.ID],1000,
          function (data) {

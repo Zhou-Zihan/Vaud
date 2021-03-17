@@ -107,7 +107,7 @@ function showobjectlist_peoplelist(obj){
         })
 
     thiscarlistdiv.append("img")
-        .attr("src","image/map_objlist_car.svg")
+        .attr("src","image/map_objlist_people.svg")
         .attr("height","30px")
         .attr("width","30px")
         .style("position","absolute")

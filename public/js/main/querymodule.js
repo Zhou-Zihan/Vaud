@@ -173,11 +173,11 @@ QueryDb.getByDataId=function(condition,fun){
 	}, false);
 }
 
-QueryDb.recommend_init(
-	function(data){
-		console.log(data)
-	}
-);
+// QueryDb.recommend_init(
+// 	function(data){
+// 		console.log(data)
+// 	}
+// );
 
 var qm = (function() {
 
