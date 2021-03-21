@@ -104,7 +104,7 @@
 let format = d3.time.format("%Y-%m-%dT%H:%M");
 
 
-var timearea=[format.parse( "2014-01-01T00:00" ) , format.parse( "2014-01-16T23:59" )];
+var timearea=[format.parse( "2014-01-01T00:00" ) , format.parse( "2014-01-01T23:59" )];
 var tleft=730,
     ttop=20,
     twidth=1100,

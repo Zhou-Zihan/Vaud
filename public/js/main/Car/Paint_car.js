@@ -5,7 +5,7 @@
  * @ car
  */
 
-function paint_cartraj(car){
+function paint_cartraj(car, str){
     var data=car.data;
 
     if(data.texiInfo.length>0){
@@ -65,6 +65,9 @@ function paint_cartraj(car){
                 else
                     polyline.attr("class","cartraj cartrajisnotmove cartrajpassagein")
 
+            }
+            if (typeof str !== 'undefined') {
+                polyline.attr('id', str)
             }
         }
     }
@@ -386,7 +389,7 @@ function paint_carlisttraj(carlist){
                         .attr("id","carlist_traj"+carlist.id)
                         .on("mouseup",function(){
                             console.log(d3.select(this).attr("opacity"))
-                            add_mapobject("car",d3.select(this).attr("carid"),carlist.node)
+                            // add_mapobject("car",d3.select(this).attr("carid"),carlist.node)
                         });
                     if (carlist.ismove != 0) {
                         var polylineupper = d3.select("#mapobjectsvg")
