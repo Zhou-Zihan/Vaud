@@ -146,20 +146,20 @@ function queryblog(count) {
 
 	console.log(condition, sqlobject)
 
-	// QueryDb.getWeibo(sqlobject, function (data) {
-	// 	console.log(data)
-	// 	blog_handleresult(data, count)
-	// })
-	$(function () {
-		$.ajax({
-			url: 'statis/case1/1-blog.json',
-			dataType: 'json',
-			success: function (data) {
-				console.log(data)
-				blog_handleresult(data, count)
-			},
-		})
+	QueryDb.getWeibo(sqlobject, function (data) {
+		console.log(data)
+		blog_handleresult(data, count)
 	})
+	// $(function () {
+	// 	$.ajax({
+	// 		url: 'statis/case1/1-blog.json',
+	// 		dataType: 'json',
+	// 		success: function (data) {
+	// 			console.log(data)
+	// 			blog_handleresult(data, count)
+	// 		},
+	// 	})
+	// })
 
 	return sqlobject
 }

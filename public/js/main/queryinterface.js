@@ -11,7 +11,7 @@ var nodedrag = { boolean: false }
 var nownode = null
 var nodesvgmove = { boolean: false }
 var thecase = 1
-var casestep = 1
+var casestep = 0
 
 var operationstack = []
 
@@ -701,6 +701,7 @@ function query_recommend_case(count, sqlobject) {
 	})
 
 	console.log(queryobject)
+
 	QueryDb.getrecommend(queryobject, function (data) {
 		console.log(data)
 
@@ -752,15 +753,68 @@ function query_recommend_case(count, sqlobject) {
 			query_result_case(data.recommend[i], thisnode.type)
 		}
 	})
+
+	casestep++
 }
 
 function query_result_case(node, idtype) {
 	const match = { people: 0, car: 1, blog: 2, point_of_interest: 3 }
 
-	if(node.iscase){
-
-
-	}else{
+	if (node.iscase) {
+		if (node.source == 'people') {
+			var sqlobject = {
+				time: ['00:00:00', '23:59:59'],
+				geo: [130, 110, 30, 20],
+			}
+			sqlobject = people_handlecondition(sqlobject, node.condition)
+			QueryDb.getPeople(sqlobject, function (data) {
+				recolist.results[node.idx] = {
+					num: data.length,
+					data: data,
+				}
+				d3.select('.reco_num' + node.idx).text(data.length)
+			})
+		}
+		if (node.source == 'blog') {
+			var sqlobject = {}
+			sqlobject = bolg_handlecondition(sqlobject, node.condition)
+			QueryDb.getWeibo(sqlobject, function (data) {
+				data.forEach((o) => {
+					o.time = new Date(o.time)
+				})
+				recolist.results[node.idx] = {
+					num: data.length,
+					data: data,
+				}
+				d3.select('.reco_num' + node.idx).text(data.length)
+			})
+		}
+		if (node.source == 'point_of_interest') {
+			var sqlobject = {}
+			sqlobject = poi_handlecondition(sqlobject, node.condition)
+			QueryDb.getPoi(sqlobject, function (data) {
+				recolist.results[node.idx] = {
+					num: data.length,
+					data: data,
+				}
+				d3.select('.reco_num' + node.idx).text(data.length)
+			})
+		}
+		if (node.source == 'car') {
+			var sqlobject = {
+				time: ['00:00:00', '23:59:59'],
+				geo: [130, 110, 30, 20],
+			}
+			sqlobject = car_handlecondition(sqlobject, node.condition)
+			QueryDb.getcar(sqlobject, function (data) {
+				recolist.results[node.idx] = {
+					num: data.length,
+					data: data,
+				}
+				d3.select('.reco_num' + node.idx).text(data.length)
+			})
+		}
+	} else {
 		var sqlobject = {
 			targetSource: match[node.source],
 			originSource: match[idtype],

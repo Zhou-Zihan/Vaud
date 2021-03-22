@@ -46,7 +46,6 @@ QueryDb.getPoi = function (condition, func) {
 }
 
 QueryDb.getWeibo = function (condition, func) {
-	let result
 	QueryDb.query(
 		{
 			data: condition,
@@ -54,11 +53,10 @@ QueryDb.getWeibo = function (condition, func) {
 			type: 'POST',
 		},
 		function (data) {
-			result = data
+			func(data)
 		},
-		false
+		true
 	)
-	func(result)
 }
 
 QueryDb.getValue = function (condition, func) {
@@ -237,9 +235,9 @@ QueryDb.scubeHeatMap = function () {
 
 // QueryDb.scubeHeatMap()
 
-// QueryDb.recommend_init(function (data) {
-// 	console.log(data)
-// })
+QueryDb.recommend_init(function (data) {
+	console.log(data)
+})
 
 var qm = (function () {
 	var qm = { version: '1.0.0' }
