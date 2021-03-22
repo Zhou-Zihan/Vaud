@@ -322,7 +322,11 @@ function showpeoplelistchart(peoplelist, highlightpeople) {
 	for (var i = 0; i < thisdata.length; i++) {
 		latlngs.push(L.latLng(thisdata[i].latitude, thisdata[i].longitude))
 	}
-	Heatmap_Object.setOptions({ radius: 10, max: thisdata.length / 1000 })
+	Heatmap_Object.setOptions({
+		radius: 10,
+		max: thisdata.length / 1000,
+		blur: 30,
+	})
 	objectheat_latlon = latlngs
 	heatmapalive_detection()
 }

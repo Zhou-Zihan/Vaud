@@ -333,7 +333,8 @@ function showcarchart(car,highlightcar) {
         }
         // debugger
         // {gradient:{0: '#ffffff',0.8: 'red'}
-        Heatmap_Object.setOptions({radius: 10,max: thisdata.length/5000*mapheatmap_value})
+        // Heatmap_Object.setOptions({radius: 10,max: thisdata.length/5000*mapheatmap_value})
+        Heatmap_Object.setOptions({radius: 10,max: 15, blur:25})
         objectheat_latlon=latlngs;
         heatmapalive_detection()
     

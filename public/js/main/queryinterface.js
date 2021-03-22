@@ -10,6 +10,8 @@ var mousex, mousey
 var nodedrag = { boolean: false }
 var nownode = null
 var nodesvgmove = { boolean: false }
+var thecase = 1
+var casestep = 1
 
 var operationstack = []
 
@@ -370,7 +372,11 @@ function query(count, isfrom_reco_result) {
 		}
 	}
 
-	// query_recommend(count, sqlobject)
+	if (thecase == 1) {
+		query_recommend_case(count, sqlobject)
+	} else {
+		query_recommend(count, sqlobject)
+	}
 }
 
 function query_recommend(count, sqlobject) {
@@ -637,64 +643,140 @@ function query_result(node, idtype) {
 }
 
 function query_recommend_case(count, sqlobject) {
+	var queryobject = {}
+
 	var thisnode = nodelist.getlistiditem('node' + count)
+	var has_father = -1
+	if (thisnode.recoid != -1) {
+		queryobject.behavior = 'selectRecommend'
+	} else {
+		var father_and_son = nodelist.getfather_and_son()
+		for (var i = 0; i < father_and_son.length; i++) {
+			if (father_and_son[i].son == count) {
+				has_father = father_and_son[i].father
+				break
+			}
+		}
+		for (var i = 0; i < father_and_son.length; i++) {
+			if (father_and_son[i].son == has_father) {
+				has_father = father_and_son[i].father
+				var fathernode = nodelist.getlistiditem('node' + has_father)
+				has_father = fathernode.recoid
+				break
+			}
+		}
+		if (has_father == -1) {
+			queryobject.behavior = 'rootQuery'
+		} else {
+			queryobject.behavior = 'childQuery'
+		}
+	}
+
+	if (queryobject.behavior == 'selectRecommend') {
+		queryobject.id = thisnode.recoid
+	}
+	if (queryobject.behavior == 'rootQuery') {
+		queryobject.source = thisnode.type
+		queryobject.sqlobject = sqlobject
+	}
+	if (queryobject.behavior == 'childQuery') {
+		queryobject.source = thisnode.type
+		queryobject.father = has_father
+		queryobject.dataid = thisnode.fromexist_id
+		if (thisnode.type == 'car') {
+			queryobject.dataid += '.LOG'
+		}
+		queryobject.sqlobject = sqlobject
+	}
 
 	$(function () {
 		$.ajax({
-			url: 'statis/case1/' + count + '-recommend.json',
+			url: 'statis/case' + thecase + '/reco_for_case.json',
 			dataType: 'json',
+			async: false,
 			success: function (data) {
-				console.log(data)
-				recolist = Recolist.createNew()
-				d3.selectAll('.reconodediv').remove()
-				thisnode.recoid = data.id
-
-				//data.recommendrecomm
-				for (var i = 0; i < data.recommend.length; i++) {
-					var o = data.recommend[i]
-					//idx
-					o.idx = i
-					//condition
-					o.condition = []
-					var temp_condition = []
-					if (o.sqlobject.geo != undefined) {
-						temp_condition.push({
-							type: 'where',
-							data: [
-								o.sqlobject.geo[3],
-								o.sqlobject.geo[1],
-								o.sqlobject.geo[2],
-								o.sqlobject.geo[0],
-								'region',
-							],
-						})
-					}
-					if (o.sqlobject.time != undefined) {
-						temp_condition.push({
-							type: 'time',
-							data: [
-								'2014-1-01 ' + o.sqlobject.time[0].substr(0, 5),
-								'2014-1-01 ' + o.sqlobject.time[1].substr(0, 5),
-							],
-						})
-					}
-					if (temp_condition.length == 1) {
-						o.condition = temp_condition
-					} else if (temp_condition.length == 2) {
-						o.condition.push({ type: '+', data: temp_condition })
-					}
-					recolist.pushfather_and_son({
-						father: o.father,
-						son: o.idx,
-					})
-					condition_reconode_newnode(o)
-				}
-				for (var i = 0; i < data.recommend.length; i++) {
-					query_result(data.recommend[i], thisnode.type)
-				}
-
-				console.log(nodelist, recolist)
+				queryobject.case = data[casestep]
 			},
 		})
 	})
+
+	console.log(queryobject)
+	QueryDb.getrecommend(queryobject, function (data) {
+		console.log(data)
+
+		recolist = Recolist.createNew()
+		d3.selectAll('.reconodediv').remove()
+
+		if (queryobject.behavior != 'selectRecommend') {
+			thisnode.recoid = data.id
+		}
+
+		for (var i = 0; i < data.recommend.length; i++) {
+			var o = data.recommend[i]
+			o.idx = i
+			var temp_condition = []
+			if (o.sqlobject.geo != undefined) {
+				temp_condition.push({
+					type: 'where',
+					data: [
+						o.sqlobject.geo[3],
+						o.sqlobject.geo[1],
+						o.sqlobject.geo[2],
+						o.sqlobject.geo[0],
+						'region',
+					],
+				})
+			}
+			if (o.sqlobject.time != undefined) {
+				temp_condition.push({
+					type: 'time',
+					data: [
+						'2014-1-01' + o.sqlobject.time[0].substr(0, 5),
+						'2014-1-01' + o.sqlobject.time[1].substr(0, 5),
+					],
+				})
+			}
+			if (temp_condition.length == 1) {
+				o.condition = temp_condition
+			} else if (temp_condition.length == 2) {
+				o.condition = [{ type: '+', data: temp_condition }]
+			}
+			recolist.pushfather_and_son({
+				father: o.father,
+				son: o.idx,
+			})
+			condition_reconode_newnode(o)
+		}
+
+		for (var i = 0; i < data.recommend.length; i++) {
+			query_result_case(data.recommend[i], thisnode.type)
+		}
+	})
+}
+
+function query_result_case(node, idtype) {
+	const match = { people: 0, car: 1, blog: 2, point_of_interest: 3 }
+
+	if(node.iscase){
+
+
+	}else{
+		var sqlobject = {
+			targetSource: match[node.source],
+			originSource: match[idtype],
+			id: node.dataid,
+			mode: node.mode,
+		}
+		console.log(sqlobject)
+
+		QueryDb.getByDataId(sqlobject, function (data) {
+			// debugger
+			console.log(data)
+			recolist.results[node.idx] = {
+				num: data.length,
+				data: data,
+			}
+			d3.select('.reco_num' + node.idx).text(data.length)
+		})
+	}
 }
