@@ -71,6 +71,13 @@ function repaint_map_object() {
 			}
 		}
 	}
+	if (thecase == 1 && casestep == 4) {
+		debugger
+		d3.select('#mapobjectsvg')
+			.selectAll('.carlisttrajpolyline')
+			.style('stroke-opacity', 0.2)
+			.attr('opacity', 0.2)
+	}
 	$('#mapobjectsvg').show()
 }
 

@@ -181,12 +181,14 @@ function blog_handlecondition(sqlobject, condition) {
 			]
 		}
 		if (thiscondition.type == 'time') {
-			// sqlobject.time = thiscondition.data
-			sqlobject.time=[thiscondition.data[0].split(" ")[1]+":00",thiscondition.data[1].split(" ")[1]+":00"]
+			sqlobject.time = [
+				thiscondition.data[0].split(' ')[1] + ':00',
+				thiscondition.data[1].split(' ')[1] + ':00',
+			]
 		}
 		if (thiscondition.type == '+') {
 			for (var ii = 0; ii < thiscondition.data.length; ii++) {
-				if (thiscondition.type == 'where') {
+				if (thiscondition.data[ii].type == 'where') {
 					sqlobject.geo = [
 						thiscondition.data[ii].data[3],
 						thiscondition.data[ii].data[1],
@@ -194,10 +196,13 @@ function blog_handlecondition(sqlobject, condition) {
 						thiscondition.data[ii].data[0],
 					]
 				}
-				if (thiscondition.type == 'time') {
-					sqlobject.time = thiscondition.data[ii].data
+				if (thiscondition.data[ii].type == 'time') {
+					sqlobject.time = [
+						thiscondition.data[ii].data[0].split(' ')[1] + ':00',
+						thiscondition.data[ii].data[1].split(' ')[1] + ':00',
+					]
 				}
-				if (thiscondition.type == 'what') {
+				if (thiscondition.data[i].type == 'what') {
 					sqlobject.keyword = thiscondition.data[ii].data[1]
 				}
 			}

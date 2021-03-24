@@ -30,7 +30,7 @@ function condition_reconode_newnode(reconode) {
 		.style('height', '150px')
 		.style('position', 'absolute')
 		.style('top', top + 90 + 200 * (recolist.getlistlength() - 1) + 'px')
-		.style('left', left + 40 + 'px')
+		.style('left', left + 30 + 'px')
 		.style('z-index', 1000001)
 		.on('mouseover', function () {
 			linepaint_for_reco(reconode.idx)
@@ -50,8 +50,7 @@ function condition_reconode_newnode(reconode) {
 		.append('img')
 		.attr('src', 'image/bgRecoCard.svg')
 		.style('left', '0')
-		.style('width', '220px')
-		.style('height', '100%')
+		.style('width', '240px')
 		.style('top', '0')
 		.attr('draggable', false)
 
@@ -214,6 +213,7 @@ function show_result_heatmap(id) {
 		Heatmap_Object.setOptions({
 			radius: 10,
 			max: (latlngs.length / 5000) * mapheatmap_value,
+			blur: 25,
 		})
 		objectheat_latlon = latlngs
 		heatmapalive_detection()
@@ -256,7 +256,8 @@ function show_result_heatmap(id) {
 		}
 		Heatmap_Object.setOptions({
 			radius: 10,
-			max: (latlngs.length / 5000) * mapheatmap_value,
+			max: (latlngs.length / 15000) * mapheatmap_value,
+			blur: 25,
 		})
 		objectheat_latlon = latlngs
 		heatmapalive_detection()
@@ -267,23 +268,42 @@ function show_result_traj(dataid, father_bk) {
 	var father = find_node_son(father_bk)
 	var node = nodelist.getlistiditem('node' + father)
 	var data = node.datalist
-	var result = null
+	var result = { data: null }
 	if (node.type == 'car') {
-		for (i = 0; i < data.length; i++) {
-			if (data[i].ID == dataid.substr(0, 7)) {
-				result.data = data[i]
-				break
-			}
-		}
-		paint_cartraj(result, 'just-for-show')
+		// for (i = 0; i < data.length; i++) {
+		// 	if (data[i].ID == dataid.substr(0, 7)) {
+		// 		result.data = data[i]
+		// 		break
+		// 	}
+		// }
+		// console.log(result)
+		// paint_cartraj(result, 'just-for-show')
 	}
 	if (node.type == 'people') {
-		for (i = 0; i < data.length; i++) {
-			if (data[i].id == dataid.substr(0, 7)) {
-				result.data = data[i]
-				break
+		if (thecase == 1 && casestep >= 2) {
+			var queryobject = {
+				ids: ['460008794504403'],
+				source: 0,
 			}
+			QueryDb.getOneDataById(
+				queryobject,
+				function (data) {
+					let temppeople = new Map()
+					data.forEach((o) => {
+						if (!temppeople.has(o.id)) {
+							temppeople.set(o.id, { ID: o.id, pInfo: [] })
+						}
+						o.data.forEach((point) => {
+							point.time = new Date(point.time)
+							temppeople.get(o.id).pInfo.push(point)
+						})
+					})
+					result.data = [...temppeople.values()][0]
+				},
+				false
+			)
+			console.log(result)
+			paint_peopletraj(result, 'just-for-show')
 		}
-		paint_peopletraj(result, 'just-for-show')
 	}
 }

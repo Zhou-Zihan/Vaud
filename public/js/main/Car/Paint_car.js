@@ -427,10 +427,17 @@ function paint_carlisttraj(carlist){
                 alpha=0.1;
             if(thislistnum>3000)
                 alpha=0.06;
-         // console.log(alpha) 
-            
+         // console.log(alpha)
+
     d3.select("#mapobjectsvg").selectAll(".carlisttrajpolyline").style("stroke-opacity",alpha)
                     .attr("opacity",alpha)
+    if (thecase == 1 && casestep == 4) {
+        debugger
+        d3.select('#mapobjectsvg')
+            .selectAll('.carlisttrajpolyline')
+            .style('stroke-opacity', 0.2)
+            .attr('opacity', 0.2)
+    }
 }
 
 function highlightpaint_carlisttraj(carlist){

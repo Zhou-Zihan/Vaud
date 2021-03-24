@@ -755,13 +755,13 @@ function query_recommend_case(count, sqlobject) {
 	})
 
 	casestep++
+	if (casestep >= 4) casestep == 4
 }
 
 function query_result_case(node) {
 	const match = { people: 0, car: 1, blog: 2, point_of_interest: 3 }
-	var father =  find_node_son(node.father)
+	var father = find_node_son(node.father)
 	var idtype = nodelist.getlistiditem('node' + father).type
-
 
 	if (node.iscase) {
 		if (node.source == 'people') {

@@ -6,7 +6,7 @@ QueryDb.query = function (myData, successFunc, isAsync) {
 		url: myData.url,
 		type: myData.type,
 		data: JSON.stringify(myData.data),
-		async: true,
+		async: isAsync,
 		success: function (res) {
 			// console.log(res)
 			successFunc(res)
@@ -85,7 +85,7 @@ QueryDb.getcar = function (condition, func) {
 		function (result) {
 			func(result)
 		},
-		false
+		true
 	)
 }
 
@@ -147,13 +147,13 @@ QueryDb.getrecommend = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.192:5000/recommend',
+			url: 'http://10.186.48.224:5000/recommend',
 			type: 'POST',
 		},
 		function (result) {
 			func(result)
 		},
-		false
+		true
 	)
 }
 
@@ -167,6 +167,20 @@ QueryDb.getPeople = function (condition, func) {
 		function (result) {
 			func(result)
 		},
+		true
+	)
+}
+
+QueryDb.getOneDataById = function (condition, func) {
+	QueryDb.query(
+		{
+			data: condition,
+			url: 'http://10.76.0.196:7001/getOneDataById',
+			type: 'POST',
+		},
+		function (result) {
+			func(result)
+		},
 		false
 	)
 }
@@ -175,13 +189,13 @@ QueryDb.recommend_init = function (func) {
 	QueryDb.query(
 		{
 			data: 'TEST',
-			url: 'http://10.76.0.192:5000/init',
+			url: 'http://10.186.48.224:5000/init',
 			type: 'POST',
 		},
 		function (result) {
 			func(result)
 		},
-		false
+		true
 	)
 }
 
@@ -195,7 +209,7 @@ QueryDb.getByDataId = function (condition, fun) {
 		function (result) {
 			fun(result)
 		},
-		false
+		true
 	)
 }
 

@@ -44,6 +44,7 @@ function paint_peopletraj(people, str) {
 	}
 	if (typeof str !== 'undefined') {
 		polyline.attr('id', str)
+		polylineupper.attr('id', str)
 	}
 }
 
