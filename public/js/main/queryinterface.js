@@ -780,7 +780,7 @@ function query_result_case(node) {
 		}
 		if (node.source == 'blog') {
 			var sqlobject = {}
-			sqlobject = bolg_handlecondition(sqlobject, node.condition)
+			sqlobject = blog_handlecondition(sqlobject, node.condition)
 			QueryDb.getWeibo(sqlobject, function (data) {
 				data.forEach((o) => {
 					o.time = new Date(o.time)
