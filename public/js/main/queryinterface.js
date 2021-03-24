@@ -732,8 +732,8 @@ function query_recommend_case(count, sqlobject) {
 				temp_condition.push({
 					type: 'time',
 					data: [
-						'2014-1-01' + o.sqlobject.time[0].substr(0, 5),
-						'2014-1-01' + o.sqlobject.time[1].substr(0, 5),
+						'2014-1-01 ' + o.sqlobject.time[0].substr(0, 5),
+						'2014-1-01 ' + o.sqlobject.time[1].substr(0, 5),
 					],
 				})
 			}
@@ -750,15 +750,18 @@ function query_recommend_case(count, sqlobject) {
 		}
 
 		for (var i = 0; i < data.recommend.length; i++) {
-			query_result_case(data.recommend[i], thisnode.type)
+			query_result_case(data.recommend[i])
 		}
 	})
 
 	casestep++
 }
 
-function query_result_case(node, idtype) {
+function query_result_case(node) {
 	const match = { people: 0, car: 1, blog: 2, point_of_interest: 3 }
+	var father =  find_node_son(node.father)
+	var idtype = nodelist.getlistiditem('node' + father).type
+
 
 	if (node.iscase) {
 		if (node.source == 'people') {
