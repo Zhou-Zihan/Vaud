@@ -38,7 +38,7 @@ queryrecommand
 				])
 			}
 			Heatmap_Object.setOptions({
-				radius: 100,
+				radius: 500,
 				max: 2,
 			})
 			heat.setLatLngs(latlngs)

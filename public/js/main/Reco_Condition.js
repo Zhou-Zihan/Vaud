@@ -295,34 +295,59 @@ function show_result_traj(dataid, father_bk) {
 			console.log(result)
 			paint_peopletraj(result, 'just-for-show')
 		}
-		if (thecase == 2 && casestep == 2) {
+		// if (thecase == 2 && casestep == 2) {
+		// 	var queryobject = {
+		// 		ids: ['460008302340300'],
+		// 		source: 0,
+		// 	}
+		// 	QueryDb.getOneDataById(
+		// 		queryobject,
+		// 		function (data) {
+		// 			let temppeople = new Map()
+		// 			data.forEach((o) => {
+		// 				if (!temppeople.has(o.id)) {
+		// 					temppeople.set(o.id, { ID: o.id, pInfo: [] })
+		// 				}
+		// 				o.data.forEach((point) => {
+		// 					point.time = new Date(point.time)
+		// 					temppeople.get(o.id).pInfo.push(point)
+		// 				})
+		// 			})
+		// 			result.data = [...temppeople.values()][0]
+		// 		},
+		// 		false
+		// 	)
+		// 	console.log(result)
+		// 	paint_peopletraj(result, 'just-for-show')
+		// }
+		// if (thecase == 2 && casestep == 4) {
+		// 	var queryobject = {
+		// 		ids: ['460008813640387'],
+		// 		source: 0,
+		// 	}
+		// 	QueryDb.getOneDataById(
+		// 		queryobject,
+		// 		function (data) {
+		// 			let temppeople = new Map()
+		// 			data.forEach((o) => {
+		// 				if (!temppeople.has(o.id)) {
+		// 					temppeople.set(o.id, { ID: o.id, pInfo: [] })
+		// 				}
+		// 				o.data.forEach((point) => {
+		// 					point.time = new Date(point.time)
+		// 					temppeople.get(o.id).pInfo.push(point)
+		// 				})
+		// 			})
+		// 			result.data = [...temppeople.values()][0]
+		// 		},
+		// 		false
+		// 	)
+		// 	console.log(result)
+		// 	paint_peopletraj(result, 'just-for-show')
+		// }
+		if (thecase == 2) {
 			var queryobject = {
-				ids: ['460008302340300'],
-				source: 0,
-			}
-			QueryDb.getOneDataById(
-				queryobject,
-				function (data) {
-					let temppeople = new Map()
-					data.forEach((o) => {
-						if (!temppeople.has(o.id)) {
-							temppeople.set(o.id, { ID: o.id, pInfo: [] })
-						}
-						o.data.forEach((point) => {
-							point.time = new Date(point.time)
-							temppeople.get(o.id).pInfo.push(point)
-						})
-					})
-					result.data = [...temppeople.values()][0]
-				},
-				false
-			)
-			console.log(result)
-			paint_peopletraj(result, 'just-for-show')
-		}
-		if (thecase == 2 && casestep == 4) {
-			var queryobject = {
-				ids: ['460008813640387'],
+				ids: [dataid],
 				source: 0,
 			}
 			QueryDb.getOneDataById(
