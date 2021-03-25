@@ -10,7 +10,7 @@ var mousex, mousey
 var nodedrag = { boolean: false }
 var nownode = null
 var nodesvgmove = { boolean: false }
-var thecase = 1
+var thecase = 2
 var casestep = 0
 
 var operationstack = []
@@ -372,7 +372,7 @@ function query(count, isfrom_reco_result) {
 		}
 	}
 
-	if (thecase == 1) {
+	if (thecase >= 1) {
 		query_recommend_case(count, sqlobject)
 	} else {
 		query_recommend(count, sqlobject)
@@ -695,7 +695,9 @@ function query_recommend_case(count, sqlobject) {
 			dataType: 'json',
 			async: false,
 			success: function (data) {
-				queryobject.case = data[casestep]
+				if (JSON.stringify(data[casestep]) != '{}') {
+					queryobject.case = data[casestep]
+				}
 			},
 		})
 	})
@@ -755,7 +757,8 @@ function query_recommend_case(count, sqlobject) {
 	})
 
 	casestep++
-	if (casestep >= 4) casestep == 4
+	if (thecase==1 && casestep >= 4) casestep == 4
+	if (thecase==2 && casestep >= 5) casestep == 4
 }
 
 function query_result_case(node) {

@@ -35,7 +35,8 @@ QueryDb.getPoi = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.196:7001/poi',
+			// url: 'http://10.76.0.196:7001/poi',
+			url: 'http://10.76.0.196:7002/poi',
 			type: 'POST',
 		},
 		function (result) {
@@ -158,10 +159,12 @@ QueryDb.getrecommend = function (condition, func) {
 }
 
 QueryDb.getPeople = function (condition, func) {
+	condition.boolFull = true
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.196:7001/phone',
+			// url: 'http://10.76.0.196:7001/phone',
+			url: 'http://10.76.0.196:7002/phone',
 			type: 'POST',
 		},
 		function (result) {
@@ -203,7 +206,8 @@ QueryDb.getByDataId = function (condition, fun) {
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.196:7001/queryByDataId',
+			// url: 'http://10.76.0.196:7001/queryByDataId',
+			url: 'http://10.76.0.196:7002/queryByDataId',
 			type: 'POST',
 		},
 		function (result) {
