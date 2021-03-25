@@ -148,7 +148,7 @@ QueryDb.getrecommend = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.186.204.177:5000/recommend',
+			url: 'http://10.76.0.192:5000/recommend',
 			type: 'POST',
 		},
 		function (result) {
@@ -193,7 +193,7 @@ QueryDb.recommend_init = function (func) {
 	QueryDb.query(
 		{
 			data: 'TEST',
-			url: 'http://10.186.204.177:5000/init',
+			url: 'http://10.76.0.192:5000/init',
 			type: 'POST',
 		},
 		function (result) {

@@ -34,12 +34,13 @@ queryrecommand
 				latlngs.push([
 					result[i].latitude,
 					result[i].longitude,
-					result[i].value * 100,
+					result[i].value,
 				])
 			}
-			Heatmap_Object.setOptions({
-				radius: 500,
-				max: 2,
+			heat.setOptions({
+				radius: 100,
+				max: 0.1,
+				blur: 25
 			})
 			heat.setLatLngs(latlngs)
 		} else {
