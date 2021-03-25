@@ -269,20 +269,60 @@ function show_result_traj(dataid, father_bk) {
 	var node = nodelist.getlistiditem('node' + father)
 	var data = node.datalist
 	var result = { data: null }
-	if (node.type == 'car') {
-		// for (i = 0; i < data.length; i++) {
-		// 	if (data[i].ID == dataid.substr(0, 7)) {
-		// 		result.data = data[i]
-		// 		break
-		// 	}
-		// }
-		// console.log(result)
-		// paint_cartraj(result, 'just-for-show')
-	}
 	if (node.type == 'people') {
 		if (thecase == 1 && casestep >= 2) {
 			var queryobject = {
 				ids: ['460008794504403'],
+				source: 0,
+			}
+			QueryDb.getOneDataById(
+				queryobject,
+				function (data) {
+					let temppeople = new Map()
+					data.forEach((o) => {
+						if (!temppeople.has(o.id)) {
+							temppeople.set(o.id, { ID: o.id, pInfo: [] })
+						}
+						o.data.forEach((point) => {
+							point.time = new Date(point.time)
+							temppeople.get(o.id).pInfo.push(point)
+						})
+					})
+					result.data = [...temppeople.values()][0]
+				},
+				false
+			)
+			console.log(result)
+			paint_peopletraj(result, 'just-for-show')
+		}
+		if (thecase == 2 && casestep == 2) {
+			var queryobject = {
+				ids: ['460008302340300'],
+				source: 0,
+			}
+			QueryDb.getOneDataById(
+				queryobject,
+				function (data) {
+					let temppeople = new Map()
+					data.forEach((o) => {
+						if (!temppeople.has(o.id)) {
+							temppeople.set(o.id, { ID: o.id, pInfo: [] })
+						}
+						o.data.forEach((point) => {
+							point.time = new Date(point.time)
+							temppeople.get(o.id).pInfo.push(point)
+						})
+					})
+					result.data = [...temppeople.values()][0]
+				},
+				false
+			)
+			console.log(result)
+			paint_peopletraj(result, 'just-for-show')
+		}
+		if (thecase == 2 && casestep == 4) {
+			var queryobject = {
+				ids: ['460008813640387'],
 				source: 0,
 			}
 			QueryDb.getOneDataById(

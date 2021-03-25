@@ -754,11 +754,13 @@ function query_recommend_case(count, sqlobject) {
 		for (var i = 0; i < data.recommend.length; i++) {
 			query_result_case(data.recommend[i])
 		}
+
+		recolist.heatmap = data.heatmap
 	})
 
 	casestep++
-	if (thecase==1 && casestep >= 4) casestep == 4
-	if (thecase==2 && casestep >= 5) casestep == 4
+	if (thecase == 1 && casestep >= 4) casestep == 4
+	if (thecase == 2 && casestep >= 5) casestep == 4
 }
 
 function query_result_case(node) {
@@ -766,7 +768,7 @@ function query_result_case(node) {
 	var father = find_node_son(node.father)
 	var idtype = nodelist.getlistiditem('node' + father).type
 
-	if (node.iscase) {
+	if (node.iscase && thecase == 1) {
 		if (node.source == 'people') {
 			var sqlobject = {
 				time: ['00:00:00', '23:59:59'],
