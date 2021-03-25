@@ -702,6 +702,8 @@ function query_recommend_case(count, sqlobject) {
 		})
 	})
 
+	queryobject.step = casestep
+
 	console.log(queryobject)
 
 	QueryDb.getrecommend(queryobject, function (data) {

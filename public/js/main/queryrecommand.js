@@ -1,7 +1,8 @@
 let queryrecommand = d3.select('#queryrecommand')
 var heat = L.heatLayer([]).addTo(map)
 map.on('zoomend', function () {
-	heat.setOptions({ radius: map.getZoom() })
+	console.log(map.getZoom())
+	heat.setOptions({ blur: map.getZoom() })
 })
 
 queryrecommand
@@ -31,16 +32,18 @@ queryrecommand
 			var result = recolist.heatmap
 			var latlngs = []
 			for (var i = 0; i < result.length; i++) {
-				latlngs.push([
-					result[i].latitude,
-					result[i].longitude,
-					result[i].value,
-				])
+				if (result[i].value != 0) {
+					latlngs.push([
+						result[i].latitude,
+						result[i].longitude,
+						result[i].value,
+					])
+				}
 			}
 			heat.setOptions({
-				radius: 100,
-				max: 0.1,
-				blur: 25
+				radius: 40,
+				max: 0.02,
+				blur: 25,
 			})
 			heat.setLatLngs(latlngs)
 		} else {

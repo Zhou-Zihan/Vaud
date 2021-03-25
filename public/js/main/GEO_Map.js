@@ -71,9 +71,8 @@ $('#mapobj_heatmap_slider')
 			max: (objectheat_latlon.length / 50000) * ui.value,
 		})
 		heat.setOptions({
-			radius: 100,
-			blur: 25,
-			max: 1/mapheatmap_value,
+			radius: 40,
+			max: 0.02 / mapheatmap_value,
 		})
 	})
 	.slider('option', 'min', 1)
