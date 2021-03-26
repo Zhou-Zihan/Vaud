@@ -35,8 +35,8 @@ QueryDb.getPoi = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			// url: 'http://10.76.0.196:7001/poi',
-			url: 'http://10.76.0.196:7002/poi',
+			url: 'http://10.76.0.196:7001/poi',
+			// url: 'http://10.76.0.196:7002/poi',
 			type: 'POST',
 		},
 		function (result) {
@@ -148,7 +148,7 @@ QueryDb.getrecommend = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.192:5000/recommend',
+			url: 'http://10.186.102.229:5000/recommend',
 			type: 'POST',
 		},
 		function (result) {
@@ -163,8 +163,8 @@ QueryDb.getPeople = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			// url: 'http://10.76.0.196:7001/phone',
-			url: 'http://10.76.0.196:7002/phone',
+			url: 'http://10.76.0.196:7001/phone',
+			// url: 'http://10.76.0.196:7002/phone',
 			type: 'POST',
 		},
 		function (result) {
@@ -178,8 +178,8 @@ QueryDb.getOneDataById = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			// url: 'http://10.76.0.196:7001/getOneDataById',
-			url: 'http://10.76.0.196:7002/getOneDataById',
+			url: 'http://10.76.0.196:7001/getOneDataById',
+			// url: 'http://10.76.0.196:7002/getOneDataById',
 			type: 'POST',
 		},
 		function (result) {
@@ -193,7 +193,7 @@ QueryDb.recommend_init = function (func) {
 	QueryDb.query(
 		{
 			data: 'TEST',
-			url: 'http://10.76.0.192:5000/init',
+			url: 'http://10.186.102.229:5000/init',
 			type: 'POST',
 		},
 		function (result) {
@@ -207,8 +207,8 @@ QueryDb.getByDataId = function (condition, fun) {
 	QueryDb.query(
 		{
 			data: condition,
-			// url: 'http://10.76.0.196:7001/queryByDataId',
-			url: 'http://10.76.0.196:7002/queryByDataId',
+			url: 'http://10.76.0.196:7001/queryByDataId',
+			// url: 'http://10.76.0.196:7002/queryByDataId',
 			type: 'POST',
 		},
 		function (result) {
@@ -251,8 +251,6 @@ QueryDb.scubeHeatMap = function () {
 		true
 	)
 }
-
-// QueryDb.scubeHeatMap()
 
 QueryDb.recommend_init(function (data) {
 	console.log(data)

@@ -64,7 +64,7 @@ function  show_carlist(node) {
                 .attr("class", "listelement")
                 .attr("taxiid", car.ID)
                 .attr("intid",count)
-                .text(car.ID)
+                .text(car.ID.replace('浙',''))
 
             thiselementdiv.append("object")
                 .attr("data","image/unfold.svg")
