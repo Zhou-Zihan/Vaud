@@ -229,7 +229,7 @@ function paint_peoplelisttraj(peoplelist) {
 		d3.select('#mapobjectsvg')
 			.selectAll('.peoplelisttrajpolyline')
 			.style('stroke-opacity', alpha)
-		if (thecase == 2 && casestep == 3) {
+		if (thecase == 2 && casestep >= 3) {
 			d3.select('#mapobjectsvg')
 				.selectAll('.peoplelisttrajpolyline')
 				.style('stroke-opacity', 1)

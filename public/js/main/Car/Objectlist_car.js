@@ -129,7 +129,7 @@ function showobjectlist_car(obj) {
 	// 			'h' +
 	// 			parseInt((passageintime / 2) % 60) +
 	// 			'min'
-		)
+	// )
 }
 
 function showobjectlist_carlist(obj) {

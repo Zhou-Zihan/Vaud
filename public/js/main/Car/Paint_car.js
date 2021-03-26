@@ -431,8 +431,8 @@ function paint_carlisttraj(carlist){
 
     d3.select("#mapobjectsvg").selectAll(".carlisttrajpolyline").style("stroke-opacity",alpha)
                     .attr("opacity",alpha)
-    if (thecase == 1 && casestep == 4) {
-        debugger
+    if (thecase == 1 && casestep >= 4) {
+        // debugger
         d3.select('#mapobjectsvg')
             .selectAll('.carlisttrajpolyline')
             .style('stroke-opacity', 0.2)

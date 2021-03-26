@@ -32,10 +32,16 @@ QueryDb.pquery = function (myData) {
 }
 
 QueryDb.getPoi = function (condition, func) {
+	var port
+	if (thecase == 1) {
+		port = 7001
+	} else {
+		port = 7002
+	}
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.196:7001/poi',
+			url: 'http://10.76.0.196:' + port + '/poi',
 			// url: 'http://10.76.0.196:7002/poi',
 			type: 'POST',
 		},
@@ -148,7 +154,7 @@ QueryDb.getrecommend = function (condition, func) {
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.186.102.229:5000/recommend',
+			url: 'http://10.76.0.198:5000/recommend',
 			type: 'POST',
 		},
 		function (result) {
@@ -159,11 +165,17 @@ QueryDb.getrecommend = function (condition, func) {
 }
 
 QueryDb.getPeople = function (condition, func) {
-	condition.boolFull = true
+	var port
+	if (thecase == 2) {
+		condition.boolFull = true
+		port = 7002
+	} else {
+		port = 7001
+	}
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.196:7001/phone',
+			url: 'http://10.76.0.196:' + port + '/phone',
 			// url: 'http://10.76.0.196:7002/phone',
 			type: 'POST',
 		},
@@ -175,10 +187,16 @@ QueryDb.getPeople = function (condition, func) {
 }
 
 QueryDb.getOneDataById = function (condition, func) {
+	var port
+	if (thecase == 1) {
+		port = 7001
+	} else {
+		port = 7002
+	}
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.196:7001/getOneDataById',
+			url: 'http://10.76.0.196:' + port + '/getOneDataById',
 			// url: 'http://10.76.0.196:7002/getOneDataById',
 			type: 'POST',
 		},
@@ -193,7 +211,7 @@ QueryDb.recommend_init = function (func) {
 	QueryDb.query(
 		{
 			data: 'TEST',
-			url: 'http://10.186.102.229:5000/init',
+			url: 'http://10.76.0.198:5000/init',
 			type: 'POST',
 		},
 		function (result) {
@@ -204,10 +222,16 @@ QueryDb.recommend_init = function (func) {
 }
 
 QueryDb.getByDataId = function (condition, fun) {
+	var port
+	if (thecase == 1) {
+		port = 7001
+	} else {
+		port = 7002
+	}
 	QueryDb.query(
 		{
 			data: condition,
-			url: 'http://10.76.0.196:7001/queryByDataId',
+			url: 'http://10.76.0.196:' + port + '/queryByDataId',
 			// url: 'http://10.76.0.196:7002/queryByDataId',
 			type: 'POST',
 		},
